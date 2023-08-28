@@ -4,7 +4,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Sidebar from './components/sidebar'
 import Script from 'next/script'
-import { GTM_ID } from 'lib/gtm'
+import { GTM_ID, pageview } from 'lib/gtm'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 const graphik = localFont({
   src: [
@@ -62,6 +64,15 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (pathname) {
+      pageview(pathname)
+    }
+  }, [pathname, searchParams])
+
   return (
     <html
       lang='en'
