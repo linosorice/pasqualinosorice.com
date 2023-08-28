@@ -29,8 +29,8 @@ export default function Page() {
         blockchain and mobile applications. Additionally, I have a growing interest in exploring the
         world of indie hacking, seeking new avenues and opportunities in this vibrant community.
       </p>
-      <div className='columns-2 gap-4 my-8'>
-        <div className='relative h-60 mb-4'>
+      <div className='column-1 sm:columns-2 gap-4 my-8'>
+        <div className='relative h-72 sm:h-60 mb-4'>
           <Image
             alt='Me speaking on stage at React Summit about the future of Next.js'
             src={mioassicuratoreNatale}
@@ -40,7 +40,7 @@ export default function Page() {
             className='rounded-lg object-cover'
           />
         </div>
-        <div className='relative h-60 mb-4'>
+        <div className='relative h-72 sm:h-60 mb-4'>
           <Image
             alt='Me speaking on stage at React Summit about the future of Next.js'
             src={mioassicuratoreTeamBuilding}
