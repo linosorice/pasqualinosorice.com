@@ -53,11 +53,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Pasqualino Sorice',
-    card: 'summary_large_image'
-  },
-  verification: {
-    google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
-    yandex: '14d2e73487fa6c71'
+    card: 'summary_large_image',
+    creator: '@linosorice'
   }
 }
 
