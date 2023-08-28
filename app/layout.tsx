@@ -3,10 +3,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Sidebar from './components/sidebar'
-import Script from 'next/script'
-import { GTM_ID, pageview } from 'lib/gtm'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { Suspense, useEffect } from 'react'
+import { Suspense } from 'react'
 import Analytics from './components/analytics'
 
 const graphik = localFont({
@@ -65,15 +62,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  useEffect(() => {
-    if (pathname) {
-      pageview(pathname)
-    }
-  }, [pathname, searchParams])
-
   return (
     <html
       lang='en'
