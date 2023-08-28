@@ -38,7 +38,7 @@ const nextConfig = {
 const ContentSecurityPolicy = `
     default-src 'self' vercel.live;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com;
-    style-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
     img-src * blob: data:;
     media-src 'none';
     connect-src *;
