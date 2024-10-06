@@ -2,10 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Mdx } from 'app/components/mdx'
 import { allBlogs } from 'contentlayer/generated'
-import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
-import ViewCounter from '../view-counter'
-import { getViewsCount } from 'lib/metrics'
 
 export async function generateMetadata({ params }): Promise<Metadata | undefined> {
   const post = allBlogs.find(post => post.slug === params.slug)
@@ -78,8 +75,6 @@ export default async function Blog({ params }) {
     notFound()
   }
 
-  const [allViews, tweets] = await Promise.all([getViewsCount(), getTweets(post.tweetIds)])
-
   return (
     <section>
       <script type='application/ld+json' suppressHydrationWarning>
@@ -92,9 +87,8 @@ export default async function Blog({ params }) {
         <p className='text-sm text-neutral-600 dark:text-neutral-400'>
           {formatDate(post.publishedAt)}
         </p>
-        <ViewCounter allViews={allViews} slug={post.slug} trackView />
       </div>
-      <Mdx code={post.body.code} tweets={tweets} />
+      <Mdx code={post.body.code} />
     </section>
   )
 }
