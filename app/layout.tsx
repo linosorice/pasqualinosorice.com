@@ -5,6 +5,7 @@ import localFont from 'next/font/local'
 import Sidebar from './components/sidebar'
 import { Suspense } from 'react'
 import Analytics from './components/analytics'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
 const graphik = localFont({
   src: [
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Sidebar />
           {children}
         </main>
+        <VercelAnalytics />
       </body>
     </html>
   )
