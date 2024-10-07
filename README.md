@@ -19,8 +19,6 @@ pnpm run setup # Remove all of my personal information
 pnpm dev
 ```
 
-Create a `.env` file similar to [`.env.example`](https://github.com/linosorice/pasqualinosorice.com/blob/main/.env.example).
-
 ## Cloning / Forking
 
 Please review the [license](https://github.com/linosorice/pasqualinosorice.com/blob/main/LICENSE.txt) and remove all of my personal information (resume, blog posts, images, etc.) by running `pnpm run setup`.
