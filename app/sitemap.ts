@@ -1,14 +1,16 @@
-import { allBlogs } from 'contentlayer/generated'
+import { getBlogPosts } from 'app/blog/utils'
+
+export const baseUrl = 'https://portfolio-blog-starter.vercel.app'
 
 export default async function sitemap() {
-  const blogs = allBlogs.map(post => ({
-    url: `https://pasqualinosorice.com/blog/${post.slug}`,
-    lastModified: post.publishedAt
+  let blogs = getBlogPosts().map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.metadata.publishedAt,
   }))
 
-  const routes = ['', '/blog'].map(route => ({
-    url: `https://pasqualinosorice.com${route}`,
-    lastModified: new Date().toISOString().split('T')[0]
+  let routes = ['', '/blog'].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString().split('T')[0],
   }))
 
   return [...routes, ...blogs]
