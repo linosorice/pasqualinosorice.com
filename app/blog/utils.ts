@@ -49,8 +49,18 @@ function getMDXData(dir) {
   })
 }
 
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
+export function getBlogPosts(limit?: number) {
+  let data = getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
+  const sortedData = data.sort((a, b) => {
+    if (a.metadata.publishedAt > b.metadata.publishedAt) {
+      return -1
+    }
+    return 1
+  })
+  if (limit) {
+    return sortedData.slice(0, limit)
+  }
+  return sortedData
 }
 
 export function formatDate(date: string, includeRelative = false) {
