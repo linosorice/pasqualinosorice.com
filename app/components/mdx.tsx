@@ -5,9 +5,7 @@ import { highlight } from 'sugar-high'
 import React from 'react'
 
 function Table({ data }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ))
+  let headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
   let rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
@@ -41,11 +39,11 @@ function CustomLink(props) {
     return <a {...props} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  return <a target='_blank' rel='noopener noreferrer' {...props} />
 }
 
 function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />
+  return <Image alt={props.alt} className='rounded-lg' {...props} />
 }
 
 function Code({ children, ...props }) {
@@ -74,8 +72,8 @@ function createHeading(level) {
         React.createElement('a', {
           href: `#${slug}`,
           key: `link-${slug}`,
-          className: 'anchor',
-        }),
+          className: 'anchor'
+        })
       ],
       children
     )
@@ -96,14 +94,9 @@ let components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
-  Table,
+  Table
 }
 
 export function CustomMDX(props) {
-  return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
-  )
+  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
 }

@@ -2,13 +2,13 @@ import { BlogPosts } from 'app/components/posts'
 
 export const metadata = {
   title: 'Blog',
-  description: 'read my blog.',
+  description: 'read my blog.'
 }
 
 export default function Page() {
   return (
     <section>
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">read my blog</h1>
+      <h1 className='mb-8 text-2xl font-semibold tracking-tighter'>read my blog</h1>
       <BlogPosts />
     </section>
   )

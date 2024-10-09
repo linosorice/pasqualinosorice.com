@@ -5,7 +5,7 @@ import Image from 'next/image'
 export default function Page() {
   return (
     <section>
-      <h1 className='font-bold text-2xl mb-8 tracking-tighter'>hey, I'm Pasqualino Sorice 👋</h1>
+      <h1 className='mb-8 text-2xl font-bold tracking-tighter'>hey, I'm Pasqualino Sorice 👋</h1>
       <p className='prose prose-neutral dark:prose-invert'>
         I'm a passionate computer engineer with a knack for innovation, especially within the
         dynamic world of insurance inside{' '}
@@ -17,8 +17,8 @@ export default function Page() {
         blockchain and mobile applications. Additionally, I have a growing interest in exploring the
         world of indie hacking, seeking new avenues and opportunities in this vibrant community.
       </p>
-      <div className='column-1 sm:columns-2 gap-4 my-8'>
-        <div className='relative h-72 sm:h-60 mb-4'>
+      <div className='column-1 my-8 gap-4 sm:columns-2'>
+        <div className='relative mb-4 h-72 sm:h-60'>
           <Image
             alt='Christmas party at MioAssicuratore'
             src='/mioassicuratore_natale.jpg'
@@ -28,7 +28,7 @@ export default function Page() {
             className='rounded-lg object-cover'
           />
         </div>
-        <div className='relative h-72 sm:h-60 mb-4'>
+        <div className='relative mb-4 h-72 sm:h-60'>
           <Image
             alt='Team building at MioAssicuratore'
             src='/mioassicuratore_team_building.jpg'
@@ -90,7 +90,7 @@ export default function Page() {
           are limitless!
         </p>
       </div>
-      <div className="my-8">
+      <div className='my-8'>
         <BlogPosts limit={10} />
       </div>
     </section>
