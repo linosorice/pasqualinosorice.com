@@ -22,8 +22,9 @@ export default function Page() {
         </Link>
         . Beyond my tech pursuits, I wear the badge of a proud and incredibly happy father. My
         journey in the tech realm has been an exhilarating ride, weaving through the realms of
-        blockchain and mobile applications. Additionally, I have a growing interest in exploring the
-        world of indie hacking, seeking new avenues and opportunities in this vibrant community.
+        blockchain, mobile applications, and <b>AI integration in startups</b>. Additionally, I have
+        a growing interest in exploring the world of indie hacking, seeking new avenues and
+        opportunities in this vibrant community.
       </p>
       <div className='column-1 my-8 gap-4 sm:columns-2'>
         <div className='relative mb-4 h-72 sm:h-60'>
@@ -52,20 +53,18 @@ export default function Page() {
           🔍 <b>Fintech Visionary</b>: With a solid background in computer engineering, I've
           seamlessly ventured into the fintech landscape, honing my skills in revolutionizing
           insurance through cutting-edge technology. My expertise lies in fusing intricate financial
-          concepts with elegant tech solutions to reshape the industry.
+          concepts with elegant tech solutions to reshape the industry, including{' '}
+          <b>AI implementation in business processes</b>.
         </p>
       </div>
       <div className='prose prose-neutral dark:prose-invert'>
         <p>
-          🌟 <b>CiaoTeam</b>: Uniting Virtually, Powering Teams! Amidst this exciting journey, I'm
-          steering a remarkable project called{' '}
-          <Link href='https://ciaoteam.com' target='_blank'>
-            CiaoTeam
-          </Link>
-          . This Virtual Team Building platform is my brainchild, designed to connect teams across
-          distances, fostering collaboration, camaraderie, and productivity like never before.
-          Through CiaoTeam, I'm igniting a new era of remote teamwork that transcends geographical
-          boundaries.
+          🌟 <b>ExaminatorAI</b>: I'm leading an innovative project called <b>ExaminatorAI</b>,
+          driven by a clear mission: empowering students to understand how prepared they are for
+          their exams. <b>This AI-powered platform leverages</b> cutting-edge artificial
+          intelligence both in its core functionality and implementation. Through ExaminatorAI,
+          we're revolutionizing the way students assess their exam readiness, providing them with
+          intelligent insights and personalized feedback to boost their academic confidence.
         </p>
       </div>
       <div className='prose prose-neutral dark:prose-invert'>
@@ -92,10 +91,11 @@ export default function Page() {
       </div>
       <div className='prose prose-neutral dark:prose-invert'>
         <p>
-          So, whether I'm shaping fintech futures, unraveling blockchain mysteries, crafting digital
-          marvels, or reveling in the pure happiness of fatherhood, one thing remains constant: my
-          unwavering commitment to innovation. Join me on this tech odyssey, where the possibilities
-          are limitless!
+          So, whether I'm shaping fintech futures with AI, unraveling blockchain mysteries, crafting
+          digital marvels powered by artificial intelligence, or reveling in the pure happiness of
+          fatherhood, one thing remains constant: my unwavering commitment to innovation and
+          exploring AI's transformative potential. Join me on this tech odyssey, where the
+          possibilities are limitless and AI helps pave the way forward!
         </p>
       </div>
       <div className='my-8'>
