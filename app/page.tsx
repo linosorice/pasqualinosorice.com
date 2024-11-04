@@ -17,7 +17,7 @@ export default function Page() {
       <p className='prose prose-neutral dark:prose-invert'>
         I'm a passionate computer engineer with a knack for innovation, especially within the
         dynamic world of insurance inside{' '}
-        <Link href='https://mioassicuratore.it' target='_blank'>
+        <Link href='https://www.mioassicuratore.it' target='_blank'>
           MioAssicuratore
         </Link>
         . Beyond my tech pursuits, I wear the badge of a proud and incredibly happy father. My
