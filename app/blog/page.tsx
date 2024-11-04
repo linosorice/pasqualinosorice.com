@@ -1,8 +1,13 @@
 import { BlogPosts } from 'app/components/posts'
+import { Metadata } from 'next'
+import { baseUrl } from '../sitemap'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Blog',
-  description: 'read my blog.'
+  description: 'read my blog.',
+  alternates: {
+    canonical: `${baseUrl}/blog`
+  }
 }
 
 export default function Page() {

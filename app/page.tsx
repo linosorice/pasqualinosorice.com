@@ -1,6 +1,14 @@
 import { BlogPosts } from 'app/components/posts'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Metadata } from 'next'
+import { baseUrl } from './sitemap'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: baseUrl
+  }
+}
 
 export default function Page() {
   return (

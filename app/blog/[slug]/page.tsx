@@ -40,6 +40,9 @@ export function generateMetadata({ params }) {
       title,
       description,
       images: [ogImage]
+    },
+    alternates: {
+      canonical: `${baseUrl}/blog/${post.slug}`
     }
   }
 }
