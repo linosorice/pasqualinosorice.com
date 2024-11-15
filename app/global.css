@@ -52,7 +52,7 @@ html {
 }
 
 .interlink {
-  @apply tunderline hover:text-neutral-500;
+  @apply underline hover:text-neutral-500;
 }
 
 .prose .anchor:after {
