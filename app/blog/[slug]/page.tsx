@@ -98,7 +98,7 @@ export default function Blog({ params }) {
                   return (
                     <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
                       <a
-                        href={`#${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                        href={`${baseUrl}/blog/${post.slug}#${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                         className='text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
                       >
                         {title}
@@ -111,7 +111,7 @@ export default function Blog({ params }) {
               .filter(Boolean)}
           </div>
         </div>
-        <CustomMDX source={post.content} />
+        <CustomMDX source={post.content} slug={post.slug} />
       </article>
     </section>
   )

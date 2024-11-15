@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
+import { baseUrl } from 'app/sitemap'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
@@ -29,17 +30,17 @@ function CustomLink(props) {
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} {...props}>
+      <Link className='interlink' href={href} {...props}>
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a className='interlink' {...props} />
   }
 
-  return <a target='_blank' rel='noopener noreferrer' {...props} />
+  return <a className='interlink' target='_blank' rel='noopener noreferrer' {...props} />
 }
 
 function RoundedImage(props) {
@@ -62,21 +63,20 @@ function slugify(str) {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 
-function createHeading(level) {
+function createHeading(level, postSlug) {
   const Heading = ({ children }) => {
     let slug = slugify(children)
-    return React.createElement(
-      `h${level}`,
-      { id: slug },
-      [
-        React.createElement('a', {
-          href: `#${slug}`,
+    return React.createElement(`h${level}`, { id: slug }, [
+      React.createElement(
+        'a',
+        {
+          href: `${baseUrl}/blog/${postSlug}#${slug}`,
           key: `link-${slug}`,
-          className: 'anchor'
-        })
-      ],
-      children
-    )
+          className: 'no-underline hover:underline'
+        },
+        children
+      )
+    ])
   }
 
   Heading.displayName = `Heading${level}`
@@ -84,19 +84,21 @@ function createHeading(level) {
   return Heading
 }
 
-let components = {
-  h1: createHeading(1),
-  h2: createHeading(2),
-  h3: createHeading(3),
-  h4: createHeading(4),
-  h5: createHeading(5),
-  h6: createHeading(6),
+let components = postSlug => ({
+  h1: createHeading(1, postSlug),
+  h2: createHeading(2, postSlug),
+  h3: createHeading(3, postSlug),
+  h4: createHeading(4, postSlug),
+  h5: createHeading(5, postSlug),
+  h6: createHeading(6, postSlug),
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
   Table
-}
+})
 
 export function CustomMDX(props) {
-  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
+  return (
+    <MDXRemote {...props} components={{ ...components(props.slug), ...(props.components || {}) }} />
+  )
 }

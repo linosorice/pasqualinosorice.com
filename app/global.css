@@ -48,7 +48,11 @@ html {
 }
 
 .prose a {
-  @apply underline decoration-neutral-400 decoration-[0.1em] underline-offset-2 transition-all dark:decoration-neutral-600;
+  @apply decoration-neutral-400 decoration-[0.1em] underline-offset-2 transition-all dark:decoration-neutral-600;
+}
+
+.interlink {
+  @apply tunderline hover:text-neutral-500;
 }
 
 .prose .anchor:after {

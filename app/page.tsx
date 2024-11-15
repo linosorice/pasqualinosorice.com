@@ -17,7 +17,7 @@ export default function Page() {
       <p className='prose prose-neutral dark:prose-invert'>
         I'm a passionate computer engineer with a knack for innovation, especially within the
         dynamic world of insurance inside{' '}
-        <Link href='https://www.mioassicuratore.it' target='_blank'>
+        <Link href='https://www.mioassicuratore.it' className='interlink' target='_blank'>
           MioAssicuratore
         </Link>
         . Beyond my tech pursuits, I wear the badge of a proud and incredibly happy father. My
@@ -59,8 +59,11 @@ export default function Page() {
       </div>
       <div className='prose prose-neutral dark:prose-invert'>
         <p>
-          🌟 <b>ExaminatorAI</b>: I'm leading an innovative project called <b>ExaminatorAI</b>,
-          driven by a clear mission: empowering students to understand how prepared they are for
+          🌟 <b>ExaminatorAI</b>: I'm leading an innovative project called{' '}
+          <Link href='https://examinatorai.com' className='interlink' target='_blank'>
+            <b>ExaminatorAI</b>
+          </Link>
+          , driven by a clear mission: empowering students to understand how prepared they are for
           their exams. <b>This AI-powered platform leverages</b> cutting-edge artificial
           intelligence both in its core functionality and implementation. Through ExaminatorAI,
           we're revolutionizing the way students assess their exam readiness, providing them with

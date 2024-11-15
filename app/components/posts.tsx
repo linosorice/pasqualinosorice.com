@@ -7,16 +7,16 @@ export function BlogPosts({ limit }: { limit?: number }) {
   return (
     <div>
       {allBlogs.map(post => (
-        <Link key={post.slug} className='mb-4 flex flex-col space-y-1' href={`/blog/${post.slug}`}>
+        <div key={post.slug} className='mb-4 flex flex-col space-y-1'>
           <div className='flex w-full flex-col space-x-0 md:flex-row md:space-x-2'>
             <p className='w-[100px] tabular-nums text-neutral-600 dark:text-neutral-400'>
               {formatDate(post.metadata.publishedAt, false)}
             </p>
-            <p className='tracking-tight text-neutral-900 dark:text-neutral-100'>
+            <Link href={`/blog/${post.slug}`} className='interlink tracking-tight'>
               {post.metadata.title}
-            </p>
+            </Link>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   )
