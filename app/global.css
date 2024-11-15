@@ -148,3 +148,7 @@ table {
 .title {
   text-wrap: balance;
 }
+
+html {
+  scroll-behavior: smooth;
+}

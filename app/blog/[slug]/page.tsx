@@ -85,6 +85,32 @@ export default function Blog({ params }) {
         </p>
       </div>
       <article className='prose'>
+        <div className='mb-8'>
+          <h2 className='mb-2 text-lg font-medium'>Table of Contents</h2>
+          <div className='space-y-1'>
+            {post.content
+              .split('\n')
+              .map((line, index) => {
+                const match = line.match(/^(#{2,6})\s+(.+)/)
+                if (match) {
+                  const level = match[1].length - 1
+                  const title = match[2]
+                  return (
+                    <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
+                      <a
+                        href={`#${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                        className='text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+                      >
+                        {title}
+                      </a>
+                    </div>
+                  )
+                }
+                return null
+              })
+              .filter(Boolean)}
+          </div>
+        </div>
         <CustomMDX source={post.content} />
       </article>
     </section>
