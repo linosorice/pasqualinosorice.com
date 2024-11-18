@@ -10,7 +10,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 const title = 'Pasqualino Sorice - AI & Insurtech'
 const description =
   "Explore Pasqualino Sorice's AI-driven innovations in insurtech. Dive into his insights on artificial intelligence, technology, and the future of insurance."
-const ogImage = `${baseUrl}/public/og.png`
+const ogImage = `${baseUrl}/og.png`
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
