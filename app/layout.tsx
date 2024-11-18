@@ -7,23 +7,38 @@ import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 import { GoogleTagManager } from '@next/third-parties/google'
 
+const title = 'Pasqualino Sorice - AI & Insurtech'
+const description =
+  "Explore Pasqualino Sorice's AI-driven innovations in insurtech. Dive into his insights on artificial intelligence, technology, and the future of insurance."
+const ogImage = `${baseUrl}/public/og.png`
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Pasqualino Sorice - Insurtech Innovator, Digital Pioneer, and Devoted Father',
-    template: '%s | Pasqualino Sorice - Insurtech Innovator, Digital Pioneer, and Devoted Father'
+    default: title,
+    template: '%s | Pasqualino Sorice'
   },
-  description:
-    'Discover the journey of Pasqualino Sorice, an insurtech innovator, digital pioneer, and devoted father. Explore his insights on technology, insurance and AI.',
+  description,
   openGraph: {
-    title: 'Pasqualino Sorice - Insurtech Innovator, Digital Pioneer, and Devoted Father',
-    description:
-      'Discover the journey of Pasqualino Sorice, an insurtech innovator, digital pioneer, and devoted father. Explore his insights on technology, insurance and AI.',
+    title,
+    description,
     url: baseUrl,
-    siteName: 'Pasqualino Sorice',
+    siteName: title,
     locale: 'en_US',
-    type: 'website'
+    type: 'website',
+    images: [
+      {
+        url: ogImage
+      }
+    ]
   },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: [ogImage]
+  },
+
   robots: {
     index: true,
     follow: true,
