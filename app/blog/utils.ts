@@ -51,12 +51,21 @@ function getMDXData(dir) {
 
 export function getBlogPosts(limit?: number) {
   let data = getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
-  const sortedData = data.sort((a, b) => {
+  const currentDate = new Date()
+
+  // Filter out future posts
+  const filteredData = data.filter(post => {
+    const postDate = new Date(post.metadata.publishedAt)
+    return postDate <= currentDate
+  })
+
+  const sortedData = filteredData.sort((a, b) => {
     if (a.metadata.publishedAt > b.metadata.publishedAt) {
       return -1
     }
     return 1
   })
+
   if (limit) {
     return sortedData.slice(0, limit)
   }

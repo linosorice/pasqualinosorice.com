@@ -1,0 +1,88 @@
+---
+title: 'Fine Tuning vs. RAG: When to Use Each in AI Applications'
+publishedAt: '2025-02-07'
+summary: 'An in-depth comparison of fine tuning and Retrieval Augmented Generation (RAG) in AI applications, exploring their advantages, costs, and practical applications.'
+---
+
+In the landscape of Artificial Intelligence and, specifically, Natural Language Processing (NLP), language models play a crucial role. In recent years, we have witnessed a continuous evolution of pre-trained models, such as GPT-3.5 or Llama 3.2, which can understand and generate text on a wide range of topics. However, when more specific needs arise, two strategies prove particularly useful: fine tuning and Retrieval Augmented Generation (RAG). In this article, we will explore how and when to use these techniques, highlighting their advantages, costs, and practical applications.
+
+## Introduction to Language Models and Fine Tuning
+
+Pre-trained language models are "instructed" using huge datasets that cover a wide variety of topics. Through this process, they develop a solid "knowledge base" and can generate coherent and relevant text in numerous contexts. However, in some cases, there may be a need to further specialize the model for more narrow tasks that do not fall within its "generic" competence.
+
+### What is Fine Tuning?
+
+Fine tuning is the process through which a model continues training on a specific dataset, aimed at a particular type of task. Think of the model as a student who already has a basic education; fine tuning is like a "specialization course" where more in-depth knowledge in a defined field is acquired.
+
+It is useful when the pre-trained model does not have sufficient information to perform a particular task.
+
+It requires the creation of a high-quality, relevant dataset for the desired task.
+
+In the case of translations, for example, fine tuning allows the model to learn the specific rules of a language or dialect that was rarely treated during standard training.
+
+## Using Retrieval Augmented Generation (RAG)
+
+Alongside fine tuning, there is another highly effective approach: Retrieval Augmented Generation (RAG). This technique enables the model to draw on external information hosted in a database or other consultable sources.
+
+### How does RAG work?
+
+RAG works as if the same "student" (i.e., the language model) had the ability to consult a book or documentation archive during an exam. When the model receives a question or input, it can access external data and use the relevant information to provide the most appropriate answer.
+
+### Advantages of RAG
+
+Constant updates: if the documentation changes or is enriched, the model can immediately take advantage of the new content without needing to be retrained.
+
+Lower implementation costs: there is no need for a lengthy training process on new datasets. You just need to build a vector database and organize the documentation.
+
+Versatile applications: it is the ideal solution when the goal is to provide answers based on very specific or frequently updated content, such as company regulations, technical manuals, or research documents.
+
+In 80% of projects, the RAG approach is sufficient and particularly advantageous, especially in contexts where there is extensive company documentation that the chatbot can dynamically consult.
+
+## When to Perform Fine Tuning
+
+Despite the advantages of RAG, there are situations where fine tuning becomes inevitable. In particular, if the base model does not have the fundamental skills to understand or generate the required texts, integrating external information is not enough.
+
+### Examples of Fine Tuning Needs
+
+Specialized Translations: if we need to translate texts from or into uncommon languages or those rich in idiomatic expressions, the model must be trained on an appropriate dataset.
+
+Particular formatting or syntax: if our goal is to obtain outputs with very strict style rules (for example, complex LaTeX code or a specific reporting format), fine tuning helps the model produce exactly what is needed.
+
+Complex vertical competencies: in fields such as molecular chemistry, finance, medicine, or the legal sector, the model may need to acquire very specific terminology and logic that may not be fully present in the initial data.
+
+## Practical Application Examples
+
+### An Expert Agent in Regulations
+
+Imagine a chatbot used in a company to provide answers on current regulations regarding safety.
+
+RAG Approach: the chatbot could consult a constantly updated database of regulatory documentation.
+
+Fine Tuning Approach: if the regulatory language is extremely specific or the model does not have the foundational notion of legislation, it may be necessary to train it on a dedicated corpus of legislative texts before implementing RAG.
+
+### A Consultant in Molecular Chemistry
+
+In a research laboratory, an AI assistant must support researchers by providing formulas and explanations on synthesis processes.
+
+RAG Approach: the model can consult an archive of scientific articles and research.
+
+Fine Tuning Approach: if the model is not able to correctly use technical jargon or chemical formulas, it may need additional training with specialized datasets.
+
+In both cases, the knowledge base is crucial. Before overloading the chatbot with hundreds of documents, make sure it has sufficient skills to understand and effectively exploit them.
+
+### Costs and Final Considerations
+
+The training process (fine tuning) involves costs of various kinds:
+
+Time and energy: a curated, high-quality dataset must be prepared, and computational resources must be dedicated to training.
+
+Specialist skills: staff is needed to select the data, manage the training process, and evaluate the results.
+
+RAG, on the other hand, generally has lower training costs but requires the creation and maintenance of a well-structured vector database. Moreover, it assumes that the base model already has the minimum necessary knowledge to interpret and use the external documents.
+
+Conclusion
+The choice between fine tuning and RAG strongly depends on the project's objectives and the required level of specialization. In most cases, the RAG approach is sufficient to provide accurate and dynamically updated answers. However, when the model must acquire base skills absent in its initial training, fine tuning becomes essential.
+
+We hope this overview has helped clarify the differences and potential of both techniques. Whether you're consulting company documentation, translating complex texts, or delving into technical language, it's important to carefully evaluate your project's needs, the application context, and the associated costs.
+
+If you have doubts or experiences to share regarding the implementation of these solutions, leave a comment below! We are curious to hear your perspective and to help you find the best path for your chatbot or AI agent.
