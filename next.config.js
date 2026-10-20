@@ -1,3 +1,5 @@
+const { getReplacements } = require('./app/blog/publishing')
+
 // 'unsafe-eval' is only needed by React's dev tooling, never in production
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -28,11 +30,17 @@ const removedPosts = [
 
 module.exports = {
   async redirects() {
-    return removedPosts.map(slug => ({
+    let removed = removedPosts.map(slug => ({
       source: `/blog/${slug}`,
       destination: '/blog',
       permanent: true
     }))
+    let rewritten = getReplacements().map(({ from, to }) => ({
+      source: `/blog/${from}`,
+      destination: `/blog/${to}`,
+      permanent: true
+    }))
+    return [...removed, ...rewritten]
   },
   async headers() {
     return [

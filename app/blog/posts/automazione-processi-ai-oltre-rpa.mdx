@@ -1,0 +1,82 @@
+---
+title: "Automatizzare i processi aziendali con l'AI: oltre l'RPA"
+publishedAt: '2026-12-01'
+summary: "L'RPA automatizza i passaggi sempre uguali, l'AI quelli che cambiano ogni volta: email, documenti, richieste dei clienti. Come scegliere il primo processo da automatizzare, dove tenere le persone e come capire se ne vale la pena."
+replaces: 'ai-rpa-automation'
+---
+
+In quasi ogni azienda c'è almeno una persona che passa ore ogni settimana a fare la stessa cosa. Legge una email, apre l'allegato, copia due o tre dati in un gestionale, risponde con un modello già pronto. Non è un lavoro difficile, ma è lento, noioso e pieno di piccoli errori.
+
+Per anni la risposta è stata l'RPA. Oggi c'è uno strumento in più, l'intelligenza artificiale, e cambia parecchio cosa si può automatizzare. In questo articolo provo a spiegare la differenza in modo semplice, senza gergo tecnico, e a dare qualche criterio pratico per partire.
+
+## Cos'è l'RPA e dove si ferma
+
+RPA sta per _Robotic Process Automation_: un software che imita i clic e le digitazioni di una persona sullo schermo. Apre un programma, copia un valore da un campo, lo incolla in un altro, salva. Sempre nello stesso ordine, sempre allo stesso modo.
+
+Funziona bene quando il processo è davvero sempre uguale. Il problema è che il mondo reale raramente lo è. Basta che un fornitore cambi il formato della fattura, che un sito sposti un pulsante o che un cliente scriva la richiesta con parole diverse, e il robot si blocca. L'RPA segue regole fisse: non capisce cosa sta facendo, esegue.
+
+Per questo molti progetti di RPA finiscono con una persona che passa il tempo a "riparare il robot" invece di fare il lavoro che il robot avrebbe dovuto toglierle.
+
+## Cosa cambia con l'AI
+
+L'AI di oggi sa fare una cosa che l'RPA non sa fare: **capire contenuti scritti in modo non standard**. Può leggere una email e capire che è un reclamo, una richiesta di preventivo o una disdetta. Può aprire un PDF scansionato e tirare fuori nome, data e importo anche se ogni fornitore li mette in un punto diverso. Può riassumere una conversazione lunga e proporre una risposta.
+
+In pratica, l'AI è utile dove l'input cambia ogni volta:
+
+- **email e richieste dei clienti**, da classificare e smistare alla persona giusta;
+- **documenti non strutturati**, come fatture, contratti, moduli compilati a mano, da cui estrarre i dati;
+- **testi da preparare**, come bozze di risposta, riassunti, verbali, da far rivedere a una persona;
+- **controlli**, come verificare che un documento contenga tutto quello che serve prima di passarlo avanti.
+
+Non serve scegliere tra le due tecnologie. Spesso la combinazione migliore è un'automazione classica per i passaggi rigidi (spostare file, aggiornare un gestionale) e l'AI per i passaggi in cui bisogna "capire" qualcosa.
+
+## Agenti: quando l'automazione fa più di un passo
+
+Negli ultimi anni si parla molto di **agenti AI**. In parole semplici, un agente è un'automazione che non esegue solo un'istruzione ma porta avanti un compito di più passaggi: legge la richiesta, cerca le informazioni che mancano, prepara una risposta, la passa a chi deve approvarla.
+
+È lo stesso approccio che uso ogni giorno nello sviluppo software, e che ho raccontato in [come lavoriamo con gli agenti AI](/blog/un-solo-sviluppatore-sviluppo-agentico). Il principio che vale lì vale anche nei processi aziendali: gli agenti funzionano bene quando il compito è descritto con precisione e quando c'è un controllo chiaro sul risultato. Se le regole del processo non sono chiare nemmeno alle persone, non lo saranno per un agente.
+
+## Come scegliere il primo processo da automatizzare
+
+L'errore più comune è partire dal processo più importante o più complesso. Io consiglio il contrario: partire da un processo piccolo, noioso e facile da misurare. I criteri che uso sono questi:
+
+1. **È ripetitivo.** Succede tante volte, ogni settimana, più o meno nello stesso modo.
+2. **Ha volumi.** Se succede due volte al mese, automatizzarlo non vale la fatica.
+3. **È misurabile.** Sai quanto tempo richiede oggi e quanti errori produce. Senza questo dato non saprai mai se l'automazione ha funzionato.
+4. **Un errore non è una catastrofe.** Per iniziare, meglio un processo in cui uno sbaglio si corregge facilmente, non uno che tocca pagamenti o obblighi di legge.
+5. **C'è una persona che lo conosce bene.** Sarà lei a spiegare come funziona davvero, comprese le eccezioni che non sono scritte da nessuna parte.
+
+Un buon primo candidato è spesso lo smistamento delle email in arrivo o l'estrazione di dati da documenti che oggi qualcuno ricopia a mano.
+
+## Le persone restano nel processo
+
+L'AI sbaglia. Meno di quanto si pensi in molti casi, ma sbaglia, e a volte lo fa con grande sicurezza. Per questo nei processi che contano progetto sempre l'automazione con **una persona nel mezzo**: l'AI prepara, la persona controlla e approva.
+
+All'inizio la persona rivede tutto. Man mano che si vede dove l'AI è affidabile, si può decidere di controllare solo i casi dubbi o un campione. È un po' come affiancare un nuovo collaboratore: prima gli si guarda ogni lavoro, poi gli si dà fiducia dove se l'è guadagnata.
+
+Questo approccio ha anche un altro vantaggio: le persone che oggi fanno il lavoro a mano diventano quelle che supervisionano l'automazione. Non vengono sostituite da un sistema che non capiscono, ma lo guidano.
+
+## I rischi da tenere sotto controllo
+
+Ci sono tre aspetti che valuto sempre prima di partire:
+
+- **Gli errori.** Bisogna decidere in anticipo cosa succede quando l'AI non è sicura o sbaglia: chi se ne accorge, come si corregge, cosa vede il cliente.
+- **I dati.** Email, documenti e anagrafiche contengono spesso dati personali. Occorre sapere dove vengono inviati, chi li tratta e per quanto tempo restano conservati, e verificare che tutto sia coerente con il GDPR e con le informative che l'azienda già fornisce.
+- **La dipendenza da un solo fornitore.** Se tutto il processo è costruito attorno a un unico servizio, cambiarlo domani può costare caro. Meglio una soluzione in cui il modello di AI si possa sostituire senza rifare tutto.
+
+## Come capire se ne vale la pena
+
+Il ritorno di un'automazione si misura in modo semplice, purché si abbiano i numeri di partenza:
+
+- **tempo**: quante ore a settimana richiedeva il processo prima e quante ne richiede dopo, compreso il tempo per controllare il lavoro dell'AI;
+- **errori**: quanti errori o reclami c'erano prima e quanti dopo;
+- **tempi di risposta**: quanto aspettava un cliente o un collega prima, e quanto aspetta adesso;
+- **costi**: quanto costa far funzionare l'automazione, tra servizi di AI, manutenzione e supervisione.
+
+Se dopo qualche settimana il tempo risparmiato è poco o il controllo richiede quasi lo stesso lavoro di prima, è un'informazione preziosa: meglio scoprirlo presto e cambiare processo.
+
+## Partire in piccolo
+
+Il modo più economico per capire se un'automazione funziona nel proprio caso non è un grande progetto, ma un **prototipo**: una prima versione che lavora su dati reali, su un processo solo, abbastanza per vedere i risultati e decidere se andare avanti. È uno dei servizi che offro anche alle aziende senza un team tecnico interno, li trovi descritti nella pagina dedicata alla [consulenza](/consulenza).
+
+L'importante è partire da un problema concreto, non dalla tecnologia. L'AI è uno strumento potente, ma vale solo quando toglie lavoro vero a persone vere.

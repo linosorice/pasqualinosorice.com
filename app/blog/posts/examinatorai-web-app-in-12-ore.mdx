@@ -1,0 +1,94 @@
+---
+title: "ExaminatorAI: una web app in 12 ore con l'AI, e come la farei oggi"
+publishedAt: '2026-11-03'
+summary: "Nel 2024 ho costruito ExaminatorAI, una web app per prepararsi agli esami, in 12 ore con l'aiuto dell'AI. Racconto com'è andata e cosa cambierei oggi, con lo sviluppo agentico."
+replaces: 'examinatorai'
+---
+
+![ExaminatorAI](/examinator_screenshot.png)
+
+Nel 2024 ho costruito ExaminatorAI, una web app per chi si prepara a un esame, in 12 ore. Non un mockup: autenticazione, database, generazione e correzione dei test con l'AI, pagamenti. All'epoca mi sembrava il limite di quello che si poteva fare con l'AI come assistente.
+
+Oggi ExaminatorAI è un esperimento chiuso, ma lo considero ancora un punto di svolta. È stato il primo progetto in cui ho visto davvero quanto l'AI potesse comprimere i tempi di sviluppo. Rileggendolo a due anni di distanza, però, vedo anche tutto quello che oggi farei in modo diverso.
+
+## Cos'era ExaminatorAI
+
+L'idea era semplice: chi studia per un esame raramente ha un modo serio per capire quanto è preparato. ExaminatorAI colmava questo vuoto con test generati e corretti dall'AI sugli argomenti scelti dall'utente.
+
+Il funzionamento era in due tempi:
+
+- **Generazione dell'esame.** L'utente caricava un'immagine oppure indicava gli argomenti. L'AI, tramite le API di OpenAI, preparava una traccia dettagliata e costruiva un esame su misura.
+- **Correzione automatica.** Finito l'esame, l'AI valutava le risposte e restituiva subito un feedback approfondito, con indicazioni sulle aree da rinforzare.
+
+L'AI quindi non era solo uno strumento per svilupparla: era il cuore del prodotto.
+
+![L'AI al lavoro: generazione e correzione degli esami](/examinator_ai_in_action.png)
+
+## Lo stack del 2024
+
+Per stare nelle 12 ore ho scelto strumenti che si integrassero bene tra loro senza configurazioni lunghe.
+
+**Frontend**
+
+- **[Next.js](https://nextjs.org)** per l'applicazione React con rendering lato server.
+- **[Tailwind CSS](https://tailwindcss.com)** per lo stile.
+- **[shadcn/ui](https://ui.shadcn.com)** per i componenti dell'interfaccia, così da non disegnarli da zero.
+- **[v0](https://v0.dev)** e **[Cursor](https://cursor.com)**, gli strumenti AI con cui ho accelerato l'interfaccia e buona parte del codice.
+
+**Backend**
+
+- **API Routes di Next.js** per le API, dentro la stessa applicazione.
+- **[Supabase](https://supabase.com)** per autenticazione e database.
+- **[Drizzle ORM](https://orm.drizzle.team)** per l'accesso al database, leggero e senza troppo codice di contorno.
+- **[OpenAI API](https://platform.openai.com)** per generare e correggere gli esami.
+- **[Stripe](https://stripe.com)** per i pagamenti.
+
+Il deploy era su Vercel, con l'integrazione nativa di Next.js: ogni modifica era online in pochi minuti.
+
+![Il flusso di sviluppo con l'AI](/ai_powered_development_workflow.png)
+
+## Come ho usato l'AI per svilupparla
+
+Nel 2024 l'AI era soprattutto un assistente molto veloce. Con v0 generavo le interfacce di base e iteravo sui layout in pochi minuti, invece di scrivere e ritoccare a mano ogni componente. Con Cursor, usando modelli come Claude e GPT, ottimizzavo il frontend, scrivevo il backend e risolvevo problemi che altrimenti mi avrebbero richiesto ore di debug.
+
+Il risultato è stato sorprendente: in 12 ore un'idea astratta era diventata una piattaforma funzionante. Le lezioni che ne avevo tratto all'epoca restano valide:
+
+- **Sperimentare in fretta.** Prima arrivi a un prodotto minimo, prima raccogli feedback reali.
+- **Non reinventare i componenti standard.** Librerie consolidate per tutto ciò che è comune, energie concentrate su ciò che rende il prodotto diverso.
+- **Scegliere strumenti che si integrano bene.** Uno stack coerente riduce la complessità più di qualsiasi ottimizzazione.
+
+## Cosa non avrei potuto fare con quel metodo
+
+Rileggendo quel progetto oggi, vedo anche il suo limite. In quelle 12 ore il collo di bottiglia ero io: ero io a decidere cosa chiedere all'AI, a tenere in testa i requisiti, a controllare che i pezzi stessero insieme. L'AI accelerava la scrittura del codice, ma tutto il resto passava dalla mia memoria e dalla mia attenzione.
+
+Per un prototipo di una giornata funziona. Per un prodotto da far crescere nel tempo, con più persone e con utenti veri, no. Non c'erano specifiche scritte, i test erano pochi e ogni modifica andava subito a tutti gli utenti.
+
+## Come lo rifarei oggi
+
+Oggi lavoro in un altro modo, quello che ho descritto in [come lavoriamo con gli agenti AI](/blog/un-solo-sviluppatore-sviluppo-agentico). Se dovessi ricostruire ExaminatorAI da zero, il flusso sarebbe questo.
+
+### Prima le domande, poi il codice
+
+Partirei da una issue con l'idea e la spiegherei a un agente. Il suo compito non sarebbe scrivere codice, ma farmi domande: cosa succede se l'immagine caricata è illeggibile? Come si corregge una risposta aperta che è giusta solo in parte? Cosa vede l'utente se la generazione dell'esame fallisce a metà? Cosa succede al pagamento se l'esame non viene generato?
+
+Sono esattamente le domande che nel 2024 mi facevo solo quando il problema si presentava. Oggi le chiudo prima, finché l'idea non diventa un'epica dettagliata e senza punti aperti.
+
+### Un agente che sviluppa, per deliverable
+
+Con l'epica chiusa, un altro agente la svilupperebbe un pezzo alla volta: prima l'autenticazione, poi la generazione dell'esame, poi la correzione, poi i pagamenti. Ogni pezzo con la sua pull request, abbastanza piccola da poterla rivedere davvero.
+
+### Test come condizione, non come extra
+
+Ogni deliverable arriverebbe con test unitari e test end-to-end. Nel 2024 i test erano la prima cosa sacrificata per stare nei tempi. Oggi è il contrario: più codice scrive un agente, più i test sono l'unico modo affidabile per sapere che funziona.
+
+### Feature flag per rilasciare con calma
+
+Tutto finirebbe su `main` con le nuove funzionalità spente dietro feature flag. Le accenderei prima solo per me, per collaudarle, e poi per tutti. Se qualcosa va storto, basta spegnere il flag.
+
+## Più veloce, ma soprattutto più solido
+
+La differenza tra allora e oggi non è solo la velocità. Nel 2024 l'AI mi permetteva di scrivere più codice in meno tempo. Oggi il codice lo scrivono gli agenti, e il mio lavoro è decidere cosa costruire e verificare che sia costruito bene.
+
+Con questo metodo le 12 ore probabilmente non le batterei di molto. Ma il risultato sarebbe un prodotto pronto a crescere, non un prototipo da riscrivere: specifiche scritte, test, rilasci controllati e la possibilità di farci lavorare anche altre persone senza perdere il controllo.
+
+Le barriere per trasformare un'idea in un prodotto si sono abbassate ancora rispetto al 2024. Quello che fa la differenza, oggi, è il metodo con cui si lavora.

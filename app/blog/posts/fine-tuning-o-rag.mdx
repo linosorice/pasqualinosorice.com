@@ -1,0 +1,80 @@
+---
+title: 'Fine-tuning o RAG? Come scegliere nel 2026'
+publishedAt: '2026-11-24'
+summary: 'Prima di addestrare un modello o costruire un database vettoriale, chiediti se non basta il contesto giusto. Un confronto pratico tra prompt, RAG e fine-tuning per team di sviluppo, con un albero decisionale semplice.'
+replaces: 'fine-tuning-vs-rag'
+---
+
+Quando un team decide di aggiungere una funzionalità AI al proprio prodotto, prima o poi arriva la domanda: facciamo fine-tuning o usiamo il RAG? È una domanda legittima, ma nel 2026 spesso è la domanda sbagliata da cui partire.
+
+In questo articolo spiego come ragiono quando devo scegliere, cosa resta valido delle regole di qualche anno fa e cosa invece è cambiato.
+
+## Prima di tutto: ti basta il contesto giusto?
+
+Fino a poco tempo fa i modelli avevano finestre di contesto piccole e una conoscenza generica. Per farli lavorare su dati specifici dovevi scegliere: o li riaddestravi, o costruivi un sistema che recuperasse i pezzi giusti di documentazione.
+
+Oggi le cose sono diverse per tre motivi.
+
+- **I contesti sono molto più lunghi.** In tanti casi puoi passare al modello l'intero documento, il regolamento o il catalogo prodotti, senza spezzettarlo.
+- **I modelli usano strumenti.** Un modello può chiamare una funzione, interrogare un'API o leggere un file quando ne ha bisogno, invece di ricevere tutto in anticipo.
+- **Gli agenti recuperano da soli.** Un agente che lavora su un compito può cercare l'informazione che gli manca, leggerla e decidere se gli basta.
+
+La conseguenza pratica è che il primo tentativo dovrebbe quasi sempre essere il più semplice: un buon prompt, con istruzioni chiare, esempi e il contesto necessario. Se così funziona, hai finito. Hai una soluzione che si modifica cambiando un testo, non una pipeline da mantenere.
+
+Lo stesso principio vale anche per lo sviluppo: gran parte del lavoro con gli agenti consiste nel dare loro il contesto giusto al momento giusto. Ne ho parlato raccontando [come lavoriamo con gli agenti AI](/blog/un-solo-sviluppatore-sviluppo-agentico).
+
+## Quando serve il RAG
+
+Il RAG (Retrieval Augmented Generation) è come uno studente che durante l'esame può consultare un archivio di documenti. Quando riceve una domanda, il sistema recupera i contenuti pertinenti e li passa al modello, che risponde basandosi su quelli.
+
+È la scelta giusta quando almeno una di queste condizioni è vera.
+
+- **I dati cambiano spesso.** Listini, procedure, documentazione tecnica, normative aggiornate. Con il RAG aggiorni l'archivio e la risposta cambia subito, senza riaddestrare nulla.
+- **Ti servono le fonti.** Se chi usa il sistema deve poter verificare da dove viene una risposta, il RAG ti permette di citare il documento e il passaggio esatti.
+- **Non tutti possono vedere tutto.** Se i documenti hanno permessi diversi, il recupero può filtrare in base all'utente. Un modello addestrato invece "sa" quello che ha visto, e non puoi togliergli la conoscenza per un singolo utente.
+- **L'archivio è troppo grande per il contesto.** Migliaia di documenti non entrano in un prompt, anche lungo: serve un modo per scegliere quelli giusti.
+
+Il RAG ha però un costo che spesso si sottovaluta: la qualità del recupero. Se il sistema pesca i documenti sbagliati, il modello risponde con sicurezza partendo da informazioni sbagliate. La maggior parte del lavoro non sta nel collegare un database vettoriale, ma nel decidere come dividere i documenti, come cercarli e come verificare che il recupero funzioni.
+
+## Quando serve il fine-tuning
+
+Il fine-tuning è il "corso di specializzazione" di uno studente che ha già una buona formazione: il modello continua l'addestramento su un insieme di esempi scelti per un compito preciso.
+
+Nella mia esperienza ha senso in meno casi di quanto si pensi, ma in quei casi è la soluzione migliore.
+
+- **Formato o stile molto rigidi.** Se l'output deve rispettare sempre una struttura precisa, un tono specifico o una sintassi particolare, e con il prompt non ci arrivi in modo affidabile.
+- **Compiti ristretti e ripetitivi.** Classificare richieste, estrarre campi da documenti sempre simili, normalizzare dati. Un modello piccolo e specializzato può fare questi compiti bene quanto uno grande e generico.
+- **Volumi alti, costi e latenza.** Se esegui lo stesso compito milioni di volte, un modello più piccolo addestrato per quel compito può costare meno e rispondere più in fretta di un modello grande con un prompt lungo.
+- **Linguaggi che il modello non padroneggia.** Gergo tecnico molto specifico o lingue poco rappresentate, dove il modello di base fatica anche con gli esempi nel prompt.
+
+Il fine-tuning invece non è adatto a insegnare al modello fatti che cambiano. Se domani il regolamento si aggiorna, dovresti riaddestrare il modello. E mentre lo fai, risponderebbe ancora con la versione vecchia.
+
+## Il costo vero è la manutenzione
+
+Quando si confrontano le due strade si parla quasi sempre del costo iniziale. Il costo che conta davvero è quello di mantenerle nel tempo.
+
+- **Prompt e contesto:** si modificano in minuti, si versionano come il codice, si rivedono in una pull request.
+- **RAG:** l'archivio va tenuto aggiornato e pulito, la pipeline di recupero va monitorata, e ogni cambio nei documenti può cambiare le risposte.
+- **Fine-tuning:** il dataset di addestramento va curato e aggiornato. Quando esce un modello di base migliore, devi decidere se rifare l'addestramento da capo. E servono competenze per farlo bene.
+
+Le tre strade non si escludono. Un caso comune è un modello addestrato per rispettare un formato, che riceve via RAG i documenti aggiornati da cui rispondere.
+
+## Prima di scegliere, misura
+
+L'errore più frequente che vedo è scegliere la tecnica prima di sapere cosa significa "funziona". Prima di decidere, raccogli un set di casi reali: domande vere degli utenti, documenti veri, con la risposta che ti aspetti. Bastano poche decine di casi ben scelti, compresi quelli difficili.
+
+Con quel set puoi provare la soluzione più semplice e vedere dove sbaglia. Se sbaglia perché non trova l'informazione, ti serve un recupero migliore. Se sbaglia perché non rispetta il formato o non capisce il linguaggio del dominio, il fine-tuning diventa un candidato. E ogni volta che cambi qualcosa, rilanci lo stesso set per capire se sei migliorato o peggiorato.
+
+È lo stesso principio dei test nello sviluppo: senza un modo deterministico di verificare il risultato, stai andando a sensazione.
+
+## Un albero decisionale semplice
+
+Quando devo scegliere, seguo questo ordine:
+
+1. **Il compito si risolve con un buon prompt e il contesto disponibile?** Prova prima questo, valutando sul set di casi reali. Se funziona, fermati.
+2. **Il modello sbaglia perché gli mancano informazioni?** Se i dati sono pochi, passali nel contesto o lascia che l'agente li recuperi con uno strumento. Se sono tanti, cambiano spesso, servono le fonti o ci sono permessi diversi, usa il RAG.
+3. **Il modello ha le informazioni ma sbaglia formato, stile o linguaggio del dominio?** Prima migliora prompt ed esempi. Se non basta, valuta il fine-tuning.
+4. **Il compito è stretto, ripetitivo e ad alto volume?** Valuta il fine-tuning di un modello più piccolo per ridurre costi e latenza.
+5. **Ti servono entrambe le cose?** Combina: fine-tuning per il comportamento, RAG per i contenuti.
+
+Nella maggior parte dei progetti che vedo ci si ferma al primo o al secondo punto. Se vuoi un quadro più ampio su come impostare una funzionalità AI dall'inizio, ho scritto una guida su [da dove iniziare](/blog/funzionalita-ai-da-dove-iniziare).
