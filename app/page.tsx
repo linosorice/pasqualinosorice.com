@@ -30,7 +30,7 @@ const personJsonLd = {
 const results = [
   { value: '5-6', label: 'feature in produzione a settimana (prima 1-2 ogni due settimane)' },
   { value: '100%', label: 'del codice scritto da agenti AI' },
-  { value: '3', label: 'sviluppatori, nemmeno a tempo pieno (prima erano 6)' }
+  { value: '1', label: 'solo sviluppatore, nemmeno a tempo pieno (prima erano 6)' }
 ]
 
 const services = [
@@ -77,12 +77,13 @@ export default function Page() {
         </p>
       </div>
       <h1 className='title text-2xl font-semibold tracking-tighter sm:text-3xl'>
-        Prima eravamo 6 sviluppatori e rilasciavamo 1-2 feature ogni due settimane. Oggi siamo 3 e
-        ne rilasciamo 5-6 a settimana.
+        Prima eravamo 6 sviluppatori e rilasciavamo 1-2 feature ogni due settimane. Oggi sono
+        l’unico sviluppatore e ne rilasciamo 5-6 a settimana.
       </h1>
       <p className='mt-4 text-lg text-neutral-700 dark:text-neutral-300'>
-        Con la stessa qualità di prima: test unitari, test end-to-end e review su ogni pull request.
-        Aiuto il tuo team a fare lo stesso.
+        Con me il CEO e la product designer portano codice in produzione grazie agli agenti AI, con
+        la stessa qualità di prima: test, review e collaudo su ogni pull request. Aiuto il tuo team
+        a fare lo stesso.
       </p>
 
       <div className='mt-8 flex flex-wrap items-center gap-x-4 gap-y-2'>
@@ -100,7 +101,8 @@ export default function Page() {
           </a>{' '}
           da novembre 2020. Abbiamo scelto di restare un team piccolo e di affidare agli agenti AI
           tutta la scrittura del codice: noi decidiamo cosa costruire, guidiamo gli agenti e
-          controlliamo la qualità.
+          controlliamo la qualità. Le scelte tecniche passano da me, oppure da un agente che
+          risponde solo citando decisioni già prese.
         </p>
         <p>
           Ogni feature parte da una issue su GitHub. Un agente ci fa domande finché l’idea non
@@ -143,7 +145,8 @@ export default function Page() {
           <strong className='font-medium text-neutral-900 dark:text-neutral-100'>
             CTO di MioAssicuratore
           </strong>{' '}
-          dal 2020: guido un team di 3 sviluppatori che lavora con agenti AI ogni giorno.
+          dal 2020: sono l’unico sviluppatore di un team di 3 persone che lavora con agenti AI ogni
+          giorno.
         </li>
         <li>
           <strong className='font-medium text-neutral-900 dark:text-neutral-100'>

@@ -10,7 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const title = 'Pasqualino Sorice - Consulente di sviluppo agentico'
 const description =
-  'CTO di MioAssicuratore: con 3 sviluppatori e il 100% del codice scritto da agenti AI rilasciamo 5-6 feature a settimana. Aiuto i team tech a fare lo stesso con audit, affiancamento e workshop.'
+  'CTO di MioAssicuratore: sono l’unico sviluppatore, il 100% del codice lo scrivono agenti AI e rilasciamo 5-6 feature a settimana. Aiuto i team tech a fare lo stesso con audit, affiancamento e workshop.'
 const ogImage = `${baseUrl}/og.png`
 
 export const metadata: Metadata = {
