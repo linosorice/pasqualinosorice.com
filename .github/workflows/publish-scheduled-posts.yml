@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: '0 5 * * *' # 06:00/07:00 in Italy
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Deploy even if no post is scheduled for today'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -16,9 +21,10 @@ jobs:
       - name: Trigger Vercel deploy hook if a post is scheduled for today
         env:
           DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          FORCE: ${{ inputs.force }}
         run: |
           today=$(date -u +%F)
-          if ! grep -rlE "^publishedAt: ['\"]?${today}" app/blog/posts; then
+          if [ "$FORCE" != "true" ] && ! grep -rlE "^publishedAt: ['\"]?${today}" app/blog/posts; then
             echo "No post scheduled for ${today}"
             exit 0
           fi
