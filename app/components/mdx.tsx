@@ -7,6 +7,7 @@ import { highlight } from 'sugar-high'
 import { imageSize } from 'image-size'
 import React from 'react'
 import { slugify, textContent } from 'app/blog/slugify'
+import { Todo } from 'app/components/todo'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
@@ -108,7 +109,8 @@ let components = {
   img: MarkdownImage,
   a: CustomLink,
   code: Code,
-  Table
+  Table,
+  Todo: props => <Todo block {...props} />
 }
 
 export function CustomMDX(props) {
