@@ -1,7 +1,13 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
+import { slugify, stripInlineMarkdown } from 'app/blog/slugify'
 import { baseUrl } from 'app/sitemap'
+
+type Props = { params: Promise<{ slug: string }> }
+
+// Only the posts known at build time exist: unknown slugs are a static 404
+export const dynamicParams = false
 
 export async function generateStaticParams() {
   let posts = getBlogPosts()
@@ -11,14 +17,40 @@ export async function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }) {
-  let post = getBlogPosts().find(post => post.slug === params.slug)
+function absoluteUrl(url: string) {
+  return url.startsWith('/') ? `${baseUrl}${url}` : url
+}
+
+function postImage(title: string, image?: string) {
+  return image ? absoluteUrl(image) : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+}
+
+// h2-h6 of the raw MDX, skipping fenced code blocks
+function getHeadings(content: string) {
+  let inCodeBlock = false
+
+  return content.split('\n').flatMap(line => {
+    if (line.trimStart().startsWith('```')) {
+      inCodeBlock = !inCodeBlock
+    }
+    let match = !inCodeBlock && line.match(/^(#{2,6})\s+(.+)/)
+    if (!match) {
+      return []
+    }
+    let title = stripInlineMarkdown(match[2])
+    return [{ level: match[1].length - 1, title, slug: slugify(title) }]
+  })
+}
+
+export async function generateMetadata({ params }: Props) {
+  let { slug } = await params
+  let post = getBlogPosts().find(post => post.slug === slug)
   if (!post) {
     return
   }
 
   let { title, publishedAt: publishedTime, summary: description, image } = post.metadata
-  let ogImage = image ? image : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+  let ogImage = postImage(title, image)
 
   return {
     title,
@@ -47,12 +79,15 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function Blog({ params }) {
-  let post = getBlogPosts().find(post => post.slug === params.slug)
+export default async function Blog({ params }: Props) {
+  let { slug } = await params
+  let post = getBlogPosts().find(post => post.slug === slug)
 
   if (!post) {
     notFound()
   }
+
+  let headings = getHeadings(post.content)
 
   return (
     <section>
@@ -67,13 +102,13 @@ export default function Blog({ params }) {
             'datePublished': post.metadata.publishedAt,
             'dateModified': post.metadata.publishedAt,
             'description': post.metadata.summary,
-            'image': post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+            'image': postImage(post.metadata.title, post.metadata.image),
             'url': `${baseUrl}/blog/${post.slug}`,
+            'mainEntityOfPage': `${baseUrl}/blog/${post.slug}`,
             'author': {
               '@type': 'Person',
-              'name': 'Pasqualino Sorice'
+              'name': 'Pasqualino Sorice',
+              'url': baseUrl
             }
           })
         }}
@@ -85,33 +120,24 @@ export default function Blog({ params }) {
         </p>
       </div>
       <article className='prose'>
-        <div className='mb-8'>
-          <h2 className='mb-2 text-lg font-medium'>Table of Contents</h2>
-          <div className='space-y-1'>
-            {post.content
-              .split('\n')
-              .map((line, index) => {
-                const match = line.match(/^(#{2,6})\s+(.+)/)
-                if (match) {
-                  const level = match[1].length - 1
-                  const title = match[2]
-                  return (
-                    <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
-                      <a
-                        href={`${baseUrl}/blog/${post.slug}#${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                        className='text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
-                      >
-                        {title}
-                      </a>
-                    </div>
-                  )
-                }
-                return null
-              })
-              .filter(Boolean)}
-          </div>
-        </div>
-        <CustomMDX source={post.content} slug={post.slug} />
+        {headings.length > 0 && (
+          <nav className='mb-8' aria-label='Table of Contents'>
+            <h2 className='mb-2 text-lg font-medium'>Table of Contents</h2>
+            <div className='space-y-1'>
+              {headings.map(({ level, title, slug }, index) => (
+                <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
+                  <a
+                    href={`#${slug}`}
+                    className='text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+                  >
+                    {title}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </nav>
+        )}
+        <CustomMDX source={post.content} />
       </article>
     </section>
   )

@@ -5,20 +5,19 @@
 - **Framework**: [Next.js](https://nextjs.org/)
 - **Deployment**: [Vercel](https://vercel.com)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Analytics**: [Google Analytics](https://marketingplatform.google.com/about/analytics/)
+- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
 
 ## Running Locally
 
-This application requires Node.js v16.13+.
+This application requires Node.js v20.9+.
 
 ```bash
 git clone https://github.com/linosorice/pasqualinosorice.com.git
 cd pasqualinosorice.com
 pnpm install
-pnpm run setup # Remove all of my personal information
 pnpm dev
 ```
 
 ## Cloning / Forking
 
-Please review the [license](https://github.com/linosorice/pasqualinosorice.com/blob/main/LICENSE.txt) and remove all of my personal information (resume, blog posts, images, etc.) by running `pnpm run setup`.
+Please review the [license](https://github.com/linosorice/pasqualinosorice.com/blob/main/LICENSE.txt) and remove all of my personal information (resume, blog posts, images, etc.).

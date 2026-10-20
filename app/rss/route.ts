@@ -1,32 +1,40 @@
 import { baseUrl } from 'app/sitemap'
 import { getBlogPosts } from 'app/blog/utils'
 
+// Route handlers are dynamic by default: the feed is built once from the MDX files
+export const dynamic = 'force-static'
+
+function escapeXml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
 export async function GET() {
-  let allBlogs = await getBlogPosts()
+  let allBlogs = getBlogPosts()
 
   const itemsXml = allBlogs
-    .sort((a, b) => {
-      if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
-        return -1
-      }
-      return 1
-    })
     .map(
       post =>
         `<item>
-          <title>${post.metadata.title}</title>
+          <title>${escapeXml(post.metadata.title)}</title>
           <link>${baseUrl}/blog/${post.slug}</link>
-          <description>${post.metadata.summary || ''}</description>
+          <guid>${baseUrl}/blog/${post.slug}</guid>
+          <description>${escapeXml(post.metadata.summary || '')}</description>
           <pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>
         </item>`
     )
     .join('\n')
 
   const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>
-  <rss version="2.0">
+  <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Pasqualino Sorice's blog</title>
         <link>${baseUrl}</link>
+        <atom:link href="${baseUrl}/rss" rel="self" type="application/rss+xml" />
         <description>This is Pasqualino Sorice's blog RSS feed</description>
         ${itemsXml}
     </channel>
@@ -34,7 +42,7 @@ export async function GET() {
 
   return new Response(rssFeed, {
     headers: {
-      'Content-Type': 'text/xml'
+      'Content-Type': 'application/rss+xml; charset=utf-8'
     }
   })
 }

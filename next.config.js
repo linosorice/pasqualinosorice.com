@@ -1,6 +1,9 @@
+// 'unsafe-eval' is only needed by React's dev tooling, never in production
+const isDev = process.env.NODE_ENV === 'development'
+
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    script-src 'self' ${isDev ? "'unsafe-eval'" : ''} 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data:;
     font-src 'self';
