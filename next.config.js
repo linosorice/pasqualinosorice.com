@@ -14,7 +14,26 @@ const cspHeader = `
     upgrade-insecure-requests;
 `
 
+// Posts removed in the October 2026 relaunch: keep their backlinks working
+const removedPosts = [
+  'hello-world',
+  'the-art-of-crafting-mvp',
+  'sentry-backend-monitoring',
+  'feature-development-pattern',
+  'terraform_opentf_fork',
+  'serveless_advantages_use_cases',
+  'deep-seek',
+  'algorithmic-censorship'
+]
+
 module.exports = {
+  async redirects() {
+    return removedPosts.map(slug => ({
+      source: `/blog/${slug}`,
+      destination: '/blog',
+      permanent: true
+    }))
+  },
   async headers() {
     return [
       {

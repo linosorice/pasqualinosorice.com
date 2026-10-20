@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
+import { ContactCta } from 'app/components/cta'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 import { slugify, stripInlineMarkdown } from 'app/blog/slugify'
 import { baseUrl } from 'app/sitemap'
@@ -121,8 +122,8 @@ export default async function Blog({ params }: Props) {
       </div>
       <article className='prose'>
         {headings.length > 0 && (
-          <nav className='mb-8' aria-label='Table of Contents'>
-            <h2 className='mb-2 text-lg font-medium'>Table of Contents</h2>
+          <nav className='mb-8' aria-label='Indice'>
+            <h2 className='mb-2 text-lg font-medium'>Indice</h2>
             <div className='space-y-1'>
               {headings.map(({ level, title, slug }, index) => (
                 <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
@@ -139,6 +140,7 @@ export default async function Blog({ params }: Props) {
         )}
         <CustomMDX source={post.content} />
       </article>
+      <ContactCta />
     </section>
   )
 }

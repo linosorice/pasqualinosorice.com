@@ -66,7 +66,7 @@ export function formatDate(date: string) {
     date = `${date}T00:00:00`
   }
 
-  return new Date(date).toLocaleString('en-us', {
+  return new Date(date).toLocaleString('it-IT', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
