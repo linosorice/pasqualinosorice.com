@@ -10,9 +10,31 @@ export const metadata: Metadata = {
   }
 }
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  'name': 'Pasqualino Sorice',
+  'url': baseUrl,
+  'jobTitle': 'CTO',
+  'worksFor': {
+    '@type': 'Organization',
+    'name': 'MioAssicuratore',
+    'url': 'https://www.mioassicuratore.it'
+  },
+  'sameAs': [
+    'https://github.com/linosorice',
+    'https://x.com/linosorice',
+    'https://www.linkedin.com/in/pasqualinosorice/'
+  ]
+}
+
 export default function Page() {
   return (
     <section>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <h1 className='mb-8 text-2xl font-bold tracking-tighter'>hey, I'm Pasqualino Sorice 👋</h1>
       <p className='prose prose-neutral dark:prose-invert'>
         I'm a passionate computer engineer with a knack for innovation, especially within the
@@ -33,7 +55,7 @@ export default function Page() {
             src='/mioassicuratore_natale.jpg'
             fill
             sizes='(max-width: 768px) 213px, 33vw'
-            priority
+            preload
             className='rounded-lg object-cover'
           />
         </div>
@@ -43,7 +65,7 @@ export default function Page() {
             src='/mioassicuratore_team_building.jpg'
             fill
             sizes='(max-width: 768px) 213px, 33vw'
-            priority
+            preload
             className='rounded-lg object-cover'
           />
         </div>
