@@ -42,8 +42,11 @@ export function getBlogPosts(limit?: number) {
   let data = getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
   const currentDate = new Date()
 
-  // Filter out future posts
+  // Filter out future posts in production; previews and local builds show them for review
   const filteredData = data.filter(post => {
+    if (process.env.VERCEL_ENV !== 'production') {
+      return true
+    }
     const postDate = new Date(post.metadata.publishedAt)
     return postDate <= currentDate
   })
