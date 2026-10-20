@@ -16,5 +16,5 @@ export default async function sitemap() {
     lastModified: latestPost
   }))
 
-  return [...routes, ...blogs]
+  return [...routes, { url: `${baseUrl}/consulenza` }, ...blogs]
 }

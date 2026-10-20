@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import { site } from 'app/config'
+
 function ArrowIcon() {
   return (
     <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -9,57 +12,39 @@ function ArrowIcon() {
   )
 }
 
+const links = [
+  { name: 'email', href: `mailto:${site.email}` },
+  ...(site.bookingUrl ? [{ name: 'prenota una call', href: site.bookingUrl }] : []),
+  { name: 'linkedin', href: site.linkedin },
+  { name: 'github', href: site.github },
+  { name: 'X', href: site.x },
+  { name: 'rss', href: '/rss' }
+]
+
 export default function Footer() {
   return (
     <footer className='mb-16'>
       <ul className='font-sm mt-8 flex flex-col space-y-2 space-x-0 text-neutral-600 md:flex-row md:space-y-0 md:space-x-4 dark:text-neutral-300'>
-        <li>
-          <a
-            className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
-            rel='noopener noreferrer'
-            target='_blank'
-            href='/rss'
-          >
-            <ArrowIcon />
-            <p className='ml-2 h-7'>rss</p>
-          </a>
-        </li>
-        <li>
-          <a
-            className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
-            rel='noopener noreferrer'
-            target='_blank'
-            href='https://github.com/linosorice'
-          >
-            <ArrowIcon />
-            <p className='ml-2 h-7'>github</p>
-          </a>
-        </li>
-        <li>
-          <a
-            className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
-            rel='noopener noreferrer'
-            target='_blank'
-            href='https://x.com/linosorice'
-          >
-            <ArrowIcon />
-            <p className='ml-2 h-7'>X</p>
-          </a>
-        </li>
-        <li>
-          <a
-            className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
-            rel='noopener noreferrer'
-            target='_blank'
-            href='https://www.linkedin.com/in/pasqualinosorice/'
-          >
-            <ArrowIcon />
-            <p className='ml-2 h-7'>linkedin</p>
-          </a>
-        </li>
+        {links.map(({ name, href }) => (
+          <li key={name}>
+            <a
+              className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
+              rel='noopener noreferrer'
+              target={href.startsWith('mailto:') ? undefined : '_blank'}
+              href={href}
+            >
+              <ArrowIcon />
+              <p className='ml-2 h-7'>{name}</p>
+            </a>
+          </li>
+        ))}
       </ul>
-      <p className='mt-8 text-neutral-600 dark:text-neutral-300'>
-        © {new Date().getFullYear()} MIT Licensed
+      <p className='mt-8 text-sm text-neutral-600 dark:text-neutral-300'>
+        © {new Date().getFullYear()} {site.name}
+        {site.vatNumber && <> · P.IVA {site.vatNumber}</>} ·{' '}
+        <Link href='/privacy' className='hover:text-neutral-800 dark:hover:text-neutral-100'>
+          Privacy
+        </Link>
       </p>
     </footer>
   )

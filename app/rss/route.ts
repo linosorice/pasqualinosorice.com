@@ -32,10 +32,11 @@ export async function GET() {
   const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Pasqualino Sorice's blog</title>
+        <title>Blog di Pasqualino Sorice</title>
         <link>${baseUrl}</link>
         <atom:link href="${baseUrl}/rss" rel="self" type="application/rss+xml" />
-        <description>This is Pasqualino Sorice's blog RSS feed</description>
+        <description>Sviluppo agentico e AI applicata allo sviluppo software</description>
+        <language>it</language>
         ${itemsXml}
     </channel>
   </rss>`

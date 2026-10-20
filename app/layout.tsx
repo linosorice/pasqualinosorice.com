@@ -8,9 +8,9 @@ import { baseUrl } from './sitemap'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const title = 'Pasqualino Sorice - AI & Insurtech'
+const title = 'Pasqualino Sorice - Consulente di sviluppo agentico'
 const description =
-  "Explore Pasqualino Sorice's AI-driven innovations in insurtech. Dive into his insights on artificial intelligence, technology, and the future of insurance."
+  'CTO di MioAssicuratore dal 2020: il mio team di 3 sviluppatori lavora con agenti AI ogni giorno. Aiuto i team tech a fare lo stesso con audit, affiancamento e workshop.'
 const ogImage = `${baseUrl}/og.png`
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description,
     url: baseUrl,
     siteName: title,
-    locale: 'en_US',
+    locale: 'it_IT',
     type: 'website',
     images: [
       {
@@ -58,7 +58,7 @@ const cx = (...classes: string[]) => classes.filter(Boolean).join(' ')
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang='en'
+      lang='it'
       className={cx(
         'bg-white text-black dark:bg-black dark:text-white',
         GeistSans.variable,

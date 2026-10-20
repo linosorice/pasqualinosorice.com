@@ -4,7 +4,7 @@ import { baseUrl } from '../sitemap'
 
 const title = 'Blog'
 const description =
-  'Explore our blog for in-depth articles on AI, technology, and innovation. Stay updated with the latest trends and insights in artificial intelligence.'
+  'Articoli sullo sviluppo agentico e sull’AI applicata allo sviluppo software, da chi la usa ogni giorno in produzione.'
 const ogImage = `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className='mb-8 text-2xl font-semibold tracking-tighter'>read my blog</h1>
+      <h1 className='mb-8 text-2xl font-semibold tracking-tighter'>Blog</h1>
       <BlogPosts />
     </section>
   )
