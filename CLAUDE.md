@@ -36,7 +36,7 @@ Posts are `.mdx` files in `app/blog/posts/`; the filename is the slug. There is 
 
 ### Site-wide
 
-- Contacts and personal data (email, Cal.com booking link, social links, VAT number, portrait) live in `app/config.ts`; pages, footer and CTAs read them from there.
+- Contacts and personal data (email, Cal.com booking link, social links, VAT number, portrait, remaining launch-offer slots shown on `/consulenza`) live in `app/config.ts`; pages, footer and CTAs read them from there.
 - `<Todo>` (`app/components/todo.tsx`) marks copy or numbers still to be provided: it is highlighted in dev and previews and throws when `VERCEL_ENV=production`, so a production build fails while any placeholder is rendered. `bookingUrl: null` renders one inside every booking button.
 - `ContactCta` (`app/components/cta.tsx`) is rendered on the home page, `/consulenza` and at the end of every post.
 - Removed posts are listed in `next.config.js` and permanently redirected to `/blog`; when a post is rewritten under a new slug, add a redirect from the old one.

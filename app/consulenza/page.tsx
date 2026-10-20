@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { ContactCta } from 'app/components/cta'
+import { site } from 'app/config'
 import { baseUrl } from 'app/sitemap'
 
 const title = 'Consulenza sullo sviluppo agentico'
@@ -41,7 +42,7 @@ const packages = [
       'Configurazione iniziale pronta: regole di progetto, contesto per gli agenti, controlli in CI'
     ],
     duration: '2-3 settimane',
-    price: 'da 2.500 €'
+    price: 'da 3.000 €'
   },
   {
     name: 'Affiancamento mensile',
@@ -55,7 +56,7 @@ const packages = [
       'Aggiornamento della configurazione man mano che il team cresce'
     ],
     duration: 'Mensile, disdicibile',
-    price: 'da 1.500 € al mese'
+    price: 'da 2.000 € al mese'
   },
   {
     name: 'Workshop per il team',
@@ -69,7 +70,7 @@ const packages = [
       'Materiale e configurazioni da riusare'
     ],
     duration: 'Mezza giornata',
-    price: 'da 1.500 €'
+    price: 'da 2.000 €'
   },
   {
     name: 'Prototipo AI',
@@ -82,8 +83,8 @@ const packages = [
       'Consegna del codice e della documentazione',
       'Indicazioni per portarlo in produzione'
     ],
-    duration: '6-8 settimane',
-    price: 'da 6.000 €'
+    duration: '3-5 settimane',
+    price: 'da 8.000 €'
   }
 ]
 
@@ -107,6 +108,11 @@ const steps = [
 ]
 
 const faqs = [
+  {
+    question: 'Quali strumenti usate?',
+    answer:
+      'Oggi Claude Code, ma il metodo non dipende da strumento o modello: si applica anche a quello che il tuo team usa già.'
+  },
   {
     question: 'Il mio team non usa ancora strumenti AI. Ha senso partire?',
     answer:
@@ -167,6 +173,22 @@ export default function Page() {
           </article>
         ))}
       </div>
+
+      {site.launchSlotsLeft > 0 && (
+        <aside className='mt-6 rounded-lg bg-neutral-100 p-6 dark:bg-neutral-900'>
+          <h3 className='font-medium'>Prezzo di lancio: -40% per i primi 3 clienti</h3>
+          <p className='mt-2 text-neutral-700 dark:text-neutral-300'>
+            Sto aprendo questa attività e voglio costruire i primi casi studio. Per i primi tre
+            clienti ogni pacchetto costa il 40% in meno, in cambio di un caso studio (anche anonimo)
+            e di una referenza a fine lavoro.
+          </p>
+          <p className='mt-2 text-sm font-medium'>
+            {site.launchSlotsLeft === 1
+              ? 'Resta 1 posto.'
+              : `Restano ${site.launchSlotsLeft} posti.`}
+          </p>
+        </aside>
+      )}
 
       <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Come lavoriamo</h2>
       <ol className='space-y-4'>

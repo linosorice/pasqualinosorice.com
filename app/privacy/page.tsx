@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { Todo } from 'app/components/todo'
 import { site } from 'app/config'
 import { baseUrl } from 'app/sitemap'
 
@@ -15,9 +14,6 @@ export default function Page() {
   return (
     <section>
       <h1 className='title mb-8 text-2xl font-semibold tracking-tighter'>Informativa privacy</h1>
-      <p className='mb-6'>
-        <Todo>Bozza: far verificare il testo prima della pubblicazione.</Todo>
-      </p>
       <div className='prose prose-neutral dark:prose-invert'>
         <h2>Titolare del trattamento</h2>
         <p>
@@ -37,7 +33,8 @@ export default function Page() {
           </li>
           <li>
             <strong>Email.</strong> Se mi scrivi, uso il tuo indirizzo e il contenuto del messaggio
-            solo per risponderti e per gestire un’eventuale collaborazione.
+            solo per risponderti e per gestire un’eventuale collaborazione. I messaggi indirizzati a
+            questo dominio vengono inoltrati da Cloudflare a una casella Gmail.
           </li>
           <li>
             <strong>Prenotazione di una call.</strong> Le prenotazioni passano da Cal.com, che

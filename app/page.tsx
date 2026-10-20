@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { BlogPosts } from 'app/components/posts'
 import { BookingButton, ContactCta } from 'app/components/cta'
-import { Todo } from 'app/components/todo'
 import { site } from 'app/config'
 import { baseUrl } from './sitemap'
 
@@ -29,9 +28,9 @@ const personJsonLd = {
 }
 
 const results = [
-  { value: <Todo>N</Todo>, label: 'rilasci in produzione al mese' },
-  { value: <Todo>N%</Todo>, label: 'del codice scritto da agenti AI' },
-  { value: <Todo>da N settimane a N giorni</Todo>, label: 'per portare in produzione una feature' }
+  { value: '5-6', label: 'feature in produzione a settimana (prima 1-2 ogni due settimane)' },
+  { value: '100%', label: 'del codice scritto da agenti AI' },
+  { value: '3', label: 'sviluppatori, nemmeno a tempo pieno (prima erano 6)' }
 ]
 
 const services = [
@@ -60,29 +59,31 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      <div className='flex items-start gap-6'>
-        <div>
-          <p className='mb-2 text-sm text-neutral-600 dark:text-neutral-400'>
-            {site.name} · CTO e consulente di sviluppo agentico
-          </p>
-          <h1 className='title text-3xl font-semibold tracking-tighter'>
-            Il mio team è di 3 sviluppatori e rilascia come uno di <Todo>15</Todo>.
-          </h1>
-          <p className='mt-4 text-xl tracking-tight text-neutral-700 dark:text-neutral-300'>
-            Aiuto il tuo a fare lo stesso.
-          </p>
-        </div>
+      <div className='mb-6 flex items-center gap-4'>
         {site.portrait && (
           <Image
             src={site.portrait}
             alt={`Ritratto di ${site.name}`}
-            width={112}
-            height={112}
+            width={56}
+            height={56}
             preload
-            className='hidden shrink-0 rounded-full object-cover sm:block'
+            className='shrink-0 rounded-full object-cover'
           />
         )}
+        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
+          <span className='font-medium text-neutral-900 dark:text-neutral-100'>{site.name}</span>
+          <br />
+          CTO e consulente di sviluppo agentico
+        </p>
       </div>
+      <h1 className='title text-2xl font-semibold tracking-tighter sm:text-3xl'>
+        Prima eravamo 6 sviluppatori e rilasciavamo 1-2 feature ogni due settimane. Oggi siamo 3 e
+        ne rilasciamo 5-6 a settimana.
+      </h1>
+      <p className='mt-4 text-lg text-neutral-700 dark:text-neutral-300'>
+        Con la stessa qualità di prima: test unitari, test end-to-end e review su ogni pull request.
+        Aiuto il tuo team a fare lo stesso.
+      </p>
 
       <div className='mt-8 flex flex-wrap items-center gap-x-4 gap-y-2'>
         <BookingButton />
@@ -97,14 +98,15 @@ export default function Page() {
           <a href='https://www.mioassicuratore.it' className='interlink' target='_blank'>
             MioAssicuratore
           </a>{' '}
-          da novembre 2020. Abbiamo scelto di restare un team piccolo e di sfruttare l’AI per
-          scrivere codice di qualità a ritmi elevati: oggi mettiamo in produzione nuove feature a
-          una velocità che con un team tradizionale richiederebbe molte più persone.
+          da novembre 2020. Abbiamo scelto di restare un team piccolo e di affidare agli agenti AI
+          tutta la scrittura del codice: noi decidiamo cosa costruire, guidiamo gli agenti e
+          controlliamo la qualità.
         </p>
         <p>
-          Lo sviluppo agentico non è un autocompletamento più furbo. Cambia il modo in cui si
-          scrivono specifiche, test e review, e il ruolo di chi sviluppa.{' '}
-          <Todo>Una o due frasi su come lavorate concretamente in MioAssicuratore.</Todo>
+          Ogni feature parte da una issue su GitHub. Un agente ci fa domande finché l’idea non
+          diventa un’epica dettagliata e senza punti aperti. A quel punto un agente specializzato la
+          sviluppa per deliverable fino alla pull request, con test e review. Tutto finisce su{' '}
+          <code>main</code> e i feature flag decidono cosa va in collaudo e cosa in produzione.
         </p>
       </div>
 
@@ -150,7 +152,8 @@ export default function Page() {
               Quinck
             </a>
           </strong>
-          , software house di Imola: <Todo>ruolo e cosa fai per loro</Todo>.
+          , software house di Imola: sviluppo applicazioni per i loro clienti, dall’analisi dei
+          requisiti al supporto dopo il rilascio, con lo stesso metodo agentico.
         </li>
         <li>
           <strong className='font-medium text-neutral-900 dark:text-neutral-100'>
