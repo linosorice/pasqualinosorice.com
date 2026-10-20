@@ -1,12 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { getReplacements, isPublished, normalizeDate, postsDir } from 'app/blog/publishing'
 
 type Metadata = {
   title: string
   publishedAt: string
   summary: string
   image?: string
+  // Slug of an older post this one supersedes once published (see app/blog/publishing.js)
+  replaces?: string
 }
 
 function getMDXFiles(dir: string) {
@@ -15,11 +18,7 @@ function getMDXFiles(dir: string) {
 
 function readMDXFile(filePath: string) {
   let { data, content } = matter(fs.readFileSync(filePath, 'utf-8'))
-  // Unquoted YAML dates are parsed as Date objects: normalize them to YYYY-MM-DD
-  let publishedAt =
-    data.publishedAt instanceof Date
-      ? data.publishedAt.toISOString().slice(0, 10)
-      : String(data.publishedAt)
+  let publishedAt = normalizeDate(data.publishedAt)
 
   return { metadata: { ...data, publishedAt } as Metadata, content: content.trim() }
 }
@@ -39,17 +38,12 @@ function getMDXData(dir: string) {
 }
 
 export function getBlogPosts(limit?: number) {
-  let data = getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
-  const currentDate = new Date()
+  let data = getMDXData(postsDir)
+  let replaced = new Set(getReplacements().map(({ from }) => from))
 
-  // Filter out future posts in production; previews and local builds show them for review
-  const filteredData = data.filter(post => {
-    if (process.env.VERCEL_ENV !== 'production') {
-      return true
-    }
-    const postDate = new Date(post.metadata.publishedAt)
-    return postDate <= currentDate
-  })
+  const filteredData = data.filter(
+    post => isPublished(post.metadata.publishedAt) && !replaced.has(post.slug)
+  )
 
   const sortedData = filteredData.sort((a, b) => {
     if (a.metadata.publishedAt > b.metadata.publishedAt) {

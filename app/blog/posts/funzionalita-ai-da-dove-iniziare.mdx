@@ -1,0 +1,96 @@
+---
+title: 'Costruire funzionalità AI nel 2026: da dove iniziare'
+publishedAt: '2026-11-10'
+summary: "Per aggiungere l'AI a un prodotto oggi non serve addestrare modelli: serve ingegneria. Un caso d'uso piccolo e misurabile, un dataset di prova, output strutturati, RAG, strumenti con permessi minimi, costi e privacy sotto controllo."
+replaces: 'ai-where-to-start'
+---
+
+Nel 2024 avevo scritto una guida per chi voleva iniziare a sviluppare applicazioni AI. Partiva da Python, passava per le librerie di machine learning e finiva con i progetti classici, come il riconoscimento delle cifre scritte a mano. Era un percorso sensato per chi voleva capire come funzionano i modelli.
+
+Oggi, per la maggior parte dei team che costruiscono prodotti, il punto di partenza è un altro. Non si addestra un modello: lo si usa tramite API. La parte difficile si è spostata dalla matematica all'ingegneria: quali dati dare al modello, come verificare che risponda bene, quanto costa, cosa succede quando sbaglia.
+
+In questo articolo raccolgo da dove partirei oggi per aggiungere una funzionalità AI a un prodotto esistente.
+
+## Due cose diverse: usare l'AI per sviluppare e costruire funzionalità AI
+
+Prima di tutto, una distinzione che vedo confondere spesso.
+
+**Usare l'AI per sviluppare** significa far scrivere codice agli agenti, qualunque sia il prodotto. È il modo in cui lavoriamo noi, e l'ho raccontato nel dettaglio in [come lavoriamo con gli agenti AI](/blog/un-solo-sviluppatore-sviluppo-agentico).
+
+**Costruire funzionalità AI** significa mettere un modello dentro il prodotto, al servizio degli utenti: un assistente che risponde sui documenti, un sistema che estrae dati da un PDF, una classificazione automatica delle richieste in arrivo.
+
+Sono due mestieri diversi, con rischi diversi. Questo articolo parla del secondo.
+
+## Parti da un caso d'uso piccolo e misurabile
+
+L'errore più comune è partire dalla tecnologia: "mettiamo un chatbot". Conviene partire da un problema preciso, con tre caratteristiche:
+
+- **succede spesso**, così il guadagno è visibile;
+- **tollera qualche errore**, oppure prevede comunque una persona che controlla il risultato;
+- **si può misurare**: sai dire quanto tempo richiede oggi e quando una risposta è giusta.
+
+Classificare le email o i ticket in arrivo, estrarre i dati da documenti sempre simili, riassumere una pratica prima che la apra un operatore, cercare risposte nella documentazione interna: sono buoni punti di partenza. Un assistente generico che "risponde a tutto" quasi mai lo è.
+
+Il consiglio dell'articolo del 2024 resta valido: si impara facendo progetti concreti. Solo che oggi il progetto giusto non è un esercizio su un dataset pubblico, ma un problema vero del tuo prodotto, abbastanza piccolo da chiuderlo in poche settimane.
+
+## Prima il dataset di prova, poi il prompt
+
+Prima di scrivere una riga di prompt, raccogli qualche decina di esempi reali, ciascuno con il risultato che ti aspetti. È il tuo **dataset di valutazione**, e cambia tutto.
+
+Senza esempi, ogni modifica al prompt si giudica a occhio su due o tre casi, e quello che migliora un caso ne rompe un altro senza che nessuno se ne accorga. Con un dataset puoi misurare: quante risposte sono corrette, quali errori si ripetono, se l'ultima modifica ha migliorato o peggiorato le cose.
+
+È l'equivalente dei test automatici per il codice. E come i test, va rilanciato ogni volta che cambi prompt, modello o dati.
+
+## Il modello si usa via API: cosa conta davvero
+
+Una volta chiarito il caso d'uso, il lavoro si concentra su poche cose.
+
+- **Istruzioni chiare e contesto mirato.** Il modello lavora meglio con istruzioni precise e con solo le informazioni che servono per quella richiesta. Più contesto non significa risultati migliori.
+- **Output strutturati.** Se il risultato deve finire nel tuo sistema, chiedi un formato preciso, per esempio JSON con uno schema definito, e validalo sempre prima di usarlo. Un output che non rispetta lo schema va trattato come un errore, non come un caso raro da ignorare.
+- **Prompt trattati come codice.** Versionati, revisionati, testati sul dataset di valutazione. Non stringhe sparse nel codice che nessuno osa toccare.
+
+## Quando servono i tuoi dati: RAG
+
+Se il modello deve rispondere sulla base dei tuoi documenti o dei tuoi dati, la strada di partenza di solito è la **RAG** (Retrieval-Augmented Generation): prima recuperi i contenuti pertinenti, poi li passi al modello insieme alla domanda.
+
+La qualità di un sistema RAG dipende più dal recupero che dal modello. Se i documenti giusti non arrivano al modello, nessun modello potrà rispondere bene. Per questo il dataset di valutazione deve controllare anche cosa viene recuperato, non solo la risposta finale.
+
+Addestrare o rifinire un modello sui propri dati (fine-tuning) raramente è il primo passo. Ha senso quando hai già un sistema che funziona, sai misurarlo e hai un motivo preciso per farlo.
+
+## Strumenti e agenti: poteri con parsimonia
+
+I modelli possono chiamare funzioni del tuo sistema: cercare un cliente, leggere un ordine, aprire un ticket. È quello che trasforma un modello in un agente, ed è potente. Ma ogni strumento che gli dai è anche un rischio.
+
+Le regole che seguirei:
+
+- **parti da strumenti in sola lettura** e aggiungi quelli che modificano dati solo quando serve davvero;
+- **dai a ogni strumento i permessi minimi**, gli stessi che daresti a un nuovo collega il primo giorno;
+- **chiedi una conferma umana** prima delle azioni irreversibili, come pagamenti, cancellazioni e comunicazioni ai clienti;
+- **registra ogni chiamata**, per poter ricostruire cosa ha fatto l'agente e perché.
+
+## Costi, latenza e privacy
+
+Tre aspetti che in una demo non si vedono e in produzione diventano centrali.
+
+- **Costi.** Stima il costo per richiesta e moltiplicalo per i volumi reali, non per quelli della demo. Spesso un modello più piccolo basta per i compiti semplici, e quello più capace va riservato ai casi difficili.
+- **Latenza.** Una risposta che arriva dopo diversi secondi cambia l'esperienza d'uso. Mostrare la risposta mentre viene generata, lavorare in background o ridurre il contesto sono le leve principali.
+- **Privacy.** Sappi esattamente quali dati escono dal tuo sistema, verso quale fornitore, con quali condizioni contrattuali e per quanto tempo vengono conservati. Con dati personali o sensibili valuta l'anonimizzazione prima dell'invio e coinvolgi chi si occupa di GDPR fin dall'inizio, non alla fine.
+
+## In produzione: misura, registra, rivedi
+
+Una funzionalità AI non è mai "finita" il giorno del rilascio. Servono:
+
+- **log delle richieste e delle risposte**, nel rispetto della privacy, per capire cosa succede davvero;
+- **un modo per gli utenti di segnalare** una risposta sbagliata, che alimenti il dataset di valutazione;
+- **un piano per quando il modello sbaglia o non risponde**: un messaggio chiaro, un percorso alternativo, una persona a cui passare il caso;
+- **le valutazioni automatiche nella pipeline**, così un cambio di prompt o di modello non peggiora le cose in silenzio.
+
+Se in [ExaminatorAI](/blog/examinatorai-web-app-in-12-ore) l'AI mi ha aiutato a costruire in fretta, è qui che si vede la differenza tra un prototipo e un prodotto: nel lavoro che viene dopo la prima versione.
+
+## Le competenze che servono al team
+
+Le basi dell'articolo del 2024 restano utili, solo con un peso diverso. Saper leggere e analizzare dati in Python, magari in un notebook, aiuta molto a capire dove sbaglia un sistema e a costruire il dataset di valutazione. La teoria del machine learning serve meno, a meno che tu non debba addestrare modelli.
+
+Conta molto di più la buona ingegneria del software: test, osservabilità, gestione degli errori, attenzione alla sicurezza. Un team che già lavora bene su queste cose ha quasi tutto quello che serve per costruire funzionalità AI affidabili.
+
+Il resto si impara facendo, partendo piccoli e misurando tutto.

@@ -1,0 +1,93 @@
+---
+title: 'Sistemi multi-agente: quando servono davvero e quando no'
+publishedAt: '2026-11-17'
+summary: "Più agenti non vuol dire risultati migliori. Quando basta un solo agente con buoni strumenti, quando conviene separare i ruoli e cosa costa davvero coordinare più agenti: un punto di vista pratico, dall'esperienza di tutti i giorni."
+replaces: 'startup-ai-multi-agent-solution'
+---
+
+Nel 2024 avevo scritto un articolo sui benefici dei sistemi multi-agente per le startup: più agenti specializzati, ognuno con il suo compito, che collaborano per risolvere problemi complessi. Riletto oggi, era un elenco di promesse. Mancava la parte più utile: quando non conviene.
+
+Da allora lavoro ogni giorno con gli agenti AI, e nel mio team gli agenti scrivono tutto il codice che va in produzione. L'ho raccontato nell'articolo su [come lavoriamo con gli agenti](/blog/un-solo-sviluppatore-sviluppo-agentico). Qui provo a rispondere a una domanda che mi fanno spesso: serve un sistema con tanti agenti, o ne basta uno?
+
+La risposta breve è che nella maggior parte dei casi ne basta uno. Quella lunga è il resto dell'articolo.
+
+## Cosa intendo per sistema multi-agente
+
+Un agente è un modello linguistico che può usare strumenti: leggere file, chiamare API, eseguire comandi, interrogare un database. Riceve un obiettivo, decide i passi e li esegue, controllando il risultato di ogni passo prima del successivo.
+
+Un sistema multi-agente mette insieme più agenti, ognuno con istruzioni, strumenti e contesto diversi, e definisce come si passano il lavoro. Può essere una catena, in cui ogni agente consegna al successivo, oppure un coordinatore che assegna compiti ad altri agenti e ne raccoglie i risultati.
+
+Sulla carta sembra sempre l'architettura migliore, perché ricorda un'organizzazione di persone: ognuno fa il suo mestiere. In pratica ogni agente in più è un passaggio di consegne in più, e i passaggi di consegne sono il punto in cui le informazioni si perdono.
+
+## Quando basta un solo agente
+
+Se il compito si può descrivere in modo chiaro e il contesto che serve sta in una sessione di lavoro, un solo agente con gli strumenti giusti è quasi sempre la scelta migliore. È più semplice da costruire, da capire e da correggere.
+
+Molti problemi che sembrano richiedere più agenti si risolvono in realtà con:
+
+- **istruzioni migliori**, che dicano all'agente cosa deve fare e soprattutto cosa non deve fare;
+- **strumenti migliori**, cioè accesso ai dati e alle azioni che servono davvero, e niente di più;
+- **un controllo deterministico alla fine**, come un test o una validazione, che dica se il risultato è accettabile.
+
+Prima di aggiungere un secondo agente, mi chiedo sempre se il problema non sia uno di questi tre. Quasi sempre lo è.
+
+## Quando ha senso separare i ruoli
+
+Ci sono però situazioni in cui separare il lavoro tra più agenti fa una differenza netta. Nella mia esperienza sono tre.
+
+**1. Quando due compiti richiedono atteggiamenti opposti.** Nel nostro flusso, un agente fa il grooming: legge il codice esistente, fa domande e trasforma un'idea in un'epica senza punti aperti. Un altro agente sviluppa. Tenerli separati evita che chi scrive codice si metta a reinterpretare i requisiti mentre lavora. L'agente che analizza deve dubitare di tutto; quello che sviluppa deve eseguire una specifica chiusa.
+
+**2. Quando serve un giudizio indipendente.** Un agente che rivede il proprio lavoro tende a confermarlo, perché ha nel contesto tutte le ragioni per cui l'ha fatto così. Per questo da noi la review la fa un agente diverso, che parte da zero e conosce solo la pull request da controllare. Non sa cosa voleva fare l'autore: vede solo cosa ha fatto.
+
+**3. Quando il contesto non ci sta.** Se un compito richiede di esplorare molte parti di un sistema, conviene affidare l'esplorazione ad agenti separati che restituiscono solo le conclusioni, invece di riempire il contesto di un unico agente con tutto quello che hanno letto. Un contesto pieno di dettagli irrilevanti peggiora le decisioni.
+
+In tutti e tre i casi la separazione non serve a "dividere il lavoro" per andare più veloci. Serve a dare a ogni agente il contesto giusto, e solo quello.
+
+## I costi che nessuno mette nelle slide
+
+Ogni agente in più ha un costo, e non è solo quello dei token.
+
+**Coordinamento.** Qualcuno deve decidere chi fa cosa, in che ordine e cosa succede quando un agente fallisce. Se lo decide un altro agente, hai aggiunto un punto di errore. Se lo decide una persona, hai aggiunto lavoro a quella persona.
+
+**Passaggi di consegne.** Ogni volta che un agente passa il lavoro a un altro, deve riassumere cosa ha fatto. Quel riassunto è sempre una compressione, e quello che si perde nella compressione è spesso proprio il dettaglio che serviva. Per questo da noi il passaggio tra grooming e sviluppo non è un riassunto: è un'epica scritta, completa e verificata da un controllo automatico prima che lo sviluppo possa partire.
+
+**Osservabilità.** Con un solo agente, se qualcosa va storto, guardi una sessione. Con cinque agenti che si scambiano messaggi, ricostruire perché è stata presa una decisione sbagliata può richiedere più tempo che fare il lavoro a mano.
+
+**Valutazione.** Misurare se un agente fa bene il suo lavoro è già difficile. Misurare se un sistema di agenti funziona, e capire quale anello è debole, lo è molto di più. Se non hai un modo per valutare il risultato finale, aggiungere agenti ti fa solo sentire più sofisticato.
+
+## I rischi da tenere sotto controllo
+
+Più autonomia dai a un sistema, più devi limitarla con regole esterne. Alcune lezioni che ho imparato:
+
+- **Gli agenti che controllano altri agenti non bastano.** Un revisore AI è utile, ma un controllo che chiede sempre modifiche finisce per essere ignorato, e un ciclo di review rilanciato all'infinito non converge. Servono limiti precisi e, alla fine, una persona che decide.
+- **Le regole vanno fatte rispettare da uno strumento.** Se un limite è scritto solo nelle istruzioni, prima o poi un agente lo supera. Un controllo automatico che lo blocca no.
+- **Il lavoro generato cresce più in fretta della capacità di rivederlo.** Con più agenti si produce di più, ma l'attenzione di chi verifica non aumenta. Il collo di bottiglia si sposta, non sparisce.
+
+## Uno schema per decidere
+
+Quando devo decidere se un problema richiede più agenti, seguo più o meno questo ragionamento. Lo scrivo come pseudocodice solo per chiarezza: non è codice di nessuna libreria.
+
+```text
+// Pseudocodice illustrativo, non è un'API reale
+se il compito è chiaro e il contesto sta in una sessione:
+    usa un solo agente
+    migliora istruzioni, strumenti e controllo finale prima di aggiungere altro
+
+altrimenti, separa gli agenti solo se:
+    - due fasi richiedono atteggiamenti opposti (analizzare vs eseguire)
+    - serve un giudizio indipendente (chi rivede non deve aver fatto il lavoro)
+    - l'esplorazione riempirebbe il contesto di un solo agente
+
+per ogni separazione:
+    definisci cosa passa da un agente all'altro, per iscritto e verificabile
+    decidi chi coordina e cosa succede se un agente fallisce
+    prevedi come capire, dopo, perché è stata presa ogni decisione
+```
+
+Se arrivo in fondo e non riesco a rispondere alle ultime tre domande, il sistema multi-agente non è pronto. E di solito vuol dire che un solo agente fatto bene avrebbe risolto il problema.
+
+## In sintesi
+
+I sistemi multi-agente non sono un livello più avanzato di AI. Sono uno strumento con costi precisi, che conviene usare quando il problema lo richiede davvero: compiti che richiedono atteggiamenti opposti, la necessità di un giudizio indipendente o un contesto troppo grande per una sola sessione.
+
+Negli altri casi, la strada più veloce è quasi sempre la stessa: un agente, istruzioni chiare, gli strumenti giusti e un controllo automatico alla fine. Se vuoi vedere come lavoriamo noi in pratica, parti dall'articolo su [come lavoriamo con gli agenti](/blog/un-solo-sviluppatore-sviluppo-agentico). Per un esempio più semplice, c'è [la web app costruita in 12 ore](/blog/examinatorai-web-app-in-12-ore).
