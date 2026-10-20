@@ -12,11 +12,9 @@ In questo articolo racconto come lavoriamo, passo per passo. Non è una lista di
 
 ## Da dove siamo partiti
 
-<Todo>
-  Due o tre frasi su com'era il lavoro prima: cosa rallentava di più (stime, code review, passaggi
-  di consegne, bug)? Quando avete iniziato a usare gli agenti, e quali sono state le tappe fino al
-  100%?
-</Todo>
+Prima degli agenti il problema più grosso non era scrivere codice. Erano le stime sbagliate e la mancanza di tempo per fare un grooming fatto bene.
+
+Da lì si rompeva tutto a catena. Una feature partiva con requisiti non del tutto chiari, lo sviluppo andava avanti lo stesso e alla fine il risultato non era esattamente quello che il prodotto voleva. A quel punto dovevamo rifare delle parti, togliendo tempo a tutto il resto.
 
 ## Il cambio vero: chi sviluppa non scrive più codice
 
@@ -38,14 +36,15 @@ Ogni feature nasce come issue su GitHub. Non serve che sia scritta bene: all'ini
 
 ### 2. Un agente ti intervista finché non restano punti aperti
 
-Il primo agente non scrive codice: fa domande. Chiede cosa succede nei casi limite, quali dati servono, come si comporta la feature quando qualcosa va storto. Va avanti finché l'idea non diventa un'**epica estremamente dettagliata e senza punti aperti**.
+Il primo agente non scrive codice: fa domande. Legge il codice esistente, chiede cosa succede nei casi limite, quali dati servono, come si comporta la feature quando qualcosa va storto, e per ogni scelta propone due o tre opzioni con pro e contro. Le decisioni le prendo io, l'agente le mette per iscritto. Si va avanti finché l'idea non diventa un'**epica estremamente dettagliata e senza punti aperti**.
 
-È il passaggio più importante di tutto il flusso. Un agente che sviluppa su una specifica ambigua riempie i vuoti da solo, e lo fa con sicurezza: è lì che nascono gli errori più costosi. Spostare le domande prima dello sviluppo è quello che ci permette di fidarci di ciò che arriva dopo.
+È il grooming che prima non avevamo mai il tempo di fare bene. Oggi lo guida l'agente, e non si ferma finché ogni dubbio non ha una risposta.
 
-<Todo>
-  Un esempio concreto: una feature reale, il tipo di domande che l'agente vi ha fatto e un punto
-  aperto che senza questa fase sarebbe emerso solo in produzione.
-</Todo>
+È il passaggio più importante di tutto il flusso. Un agente che sviluppa su una specifica ambigua riempie i vuoti da solo, e lo fa con sicurezza: è lì che nascono gli errori più costosi. Spostare le domande prima dello sviluppo è quello che ci permette di fidarci di ciò che arriva dopo. Per questo un'epica passa allo sviluppo solo dopo un controllo automatico: nessuna decisione ancora aperta, casi limite e dati esistenti descritti, feature flag dichiarato.
+
+Un esempio. Stavamo introducendo un credito prepagato per gli SMS con cui i clienti ricevono il codice per firmare i documenti. Durante il grooming l'agente ha chiesto cosa dovesse succedere quando il credito finisce. Se anche il codice inviato via email avesse consumato credito, a credito esaurito si sarebbero bloccati entrambi i canali e i clienti non avrebbero più potuto firmare.
+
+Ne è uscito un principio scritto nell'epica: **la firma non si blocca mai**. L'email non consuma credito e, se il servizio che gestisce il credito non risponde, l'SMS parte comunque. Senza quella domanda l'avremmo scoperto in produzione, molto probabilmente dal primo cliente rimasto senza credito.
 
 ### 3. Un altro agente sviluppa, per deliverable
 
@@ -55,13 +54,17 @@ L'agente non affronta l'epica tutta insieme: lavora **per deliverable**, pezzi p
 
 ### 4. Test e review restano obbligatori
 
-Ogni pull request arriva con test unitari e test end-to-end, e qualcuno del team la rivede prima del merge. Su questo non facciamo eccezioni, e non è un caso: più codice produce l'agente, più i test diventano l'unico modo affidabile per sapere che funziona.
+Ogni pull request arriva con test unitari e test end-to-end, e il codice di logica che cambia deve essere coperto dai test. Poi passa da una review indipendente: un altro agente, che parte da zero e conosce solo il numero della pull request, controlla il lavoro. Il merge avviene solo con il mio OK.
+
+Su questo non facciamo eccezioni, e non è un caso: più codice produce l'agente, più i test diventano l'unico modo affidabile per sapere che funziona.
 
 Chi pensa che con l'AI si possa fare a meno dei test ha il ragionamento al contrario. Lo sviluppo agentico richiede più rigore, non meno.
 
 ### 5. Tutto finisce su main, i feature flag decidono
 
-Non teniamo branch di lunga durata: tutto viene integrato su `main`, sempre. Quello che decide cosa vedono gli utenti sono i **feature flag**. Una funzionalità può essere accesa solo in collaudo, solo per alcuni utenti o in produzione per tutti.
+Non teniamo branch di lunga durata: tutto viene integrato su `main`, sempre, con la nuova funzionalità spenta. Quello che decide cosa vedono gli utenti sono i **feature flag**.
+
+Il collaudo lo facciamo direttamente in produzione: accendiamo il flag solo per un ambiente di collaudo e ripercorriamo i casi di test. Se qualcosa non va, il rollback è rispegnere il flag. Quando è tutto a posto, la funzionalità si accende per alcuni utenti o per tutti.
 
 Con 5-6 feature a settimana, gestire rami paralleli sarebbe impossibile. Con i flag l'integrazione è continua e il rilascio diventa una decisione, non un'operazione.
 
@@ -71,12 +74,15 @@ Oggi usiamo Claude Code, ma il nostro modo di lavorare non è legato a un agente
 
 È anche il consiglio che do a chi parte: non scegliere prima lo strumento. Scegli prima come vuoi lavorare.
 
-## Cosa non funziona ancora
+## Cosa non funziona ancora (e cosa abbiamo imparato)
 
-<Todo>
-  Due o tre limiti o errori reali: dove gli agenti sbagliano ancora, cosa avete dovuto correggere
-  nel metodo, cosa non delegate.
-</Todo>
+Non è tutto liscio. Il metodo che ho descritto è il risultato di errori precisi, e alcuni li stiamo ancora correggendo.
+
+- **Aprire lavoro costa quasi zero, rivederlo no.** Con gli agenti, una issue piccola può diventare in poche ore una pull request che tocca decine di file. L'attenzione di chi revisiona non scala allo stesso modo. Oggi ci sono limiti precisi: al massimo 2 epiche e 5 pull request aperte per persona, pull request sotto le 1.000 righe, una sessione per una issue per una pull request.
+- **Le regole devono farle rispettare gli strumenti, non la buona volontà.** Quei limiti non sono scritti in un documento che l'agente può ignorare: li applica uno script che blocca l'agente quando prova a superarli.
+- **Le domande rimandate tornano sempre.** In due settimane gli agenti ci hanno fatto 126 domande durante lo sviluppo, e più della metà riguardava il prodotto: erano buchi del grooming. Ora un'epica non parte con decisioni aperte. Se in sviluppo emerge comunque un dubbio, l'agente prende una decisione provvisoria dietro feature flag e la dichiara nella pull request.
+- **I test fatti da un agente sono inaffidabili, in entrambe le direzioni.** Un agente che navigava l'applicazione come un utente dava falsi allarmi e, peggio, ha classificato come rumore un errore che era un bug vero, rimasto nascosto per un mese. Prima del merge usiamo solo test deterministici. Il collaudo vero è in produzione, a flag acceso solo per l'ambiente di collaudo.
+- **Una review che chiede sempre modifiche viene ignorata.** Rilanciare la review AI a ogni giro non converge. Abbiamo fissato al massimo due giri, con un revisore che riparte ogni volta da zero.
 
 ## Da dove partire nel tuo team
 
@@ -85,5 +91,6 @@ Non serve rivoluzionare tutto in un giorno. Se dovessi ripartire da zero, farei 
 1. **Inizia dalle specifiche.** Prima ancora di far scrivere codice agli agenti, usali per trasformare le idee in epiche senza punti aperti. È il passaggio con il ritorno più alto e il rischio più basso.
 2. **Rendi i test non negoziabili.** Se oggi la copertura è bassa, è il primo investimento da fare: senza test non puoi fidarti di quello che produce un agente.
 3. **Lavora per pezzi piccoli e integra spesso.** Deliverable brevi, pull request piccole e feature flag per decidere quando rilasciare.
+4. **Metti le regole in uno strumento, non in un documento.** Ogni regola che conta va fatta rispettare da un controllo automatico, altrimenti prima o poi un agente la aggira.
 
 Il resto viene da sé, ma richiede tempo e qualche errore. Se vuoi accorciare la strada, è esattamente il lavoro che faccio con i team tech.
