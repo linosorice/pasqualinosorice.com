@@ -13,7 +13,7 @@ export async function GET() {
 
   let body = `# Pasqualino Sorice
 
-> CTO di MioAssicuratore dal 2020. Ha impostato un sistema di agenti AI che sviluppano software al posto di un team di sviluppo, e qui racconta come lavora e cosa ha imparato.
+> CTO di MioAssicuratore dal 2020. Racconta come il suo team sviluppa software con gli agenti AI, che oggi scrivono il codice: cosa funziona, cosa no e cosa ha imparato.
 
 ## Blog
 

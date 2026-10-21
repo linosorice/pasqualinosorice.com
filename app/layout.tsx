@@ -10,7 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const title = 'Pasqualino Sorice - CTO di MioAssicuratore'
 const description =
-  'CTO di MioAssicuratore: ho impostato un sistema di agenti AI che sviluppano al posto di un team di sviluppo. Il 100% del codice lo scrivono gli agenti e rilasciamo 5-6 feature a settimana. Qui racconto come.'
+  'CTO di MioAssicuratore. Racconto come sviluppiamo software con gli agenti AI: cosa funziona, cosa no e cosa ho imparato strada facendo.'
 const ogImage = `${baseUrl}/og.png`
 
 export const metadata: Metadata = {
