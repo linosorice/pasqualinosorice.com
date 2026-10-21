@@ -186,70 +186,190 @@ body {
   @apply decoration-accent/40 hover:text-accent hover:decoration-accent underline decoration-1 underline-offset-[0.2em] transition-colors;
 }
 
-.prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
-  content: '#';
+.title {
+  text-wrap: balance;
 }
 
-.prose pre {
-  @apply border-line bg-surface overflow-x-auto rounded-lg border px-3 py-2 text-sm;
-}
-
-.prose code {
-  @apply rounded-lg px-1 py-0.5;
-}
-
-.prose pre code {
-  @apply p-0;
-  border: initial;
-  line-height: 1.5;
-}
-
-.prose code span {
-  @apply font-medium;
-}
-
-.prose img {
-  /* Don't apply styles to next/image */
-  @apply m-0;
-}
-
-.prose p {
-  @apply text-ink-soft my-4;
-}
-
-.prose h1 {
-  @apply mt-6 mb-2 text-4xl font-medium tracking-tight;
-}
-
-.prose h2 {
-  @apply mt-6 mb-2 text-xl font-medium tracking-tight;
-}
-
-.prose h3 {
-  @apply mt-6 mb-2 text-xl font-medium tracking-tight;
-}
-
-.prose h4 {
-  @apply mt-6 mb-2 text-lg font-medium tracking-tight;
-}
-
-.prose strong {
-  @apply font-medium;
-}
-
-.prose ul {
-  @apply list-disc pl-6;
-}
-
-.prose ol {
-  @apply list-decimal pl-6;
+/* Long-form text of posts and pages */
+.prose {
+  font-family: var(--body);
+  font-size: var(--prose-size);
+  line-height: var(--prose-leading);
+  color: var(--ink-soft);
+  text-wrap: pretty;
 }
 
 .prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
+  margin-top: 0;
+}
+
+.prose :where(p, ul, ol, blockquote, pre, table) {
+  margin-block: 1.25em;
+}
+
+.prose :where(h2, h3, h4, h5, h6) {
+  font-family: var(--display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.prose h2 {
+  margin: 2.2em 0 0.6em;
+  font-size: 1.55em;
+}
+
+.prose h3 {
+  margin: 1.8em 0 0.5em;
+  font-size: 1.22em;
+}
+
+.prose :where(h4, h5, h6) {
+  margin: 1.6em 0 0.4em;
+  font-size: 1.05em;
+}
+
+.prose :where(h2, h3, h4, h5, h6) a {
+  text-decoration: none;
+}
+
+.prose :where(h2, h3, h4, h5, h6) a:hover::after {
+  content: ' #';
+  color: var(--accent);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.prose :where(ul, ol) {
+  padding-left: 1.4em;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  margin-block: 0.4em;
+  padding-left: 0.2em;
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.prose ol > li::marker {
+  font-family: var(--ui);
+  font-size: 0.9em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.2em;
+  color: var(--ink);
+}
+
+.prose hr {
+  margin-block: 3em;
+  border-color: var(--line);
+}
+
+.prose code {
+  border: 1px solid var(--line);
+  border-radius: 0.3em;
+  background-color: var(--surface);
+  padding: 0.1em 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  padding: 1em 1.25em;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose code span {
+  font-weight: 500;
+}
+
+.prose img {
+  margin-block: 2em;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.prose table {
+  font-family: var(--ui);
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.prose :where(th, td) {
+  border-bottom: 1px solid var(--line);
+  padding: 0.6em 1.2em 0.6em 0;
+  text-align: left;
+}
+
+.prose th {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+[data-style='editoriale'] .prose blockquote {
+  font-style: italic;
+}
+
+[data-style='editoriale'] .prose hr {
+  border: 0;
+  text-align: center;
+}
+
+[data-style='editoriale'] .prose hr::after {
+  content: '* * *';
+  letter-spacing: 0.5em;
+  color: var(--muted);
+}
+
+[data-style='tecnico'] .prose :where(h2, h3)::before {
+  margin-right: 0.6ch;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--accent);
+}
+
+[data-style='tecnico'] .prose h2::before {
+  content: '##';
+}
+
+[data-style='tecnico'] .prose h3::before {
+  content: '###';
+}
+
+[data-style='tecnico'] .prose ul > li::marker {
+  content: '- ';
+  font-family: var(--font-mono);
 }
 
 pre::-webkit-scrollbar {
@@ -266,8 +386,4 @@ table {
   max-width: fit-content;
   overflow-x: auto;
   white-space: nowrap;
-}
-
-.title {
-  text-wrap: balance;
 }
