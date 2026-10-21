@@ -13,9 +13,7 @@ export async function GET() {
 
   let body = `# Pasqualino Sorice
 
-> CTO di MioAssicuratore dal 2020 e consulente di sviluppo agentico: aiuta i team tech a lavorare con agenti AI (audit, affiancamento, workshop, prototipi AI).
-
-- [Consulenza](${baseUrl}/consulenza): pacchetti, prezzi e modalità di lavoro
+> CTO di MioAssicuratore dal 2020. Ha impostato un sistema di agenti AI che sviluppano software al posto di un team di sviluppo, e qui racconta come lavora e cosa ha imparato.
 
 ## Blog
 

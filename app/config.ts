@@ -2,13 +2,9 @@
 export const site = {
   name: 'Pasqualino Sorice',
   email: 'ciao@pasqualinosorice.com',
-  // Cal.com event for the 30 minute intro call: while null the booking buttons show a placeholder
-  bookingUrl: 'https://cal.com/pasqualinosorice-consulenza/30min' as string | null,
   linkedin: 'https://www.linkedin.com/in/pasqualinosorice/',
   github: 'https://github.com/linosorice',
   x: 'https://x.com/linosorice',
-  // Launch offer on /consulenza: hidden when it reaches 0
-  launchSlotsLeft: 3,
   // Shown in the footer once the VAT number exists
   vatNumber: null as string | null,
   // Path in public/ of the portrait shown on the home page, e.g. '/ritratto.jpg'

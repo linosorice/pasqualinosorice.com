@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { BlogPosts } from 'app/components/posts'
-import { BookingButton, ContactCta } from 'app/components/cta'
+import { ContactNote } from 'app/components/cta'
 import { site } from 'app/config'
 import { baseUrl } from './sitemap'
 
@@ -17,7 +17,7 @@ const personJsonLd = {
   '@type': 'Person',
   'name': site.name,
   'url': baseUrl,
-  'jobTitle': 'CTO e consulente di sviluppo agentico',
+  'jobTitle': 'CTO',
   'worksFor': {
     '@type': 'Organization',
     'name': 'MioAssicuratore',
@@ -31,24 +31,6 @@ const results = [
   { value: '5-6', label: 'feature in produzione a settimana (prima 1-2 ogni due settimane)' },
   { value: '100%', label: 'del codice scritto da agenti AI' },
   { value: '1', label: 'solo sviluppatore, nemmeno a tempo pieno (prima erano 6)' }
-]
-
-const services = [
-  {
-    title: 'Audit sviluppo agentico',
-    description:
-      'Analizzo codice, workflow e strumenti del tuo team e ti consegno una roadmap concreta, con la configurazione iniziale già pronta.'
-  },
-  {
-    title: 'Affiancamento mensile',
-    description:
-      'Accompagno il team mentre adotta gli agenti: review, call periodiche e supporto sui problemi reali.'
-  },
-  {
-    title: 'Workshop per il team',
-    description:
-      'Una sessione pratica sul vostro codice per passare dall’autocompletamento al lavoro con gli agenti.'
-  }
 ]
 
 export default function Page() {
@@ -73,7 +55,7 @@ export default function Page() {
         <p className='text-sm text-neutral-600 dark:text-neutral-400'>
           <span className='font-medium text-neutral-900 dark:text-neutral-100'>{site.name}</span>
           <br />
-          CTO e consulente di sviluppo agentico
+          CTO di MioAssicuratore
         </p>
       </div>
       <h1 className='title text-2xl font-semibold tracking-tighter sm:text-3xl'>
@@ -81,15 +63,21 @@ export default function Page() {
         l’unico sviluppatore e ne rilasciamo 5-6 a settimana.
       </h1>
       <p className='mt-4 text-lg text-neutral-700 dark:text-neutral-300'>
-        Con me il CEO e la product designer portano codice in produzione grazie agli agenti AI, con
-        la stessa qualità di prima: test, review e collaudo su ogni pull request. Aiuto il tuo team
-        a fare lo stesso.
+        Ho impostato un sistema di agenti AI che sviluppano al posto di un team di sviluppo. Con me
+        il CEO e la product designer portano codice in produzione, con la stessa qualità di prima:
+        test, review e collaudo su ogni pull request. Qui racconto come ci siamo arrivati e cosa ho
+        imparato.
       </p>
 
       <div className='mt-8 flex flex-wrap items-center gap-x-4 gap-y-2'>
-        <BookingButton />
-        <Link href='/consulenza' className='interlink text-sm'>
-          Scopri come lavoro
+        <Link
+          href='/blog/un-solo-sviluppatore-sviluppo-agentico'
+          className='inline-flex items-center rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300'
+        >
+          Leggi come lavoriamo
+        </Link>
+        <Link href='/blog' className='interlink text-sm'>
+          Tutti gli articoli
         </Link>
       </div>
 
@@ -124,22 +112,7 @@ export default function Page() {
         ))}
       </dl>
 
-      <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Come posso aiutarti</h2>
-      <div className='space-y-6'>
-        {services.map(({ title, description }) => (
-          <div key={title}>
-            <h3 className='font-medium'>{title}</h3>
-            <p className='mt-1 text-neutral-700 dark:text-neutral-300'>{description}</p>
-          </div>
-        ))}
-      </div>
-      <p className='mt-6'>
-        <Link href='/consulenza' className='interlink'>
-          Pacchetti, prezzi e modalità di lavoro
-        </Link>
-      </p>
-
-      <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Esperienza</h2>
+      <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Chi sono</h2>
       <ul className='space-y-4 text-neutral-700 dark:text-neutral-300'>
         <li>
           <strong className='font-medium text-neutral-900 dark:text-neutral-100'>
@@ -147,16 +120,6 @@ export default function Page() {
           </strong>{' '}
           dal 2020: sono l’unico sviluppatore di un team di 3 persone che lavora con agenti AI ogni
           giorno.
-        </li>
-        <li>
-          <strong className='font-medium text-neutral-900 dark:text-neutral-100'>
-            Collaborazione con{' '}
-            <a href='https://www.quinck.io' className='interlink' target='_blank'>
-              Quinck
-            </a>
-          </strong>
-          , software house di Imola: sviluppo applicazioni per i loro clienti, dall’analisi dei
-          requisiti al supporto dopo il rilascio, con lo stesso metodo agentico.
         </li>
         <li>
           <strong className='font-medium text-neutral-900 dark:text-neutral-100'>
@@ -173,10 +136,10 @@ export default function Page() {
         Fuori dal codice sono un papà felice.
       </p>
 
-      <ContactCta />
-
-      <h2 className='mb-4 text-xl font-medium tracking-tight'>Dal blog</h2>
+      <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Dal blog</h2>
       <BlogPosts limit={5} />
+
+      <ContactNote />
     </section>
   )
 }

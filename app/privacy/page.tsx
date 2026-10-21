@@ -37,11 +37,6 @@ export default function Page() {
             questo dominio vengono inoltrati da Cloudflare a una casella Gmail.
           </li>
           <li>
-            <strong>Prenotazione di una call.</strong> Le prenotazioni passano da Cal.com, che
-            tratta nome, email e le informazioni che inserisci secondo la propria informativa. Uso
-            questi dati solo per organizzare e svolgere la call.
-          </li>
-          <li>
             <strong>Dati tecnici.</strong> Il sito è ospitato da Vercel, che per motivi di sicurezza
             e funzionamento può registrare dati tecnici delle richieste, come l’indirizzo IP.
           </li>
@@ -52,8 +47,8 @@ export default function Page() {
 
         <h2>Per quanto tempo</h2>
         <p>
-          Conservo email e dati delle prenotazioni per il tempo necessario a gestire la richiesta e
-          l’eventuale rapporto professionale, e comunque nei limiti previsti dalla legge.
+          Conservo le email per il tempo necessario a gestire la richiesta e l’eventuale rapporto
+          professionale, e comunque nei limiti previsti dalla legge.
         </p>
 
         <h2>I tuoi diritti</h2>

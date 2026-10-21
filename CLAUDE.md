@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal website, blog and consulting site of Pasqualino Sorice (https://www.pasqualinosorice.com), positioned on "sviluppo agentico" consulting for tech teams. All copy is in Italian (`lang="it"`); the older posts are still in English until they are rewritten. Built with Next.js 16 App Router (Turbopack, React 19), Tailwind CSS v4 (via `@tailwindcss/postcss`) and MDX. Deployed on Vercel; analytics via Vercel Analytics and Speed Insights only (cookieless, no consent banner — do not reintroduce GTM/GA without one).
+Personal website and blog of Pasqualino Sorice (https://www.pasqualinosorice.com), CTO of MioAssicuratore, telling how he set up a system of AI agents that develop software instead of a development team. Consulting is offered only in private conversations: the site must not show services, prices or booking buttons. All copy is in Italian (`lang="it"`); the older posts are still in English until they are rewritten. Built with Next.js 16 App Router (Turbopack, React 19), Tailwind CSS v4 (via `@tailwindcss/postcss`) and MDX. Deployed on Vercel; analytics via Vercel Analytics and Speed Insights only (cookieless, no consent banner — do not reintroduce GTM/GA without one).
 
 ## Commands
 
@@ -36,10 +36,10 @@ Posts are `.mdx` files in `app/blog/posts/`; the filename is the slug. There is 
 
 ### Site-wide
 
-- Contacts and personal data (email, Cal.com booking link, social links, VAT number, portrait, remaining launch-offer slots shown on `/consulenza`) live in `app/config.ts`; pages, footer and CTAs read them from there.
-- `<Todo>` (`app/components/todo.tsx`) marks copy or numbers still to be provided: it is highlighted in dev and previews and throws when `VERCEL_ENV=production`, so a production build fails while any placeholder is rendered. `bookingUrl: null` renders one inside every booking button. It is also available inside MDX posts; a future-dated post is not rendered in production until its date, so its placeholders only fail the build on the publishing day.
-- `ContactCta` (`app/components/cta.tsx`) is rendered on the home page, `/consulenza` and at the end of every post.
-- Removed posts are listed in `next.config.js` and permanently redirected to `/blog`.
+- Contacts and personal data (email, social links, VAT number, portrait) live in `app/config.ts`; pages and footer read them from there.
+- `<Todo>` (`app/components/todo.tsx`) marks copy or numbers still to be provided: it is highlighted in dev and previews and throws when `VERCEL_ENV=production`, so a production build fails while any placeholder is rendered. It is also available inside MDX posts; a future-dated post is not rendered in production until its date, so its placeholders only fail the build on the publishing day.
+- `ContactNote` (`app/components/cta.tsx`) is a low-key "write me" line (email and LinkedIn) at the end of the home page and of every post.
+- Removed posts are listed in `next.config.js` and permanently redirected to `/blog`; the retired `/consulenza` page redirects to `/`.
 - A rewritten post declares `replaces: <old-slug>` in its frontmatter. Once it is published, `app/blog/publishing.js` (shared by `app/blog/utils.ts` and `next.config.js`) hides the old post and adds a permanent redirect from the old slug, so the swap happens automatically with the scheduled rebuild. Delete the old `.mdx` only after the new one is live.
 
 - `baseUrl` is exported from `app/sitemap.ts` and imported everywhere absolute URLs are needed (metadata, OG, JSON-LD, RSS, sitemap).

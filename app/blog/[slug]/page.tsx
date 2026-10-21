@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
-import { ContactCta } from 'app/components/cta'
+import { ContactNote } from 'app/components/cta'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 import { slugify, stripInlineMarkdown } from 'app/blog/slugify'
 import { baseUrl } from 'app/sitemap'
@@ -140,7 +140,7 @@ export default async function Blog({ params }: Props) {
         )}
         <CustomMDX source={post.content} />
       </article>
-      <ContactCta />
+      <ContactNote />
     </section>
   )
 }
