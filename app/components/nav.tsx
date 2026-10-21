@@ -1,37 +1,37 @@
-import Link from 'next/link'
+'use client'
 
-const navItems = {
-  '/': {
-    name: 'home'
-  },
-  '/blog': {
-    name: 'blog'
-  }
-}
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { site } from 'app/config'
+
+const navItems = [{ href: '/blog', name: 'Blog' }]
 
 export function Navbar() {
+  let pathname = usePathname()
+
   return (
-    <aside className='mb-16 -ml-[8px] tracking-tight'>
-      <div className='lg:sticky lg:top-20'>
-        <nav
-          className='fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto'
-          id='nav'
-        >
-          <div className='flex flex-row space-x-0 pr-10'>
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className='hover:text-ink relative m-1 flex px-2 py-1 align-middle transition-all'
-                >
-                  {name}
-                </Link>
-              )
-            })}
-          </div>
-        </nav>
-      </div>
-    </aside>
+    <header className='mb-12 flex items-center justify-between gap-4 py-6 sm:mb-16 sm:py-8'>
+      <Link
+        href='/'
+        className='wordmark display text-ink hover:text-accent text-xl transition-colors'
+      >
+        {site.name}
+      </Link>
+      <nav aria-label='Principale' className='font-ui text-sm'>
+        <ul className='-mr-3 flex'>
+          {navItems.map(({ href, name }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                aria-current={pathname.startsWith(href) ? 'page' : undefined}
+                className='nav-link text-muted hover:text-ink aria-[current=page]:text-ink inline-flex min-h-11 items-center px-3 transition-colors'
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
   )
 }

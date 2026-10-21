@@ -77,12 +77,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {canSwitchStyle && <script dangerouslySetInnerHTML={{ __html: styleInitScript }} />}
       </head>
-      <body className='mx-4 mt-8 max-w-xl antialiased md:mx-auto'>
-        <main className='mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0'>
+      <body className='antialiased'>
+        <a
+          href='#contenuto'
+          className='font-ui bg-ink text-paper sr-only fixed top-3 left-3 z-50 rounded px-3 py-2 text-sm focus:not-sr-only'
+        >
+          Vai al contenuto
+        </a>
+        <div className='mx-auto w-full max-w-(--measure) px-5'>
           <Navbar />
-          {children}
+          <main id='contenuto' className='min-w-0'>
+            {children}
+          </main>
           <Footer />
-        </main>
+        </div>
         {canSwitchStyle && <StyleSwitcher />}
         <Analytics />
         <SpeedInsights />
