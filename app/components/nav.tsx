@@ -17,7 +17,7 @@ export function Navbar() {
       >
         {site.name}
       </Link>
-      <nav aria-label='Principale' className='font-ui text-sm'>
+      <nav aria-label='Principale' className='font-mono text-sm'>
         <ul className='-mr-3 flex'>
           {navItems.map(({ href, name }) => (
             <li key={href}>

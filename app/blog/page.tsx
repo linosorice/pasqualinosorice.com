@@ -36,7 +36,7 @@ export default function Page() {
   return (
     <section>
       <h1 className='display title text-4xl text-ink sm:text-5xl'>Blog</h1>
-      <p className='mt-4 mb-10 font-body text-lg text-muted'>{description}</p>
+      <p className='mt-4 mb-10 font-sans text-lg text-muted'>{description}</p>
       <BlogPosts />
     </section>
   )

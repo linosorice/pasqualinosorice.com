@@ -11,7 +11,7 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className='mt-20 mb-20 border-t border-line pt-8 font-ui text-sm text-muted'>
+    <footer className='mt-20 mb-20 border-t border-line pt-8 font-mono text-sm text-muted'>
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <ul className='flex flex-wrap gap-x-5 gap-y-1'>
           {links.map(({ name, href }) => (

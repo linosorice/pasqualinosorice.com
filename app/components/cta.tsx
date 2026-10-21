@@ -5,7 +5,7 @@ export function ContactNote() {
   return (
     <aside className='mt-20 border-t border-line pt-10'>
       <p className='display text-2xl text-ink'>Stai lavorando su questi temi?</p>
-      <p className='mt-2 font-body text-lg text-ink-soft'>
+      <p className='mt-2 font-sans text-lg text-ink-soft'>
         Scrivimi a{' '}
         <a href={`mailto:${site.email}`} className='interlink'>
           {site.email}

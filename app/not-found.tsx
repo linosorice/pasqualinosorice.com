@@ -5,7 +5,7 @@ export default function NotFound() {
     <section>
       <p className='kicker'>Errore 404</p>
       <h1 className='display title mt-4 text-4xl text-ink sm:text-5xl'>Pagina non trovata</h1>
-      <p className='mt-6 font-body text-lg text-ink-soft'>
+      <p className='mt-6 font-sans text-lg text-ink-soft'>
         La pagina che cerchi non esiste o è stata spostata. Torna alla{' '}
         <Link href='/' className='interlink'>
           home

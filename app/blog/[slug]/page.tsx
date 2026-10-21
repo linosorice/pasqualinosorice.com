@@ -123,7 +123,7 @@ export default async function Blog({ params }: Props) {
         <h1 className='display title mt-4 text-[2.125rem] leading-[1.1] text-ink sm:text-[2.75rem]'>
           {displayTitle(post.metadata.title)}
         </h1>
-        <div className='mt-8 flex items-center gap-3 font-ui text-sm'>
+        <div className='mt-8 flex items-center gap-3 font-mono text-sm'>
           {site.portrait && (
             <Image
               src={site.portrait}

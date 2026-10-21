@@ -52,7 +52,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
 
   return (
     <>
-      <details className='group mb-10 rounded-card border border-line bg-surface font-ui text-sm xl:hidden'>
+      <details className='group mb-10 border border-line bg-surface font-mono text-sm xl:hidden'>
         <summary className='flex min-h-12 cursor-pointer list-none items-center px-5 font-medium text-ink [&::-webkit-details-marker]:hidden'>
           Indice · {headings.length} sezioni
           <span
@@ -67,7 +67,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
         </nav>
       </details>
       <aside className='absolute inset-y-0 left-full ml-12 hidden w-56 xl:block'>
-        <nav aria-label='Indice' className='sticky top-10 font-ui text-[0.8125rem] leading-snug'>
+        <nav aria-label='Indice' className='sticky top-10 font-mono text-[0.8125rem] leading-snug'>
           <p className='kicker mb-4'>Indice</p>
           {list}
         </nav>
