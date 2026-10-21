@@ -11,7 +11,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const title = 'Pasqualino Sorice - CTO di MioAssicuratore'
 const description =
   'CTO di MioAssicuratore. Racconto come sviluppiamo software con gli agenti AI: cosa funziona, cosa no e cosa ho imparato strada facendo.'
-const ogImage = `${baseUrl}/og.png`
+const ogImage = `${baseUrl}/og`
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

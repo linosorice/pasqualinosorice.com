@@ -44,6 +44,7 @@ Posts are `.mdx` files in `app/blog/posts/`; the filename is the slug. There is 
 - A rewritten post declares `replaces: <old-slug>` in its frontmatter. Once it is published, `app/blog/publishing.js` (shared by `app/blog/utils.ts` and `next.config.js`) hides the old post and adds a permanent redirect from the old slug, so the swap happens automatically with the scheduled rebuild. Delete the old `.mdx` only after the new one is live.
 
 - `baseUrl` is exported from `app/sitemap.ts` and imported everywhere absolute URLs are needed (metadata, OG, JSON-LD, RSS, sitemap).
-- `app/og/route.tsx` generates fallback Open Graph images from a `?title=` query param; post metadata uses it when no `image` frontmatter is set.
+- `app/og/route.tsx` generates the Open Graph images in the site's dark palette, with Geist fonts read from `assets/fonts/`: without params it is the site-wide card (home), with `?title=` it is used by posts without `image` frontmatter and by the blog index. Each title word is its own element and there is no letter-spacing, otherwise Satori spaces Geist's words unevenly.
+- Icons are `app/icon.svg` (the `>_` prompt), with `app/favicon.ico` and `app/apple-icon.png` rendered from the same drawing.
 - `next.config.js` sets a strict Content-Security-Policy on all routes (`'self'` only for scripts, images, fonts; `'unsafe-eval'` only in dev). Adding external scripts, images, embeds or fonts requires updating that header.
 - Imports use the `app/...` path (enabled by `baseUrl: "."` in `tsconfig.json`). TypeScript runs with `strict: false` but `strictNullChecks: true`.
