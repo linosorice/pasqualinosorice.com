@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className='title mb-8 text-2xl font-semibold tracking-tighter'>Informativa privacy</h1>
+      <h1 className='display title text-ink mb-10 text-4xl sm:text-5xl'>Informativa privacy</h1>
       <div className='prose'>
         <h2>Titolare del trattamento</h2>
         <p>
