@@ -1,0 +1,77 @@
+---
+title: 'Gli errori che abbiamo fatto introducendo gli agenti nel team'
+publishedAt: '2026-11-17'
+summary: 'Il metodo che uso oggi è fatto soprattutto di errori corretti. Regole scritte che nessuno applicava, controlli sempre rossi, un backlog che cresceva da solo, un agente che si fermava troppo spesso e un giorno con tre cambi di regole. Cosa è successo e cosa abbiamo cambiato.'
+---
+
+Quando si racconta un metodo che funziona, si rischia di farlo sembrare nato già così. Il nostro non lo è. Nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico) ho messo in fondo un elenco di cose che non funzionano ancora. Qui vado più a fondo: gli errori che abbiamo fatto da marzo a oggi, con le date, e cosa ci hanno lasciato.
+
+## Credere che una regola scritta sia una regola rispettata
+
+È l'errore che racconterei per primo a un altro CTO, perché l'abbiamo fatto in più forme.
+
+A luglio ci siamo accorti che un controllo sui permessi, descritto nel file di istruzioni degli agenti e nel template delle pull request, non era mai scattato. Il revisore automatico non aveva una sezione in cui segnalarlo. Un controllo senza un posto dove essere segnalato non scatta mai, e nessuno se ne accorge.
+
+Poi c'erano gli hook, i controlli che girano prima di ogni commit e di ogni push. Pensavamo che girassero sempre. In realtà:
+
+- su un computer configurato senza installare le dipendenze non giravano;
+- nelle sessioni degli agenti in cloud non giravano;
+- con le pull request aperte dal sito di GitHub non giravano.
+
+A maggio avevo tolto la pipeline di integrazione continua, più di 1.300 righe di configurazione, con un ragionamento che sembrava sensato: sviluppo solo io, i controlli girano già sul mio computer. A ottobre l'ho rimessa. Dal 20 ottobre quattro controlli su GitHub sono obbligatori per tutti, me compreso.
+
+La lezione: una regola conta solo se c'è uno strumento che la applica, e solo se sai dove quello strumento **non** gira.
+
+## Un controllo sempre rosso è un controllo ignorato
+
+Per un periodo l'analisi statica di uno dei nostri frontend è stata sempre rossa, perché quel codice vecchio non aveva test. Il risultato era prevedibile: tutti ignoravano quel controllo in blocco, anche quando segnalava un problema vero nel codice nuovo.
+
+Ora l'analisi statica guarda solo le righe aggiunte, e la copertura dei test si misura solo sulla logica cambiata. Il debito vecchio non blocca nessuno. Un controllo deve essere rosso solo quando c'è qualcosa da fare adesso, altrimenti smette di essere letto. Ne ho parlato più a fondo nel [post sulla code review](/blog/code-review-codice-scritto-da-agenti).
+
+## Aprire lavoro costa zero, leggerlo no
+
+Con gli agenti aprire una issue costa pochi secondi. Tra marzo e agosto il nostro backlog è cresciuto di circa 60 issue al mese, e più della metà non apparteneva a nessuna epica. Erano idee, segnalazioni, note lasciate a metà.
+
+A fine agosto ho provato a fare pulizia a mano. Su 32 issue che sembravano morte, 10 non lo erano: chiuderle in blocco sarebbe stato un errore. Oggi le issue scadono da sole, con 14 giorni di preavviso, e c'è un filtro all'ingresso. Nelle nostre regole c'è scritto così: "Aprire una issue costa quasi zero; leggerla costa attenzione del CTO, l'unica risorsa che non scala."
+
+Lo stesso è successo con i feature flag. A un certo punto ne avevamo 47 attivi, e 10 erano accesi per tutti ma ancora presenti nel codice. Ora c'è un flag per epica e un tetto massimo.
+
+## Fermarsi a chiedere non scala
+
+A giugno la regola era semplice: quando l'agente ha un dubbio, si ferma e chiede a me. Sembrava la scelta più prudente. In pratica in due settimane gli agenti mi hanno fatto 126 domande durante lo sviluppo, e ogni domanda era una sessione ferma ad aspettare.
+
+A ottobre abbiamo ribaltato la regola. Davanti a un dubbio l'agente prende la decisione più prudente, la mette dietro un feature flag e la dichiara nella pull request, dove la rivedo. Si ferma solo per tre categorie di decisioni: soldi, compliance e dati che non si possono recuperare. E prima che un'epica passi allo sviluppo, un controllo automatico verifica che non ci siano decisioni ancora aperte.
+
+## Il 16 ottobre: tre cambi di regole in un giorno
+
+Il 16 ottobre ci siamo accorti che il lavoro aperto stava sfuggendo di mano:
+
+- una sola persona aveva 19 pull request aperte su 8 epiche diverse, e 9 erano in conflitto tra loro;
+- una issue che chiedeva di togliere un blocco da un PDF era diventata una pull request da 43 file in 5 aree del codice;
+- due persone, da sole, avevano 37 pull request aperte.
+
+Quel giorno le regole sono cambiate tre volte.
+
+- **In mattinata** sono arrivati i limiti: un numero massimo di epiche e pull request aperte per persona, un tetto alle dimensioni delle pull request, il perimetro della issue ricordato all'agente a ogni messaggio.
+- **Nel pomeriggio** ho introdotto le "corsie": chi non è il CTO poteva toccare solo il codice dell'interfaccia. Meno di un'ora dopo una pull request di correzione le aveva cancellate senza volerlo, togliendo 115 righe di controlli e 101 test. Le abbiamo ripristinate.
+- **In serata** ho cambiato approccio. Il problema non era chi tocca quale codice, ma chi decide cosa. Le corsie sono state sostituite da un agente architetto, che risponde alle domande tecniche solo citando decisioni già registrate e passa a me tutto il resto.
+
+Tre cambi in un giorno sembrano caos. In realtà è il vantaggio di avere le regole nel codice: si cambiano, si testano e si rilasciano come una feature. E quando una pull request le cancella per sbaglio, si ripristinano in meno di un'ora, insieme ai loro test.
+
+## Scambiare la complessità per qualità
+
+L'ultimo errore è più sottile. Gli agenti tendono a costruire soluzioni complete: astrazioni, configurazioni, casi limite che nessuno ha chiesto. Il codice sembra solido e la review non trova niente da segnalare, perché non c'è niente di sbagliato.
+
+Ma molte delle nostre feature sono esperimenti, e se non funzionano si tolgono. Per un esperimento la complessità è debito, non qualità. Da giugno il revisore automatico si chiede anche: "si poteva fare con metà del codice senza che nessuno se ne accorga?". Fanno eccezione solo sicurezza e isolamento dei dati, dove la prudenza non è mai troppa.
+
+## Cosa hanno in comune
+
+Rileggendo questi errori ci vedo uno schema. Quasi tutti sono nati da una regola che sembrava ragionevole ma non era applicata da nessuno strumento, oppure da un costo che con gli agenti è sceso a zero mentre quello umano è rimasto uguale: aprire issue, pull request, flag. Leggerli, rivederli e chiuderli costa ancora come prima.
+
+La correzione è stata quasi sempre la stessa:
+
+- trasformare la regola in un controllo automatico;
+- scrivere il perché nel file di istruzioni degli agenti;
+- mettere un limite dove il costo per l'agente è zero e quello per le persone no.
+
+Non abbiamo finito di sbagliare. Ma ogni errore, oggi, lascia una regola scritta con il suo perché e un controllo che la fa rispettare. Se state facendo lo stesso percorso, mi interessa sapere quali errori avete fatto voi.
