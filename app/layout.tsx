@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className='antialiased'>
         <a
           href='#contenuto'
-          className='font-ui bg-ink text-paper sr-only fixed top-3 left-3 z-50 rounded px-3 py-2 text-sm focus:not-sr-only'
+          className='sr-only fixed top-3 left-3 z-50 rounded bg-ink px-3 py-2 font-ui text-sm text-paper focus:not-sr-only'
         >
           Vai al contenuto
         </a>

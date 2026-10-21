@@ -54,10 +54,10 @@ export default function Page() {
         )}
         <p className='kicker'>CTO di MioAssicuratore</p>
       </div>
-      <h1 className='display title text-ink mt-6 text-4xl leading-[1.05] sm:text-5xl'>
+      <h1 className='display title mt-6 text-4xl leading-[1.05] text-ink sm:text-5xl'>
         Ciao, sono Pasqualino.
       </h1>
-      <div className='font-body text-ink-soft mt-6 space-y-4 text-lg leading-relaxed sm:text-xl'>
+      <div className='mt-6 space-y-4 font-body text-lg leading-relaxed text-ink-soft sm:text-xl'>
         <p>
           Sono CTO di{' '}
           <a href='https://www.mioassicuratore.it' className='interlink' target='_blank'>
@@ -69,7 +69,7 @@ export default function Page() {
         </p>
         <p>Qui racconto come ci siamo arrivati, cosa funziona e cosa ho imparato strada facendo.</p>
       </div>
-      <p className='font-body text-muted mt-6 leading-relaxed'>
+      <p className='mt-6 font-body leading-relaxed text-muted'>
         Ogni tanto sperimento anche per conto mio: nel 2024 ho costruito ExaminatorAI, una web app,
         in 12 ore con l’AI, e{' '}
         <Link href='/blog/examinatorai-web-app-in-12-ore' className='interlink'>
@@ -88,7 +88,7 @@ export default function Page() {
       <BlogPosts limit={4} exclude={featuredSlug} heading='h3' />
       <Link
         href='/blog'
-        className='font-ui text-muted hover:text-accent mt-4 inline-flex min-h-11 items-center gap-2 text-sm transition-colors'
+        className='mt-4 inline-flex min-h-11 items-center gap-2 font-ui text-sm text-muted transition-colors hover:text-accent'
       >
         Tutti gli articoli <span aria-hidden>→</span>
       </Link>

@@ -13,7 +13,7 @@ export function Navbar() {
     <header className='mb-12 flex items-center justify-between gap-4 py-6 sm:mb-16 sm:py-8'>
       <Link
         href='/'
-        className='wordmark display text-ink hover:text-accent text-xl transition-colors'
+        className='wordmark display text-xl text-ink transition-colors hover:text-accent'
       >
         {site.name}
       </Link>
@@ -24,7 +24,7 @@ export function Navbar() {
               <Link
                 href={href}
                 aria-current={pathname.startsWith(href) ? 'page' : undefined}
-                className='nav-link text-muted hover:text-ink aria-[current=page]:text-ink inline-flex min-h-11 items-center px-3 transition-colors'
+                className='nav-link inline-flex min-h-11 items-center px-3 text-muted transition-colors hover:text-ink aria-[current=page]:text-ink'
               >
                 {name}
               </Link>

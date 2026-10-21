@@ -41,7 +41,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
           <a
             href={`#${slug}`}
             aria-current={active === slug ? 'location' : undefined}
-            className='text-muted hover:text-ink aria-[current=location]:text-accent block transition-colors'
+            className='block text-muted transition-colors hover:text-ink aria-[current=location]:text-accent'
           >
             {title}
           </a>
@@ -52,12 +52,12 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
 
   return (
     <>
-      <details className='group font-ui border-line bg-surface rounded-card mb-10 border text-sm xl:hidden'>
-        <summary className='text-ink flex min-h-12 cursor-pointer list-none items-center px-5 font-medium [&::-webkit-details-marker]:hidden'>
+      <details className='group mb-10 rounded-card border border-line bg-surface font-ui text-sm xl:hidden'>
+        <summary className='flex min-h-12 cursor-pointer list-none items-center px-5 font-medium text-ink [&::-webkit-details-marker]:hidden'>
           Indice · {headings.length} sezioni
           <span
             aria-hidden
-            className='text-muted ml-auto text-lg transition-transform group-open:rotate-45 motion-reduce:transition-none'
+            className='ml-auto text-lg text-muted transition-transform group-open:rotate-45 motion-reduce:transition-none'
           >
             +
           </span>
@@ -67,7 +67,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
         </nav>
       </details>
       <aside className='absolute inset-y-0 left-full ml-12 hidden w-56 xl:block'>
-        <nav aria-label='Indice' className='font-ui sticky top-10 text-[0.8125rem] leading-snug'>
+        <nav aria-label='Indice' className='sticky top-10 font-ui text-[0.8125rem] leading-snug'>
           <p className='kicker mb-4'>Indice</p>
           {list}
         </nav>

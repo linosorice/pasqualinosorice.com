@@ -120,10 +120,10 @@ export default async function Blog({ params }: Props) {
       />
       <header className='mb-10'>
         <PostMeta post={post} />
-        <h1 className='display title text-ink mt-4 text-[2.125rem] leading-[1.1] sm:text-[2.75rem]'>
+        <h1 className='display title mt-4 text-[2.125rem] leading-[1.1] text-ink sm:text-[2.75rem]'>
           {displayTitle(post.metadata.title)}
         </h1>
-        <div className='font-ui mt-8 flex items-center gap-3 text-sm'>
+        <div className='mt-8 flex items-center gap-3 font-ui text-sm'>
           {site.portrait && (
             <Image
               src={site.portrait}
@@ -134,13 +134,13 @@ export default async function Blog({ params }: Props) {
             />
           )}
           <p className='leading-snug'>
-            <span className='text-ink font-medium'>{site.name}</span>
+            <span className='font-medium text-ink'>{site.name}</span>
             <br />
             <span className='text-muted'>CTO di MioAssicuratore</span>
           </p>
         </div>
       </header>
-      <article className='border-line relative border-t pt-10'>
+      <article className='relative border-t border-line pt-10'>
         {headings.length > 0 && <TableOfContents headings={headings} />}
         <div className='prose'>
           <CustomMDX source={post.content} />

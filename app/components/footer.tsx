@@ -11,13 +11,13 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className='font-ui border-line text-muted mt-20 mb-20 border-t pt-8 text-sm'>
+    <footer className='mt-20 mb-20 border-t border-line pt-8 font-ui text-sm text-muted'>
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <ul className='flex flex-wrap gap-x-5 gap-y-1'>
           {links.map(({ name, href }) => (
             <li key={name}>
               <a
-                className='hover:text-accent inline-flex min-h-8 items-center transition-colors'
+                className='inline-flex min-h-8 items-center transition-colors hover:text-accent'
                 rel='noopener noreferrer'
                 target={href.startsWith('mailto:') ? undefined : '_blank'}
                 href={href}
@@ -30,7 +30,7 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()} {site.name}
           {site.vatNumber && <> · P.IVA {site.vatNumber}</>} ·{' '}
-          <Link href='/privacy' className='hover:text-accent transition-colors'>
+          <Link href='/privacy' className='transition-colors hover:text-accent'>
             Privacy
           </Link>
         </p>
