@@ -1,7 +1,11 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
 import { ContactNote } from 'app/components/cta'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
+import Image from 'next/image'
+import { PostMeta } from 'app/components/posts'
+import { TableOfContents } from 'app/components/toc'
+import { displayTitle, getBlogPosts } from 'app/blog/utils'
+import { site } from 'app/config'
 import { slugify, stripInlineMarkdown } from 'app/blog/slugify'
 import { baseUrl } from 'app/sitemap'
 
@@ -114,26 +118,33 @@ export default async function Blog({ params }: Props) {
           })
         }}
       />
-      <h1 className='title text-2xl font-semibold tracking-tighter'>{post.metadata.title}</h1>
-      <div className='mt-2 mb-8 flex items-center justify-between text-sm'>
-        <p className='text-muted text-sm'>{formatDate(post.metadata.publishedAt)}</p>
-      </div>
-      <article className='prose'>
-        {headings.length > 0 && (
-          <nav className='mb-8' aria-label='Indice'>
-            <h2 className='mb-2 text-lg font-medium'>Indice</h2>
-            <div className='space-y-1'>
-              {headings.map(({ level, title, slug }, index) => (
-                <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
-                  <a href={`#${slug}`} className='text-muted hover:text-ink'>
-                    {title}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </nav>
-        )}
-        <CustomMDX source={post.content} />
+      <header className='mb-10'>
+        <PostMeta post={post} />
+        <h1 className='display title text-ink mt-4 text-[2.125rem] leading-[1.1] sm:text-[2.75rem]'>
+          {displayTitle(post.metadata.title)}
+        </h1>
+        <div className='font-ui mt-8 flex items-center gap-3 text-sm'>
+          {site.portrait && (
+            <Image
+              src={site.portrait}
+              alt=''
+              width={40}
+              height={40}
+              className='shrink-0 rounded-full object-cover'
+            />
+          )}
+          <p className='leading-snug'>
+            <span className='text-ink font-medium'>{site.name}</span>
+            <br />
+            <span className='text-muted'>CTO di MioAssicuratore</span>
+          </p>
+        </div>
+      </header>
+      <article className='border-line relative border-t pt-10'>
+        {headings.length > 0 && <TableOfContents headings={headings} />}
+        <div className='prose'>
+          <CustomMDX source={post.content} />
+        </div>
       </article>
       <ContactNote />
     </section>
