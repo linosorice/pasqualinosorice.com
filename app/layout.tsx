@@ -11,7 +11,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const title = 'Pasqualino Sorice - CTO di MioAssicuratore'
 const description =
   'CTO di MioAssicuratore. Racconto come sviluppiamo software con gli agenti AI: cosa funziona, cosa no e cosa ho imparato strada facendo.'
-const ogImage = `${baseUrl}/og.png`
+const ogImage = `${baseUrl}/og`
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -57,20 +57,21 @@ const cx = (...classes: string[]) => classes.filter(Boolean).join(' ')
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang='it'
-      className={cx(
-        'bg-white text-black dark:bg-black dark:text-white',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
-    >
-      <body className='mx-4 mt-8 max-w-xl antialiased md:mx-auto'>
-        <main className='mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0'>
+    <html lang='it' className={cx(GeistSans.variable, GeistMono.variable)}>
+      <body className='antialiased'>
+        <a
+          href='#contenuto'
+          className='sr-only fixed top-3 left-3 z-50 rounded bg-ink px-3 py-2 font-mono text-sm text-paper focus:not-sr-only'
+        >
+          Vai al contenuto
+        </a>
+        <div className='mx-auto w-full max-w-[44rem] px-5'>
           <Navbar />
-          {children}
+          <main id='contenuto' className='min-w-0'>
+            {children}
+          </main>
           <Footer />
-        </main>
+        </div>
         <Analytics />
         <SpeedInsights />
       </body>

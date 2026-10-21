@@ -1,37 +1,37 @@
-import Link from 'next/link'
+'use client'
 
-const navItems = {
-  '/': {
-    name: 'home'
-  },
-  '/blog': {
-    name: 'blog'
-  }
-}
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { site } from 'app/config'
+
+const navItems = [{ href: '/blog', name: 'Blog' }]
 
 export function Navbar() {
+  let pathname = usePathname()
+
   return (
-    <aside className='mb-16 -ml-[8px] tracking-tight'>
-      <div className='lg:sticky lg:top-20'>
-        <nav
-          className='fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto'
-          id='nav'
-        >
-          <div className='flex flex-row space-x-0 pr-10'>
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className='relative m-1 flex px-2 py-1 align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200'
-                >
-                  {name}
-                </Link>
-              )
-            })}
-          </div>
-        </nav>
-      </div>
-    </aside>
+    <header className='mb-12 flex items-center justify-between gap-4 py-6 sm:mb-16 sm:py-8'>
+      <Link
+        href='/'
+        className='wordmark display text-xl text-ink transition-colors hover:text-accent'
+      >
+        {site.name}
+      </Link>
+      <nav aria-label='Principale' className='font-mono text-sm'>
+        <ul className='-mr-3 flex'>
+          {navItems.map(({ href, name }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                aria-current={pathname.startsWith(href) ? 'page' : undefined}
+                className='nav-link inline-flex min-h-11 items-center px-3 text-muted transition-colors hover:text-ink aria-[current=page]:text-ink'
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
   )
 }

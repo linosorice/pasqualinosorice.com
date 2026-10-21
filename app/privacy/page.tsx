@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className='title mb-8 text-2xl font-semibold tracking-tighter'>Informativa privacy</h1>
-      <div className='prose prose-neutral dark:prose-invert'>
+      <h1 className='display title mb-10 text-4xl text-ink sm:text-5xl'>Informativa privacy</h1>
+      <div className='prose'>
         <h2>Titolare del trattamento</h2>
         <p>
           {site.name}, contattabile all’indirizzo{' '}

@@ -3,9 +3,10 @@ import { site } from 'app/config'
 // Low-key invitation to get in touch: the site tells a story, it is not a sales page
 export function ContactNote() {
   return (
-    <aside className='my-12 border-t border-neutral-200 pt-6 text-neutral-700 dark:border-neutral-800 dark:text-neutral-300'>
-      <p>
-        Stai lavorando su questi temi? Scrivimi a{' '}
+    <aside className='mt-20 border-t border-line pt-10'>
+      <p className='display text-2xl text-ink'>Stai lavorando su questi temi?</p>
+      <p className='mt-2 font-sans text-lg text-ink-soft'>
+        Scrivimi a{' '}
         <a href={`mailto:${site.email}`} className='interlink'>
           {site.email}
         </a>{' '}
