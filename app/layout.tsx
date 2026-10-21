@@ -8,9 +8,9 @@ import { baseUrl } from './sitemap'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const title = 'Pasqualino Sorice - Consulente di sviluppo agentico'
+const title = 'Pasqualino Sorice - CTO di MioAssicuratore'
 const description =
-  'CTO di MioAssicuratore: sono l’unico sviluppatore, il 100% del codice lo scrivono agenti AI e rilasciamo 5-6 feature a settimana. Aiuto i team tech a fare lo stesso con audit, affiancamento e workshop.'
+  'CTO di MioAssicuratore: ho impostato un sistema di agenti AI che sviluppano al posto di un team di sviluppo. Il 100% del codice lo scrivono gli agenti e rilasciamo 5-6 feature a settimana. Qui racconto come.'
 const ogImage = `${baseUrl}/og.png`
 
 export const metadata: Metadata = {

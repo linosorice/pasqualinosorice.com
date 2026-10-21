@@ -14,7 +14,6 @@ function ArrowIcon() {
 
 const links = [
   { name: 'email', href: `mailto:${site.email}` },
-  ...(site.bookingUrl ? [{ name: 'prenota una call', href: site.bookingUrl }] : []),
   { name: 'linkedin', href: site.linkedin },
   { name: 'github', href: site.github },
   { name: 'X', href: site.x },

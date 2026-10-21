@@ -40,7 +40,9 @@ module.exports = {
       destination: `/blog/${to}`,
       permanent: true
     }))
-    return [...removed, ...rewritten]
+    // The consulting page was removed: the site only tells the story, offers happen in private
+    let retired = [{ source: '/consulenza', destination: '/', permanent: true }]
+    return [...removed, ...rewritten, ...retired]
   },
   async headers() {
     return [
