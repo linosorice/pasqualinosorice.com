@@ -36,6 +36,7 @@ Posts are `.mdx` files in `app/blog/posts/`; the filename is the slug. There is 
 
 ### Site-wide
 
+- Colors and fonts are design tokens: CSS variables defined in `app/global.css` per visual style (`[data-style='editoriale' | 'tecnico' | 'sobrio']` on `<html>`, light and dark) and exposed to Tailwind through `@theme inline` (`bg-paper`, `text-ink`, `text-ink-soft`, `text-muted`, `border-line`, `bg-surface`, `text-accent`, `font-display`, `font-body`, `font-ui`, `font-meta`, `rounded-card`). Use them instead of raw Tailwind colors. `app/design.ts` lists the styles and the default; production always renders the default, while local builds and previews add an init script and a floating `StyleSwitcher` (choice saved in `localStorage`, or forced with `?stile=<id>`). Style-specific touches (kicker, wordmark, featured block, prose details) are CSS rules keyed on `data-style`.
 - Contacts and personal data (email, social links, VAT number, portrait) live in `app/config.ts`; pages and footer read them from there.
 - `<Todo>` (`app/components/todo.tsx`) marks copy or numbers still to be provided: it is highlighted in dev and previews and throws when `VERCEL_ENV=production`, so a production build fails while any placeholder is rendered. It is also available inside MDX posts; a future-dated post is not rendered in production until its date, so its placeholders only fail the build on the publishing day.
 - `ContactNote` (`app/components/cta.tsx`) is a low-key "write me" line (email and LinkedIn) at the end of the home page and of every post.
