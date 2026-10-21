@@ -1,8 +1,134 @@
 @import 'tailwindcss';
 
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+/*
+ * Design tokens. Every color and font in the components goes through these, so a style is
+ * just a different set of values under [data-style] (see app/design.ts).
+ */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-display: var(--display);
+  --font-body: var(--body);
+  --font-ui: var(--ui);
+  --font-meta: var(--meta);
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --radius-card: var(--radius);
+}
+
+/* Editoriale: a magazine page, serif type on warm paper with a terracotta accent */
+:root,
+[data-style='editoriale'] {
+  --paper: #f8f5ef;
+  --ink: #1c1915;
+  --ink-soft: #38322b;
+  --muted: #6b6257;
+  --line: #e3dccf;
+  --surface: #f0eadf;
+  --accent: #a3431c;
+  --accent-soft: #f2e1d5;
+
+  --display: var(--font-newsreader), Georgia, serif;
+  --body: var(--font-newsreader), Georgia, serif;
+  --ui: var(--font-geist-sans), system-ui, sans-serif;
+  --meta: var(--font-geist-sans), system-ui, sans-serif;
+  --display-weight: 500;
+  --display-tracking: -0.015em;
+  --prose-size: 1.1875rem;
+  --prose-leading: 1.7;
+  --measure: 42rem;
+  --radius: 0.25rem;
+}
+
+/* Tecnico: a terminal-flavoured page, mono details and a phosphor green accent */
+[data-style='tecnico'] {
+  --paper: #f5f7f5;
+  --ink: #0e1210;
+  --ink-soft: #2a312d;
+  --muted: #5a6560;
+  --line: #d9dfdb;
+  --surface: #eaeeeb;
+  --accent: #0a7443;
+  --accent-soft: #d8ede0;
+
+  --display: var(--font-geist-sans), system-ui, sans-serif;
+  --body: var(--font-geist-sans), system-ui, sans-serif;
+  --ui: var(--font-geist-mono), ui-monospace, monospace;
+  --meta: var(--font-geist-mono), ui-monospace, monospace;
+  --display-weight: 600;
+  --display-tracking: -0.035em;
+  --prose-size: 1.0625rem;
+  --prose-leading: 1.7;
+  --measure: 44rem;
+  --radius: 0;
+}
+
+/* Sobrio: the original black and white page, with one blue accent and a clearer hierarchy */
+[data-style='sobrio'] {
+  --paper: #ffffff;
+  --ink: #0a0a0a;
+  --ink-soft: #262626;
+  --muted: #636363;
+  --line: #e5e5e5;
+  --surface: #f6f6f6;
+  --accent: #2753c0;
+  --accent-soft: #e7edfb;
+
+  --display: var(--font-geist-sans), system-ui, sans-serif;
+  --body: var(--font-geist-sans), system-ui, sans-serif;
+  --ui: var(--font-geist-sans), system-ui, sans-serif;
+  --meta: var(--font-geist-sans), system-ui, sans-serif;
+  --display-weight: 600;
+  --display-tracking: -0.03em;
+  --prose-size: 1.0625rem;
+  --prose-leading: 1.75;
+  --measure: 40rem;
+  --radius: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  [data-style='editoriale'] {
+    --paper: #16130f;
+    --ink: #efe8dd;
+    --ink-soft: #d5ccbf;
+    --muted: #9c9182;
+    --line: #2f2922;
+    --surface: #1f1b16;
+    --accent: #e58b5f;
+    --accent-soft: #3a2418;
+  }
+
+  [data-style='tecnico'] {
+    --paper: #0a0d0b;
+    --ink: #e3e9e5;
+    --ink-soft: #c3ccc6;
+    --muted: #84918a;
+    --line: #1e2621;
+    --surface: #111714;
+    --accent: #4ade80;
+    --accent-soft: #10301d;
+  }
+
+  [data-style='sobrio'] {
+    --paper: #0a0a0a;
+    --ink: #f5f5f5;
+    --ink-soft: #e5e5e5;
+    --muted: #a3a3a3;
+    --line: #262626;
+    --surface: #161616;
+    --accent: #7ca3ff;
+    --accent-soft: #16213d;
+  }
+
+  html {
+    color-scheme: dark;
+  }
 }
 
 :root {
@@ -24,35 +150,40 @@
     --sh-keyword: #f47067;
     --sh-string: #0fa295;
   }
-  html {
-    color-scheme: dark;
-  }
 }
 
 html {
   min-width: 360px;
+  background-color: var(--paper);
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
 }
 
-.prose .anchor {
-  @apply invisible absolute no-underline;
-
-  margin-left: -1em;
-  padding-right: 0.5em;
-  width: 80%;
-  max-width: 700px;
-  cursor: pointer;
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--ui);
 }
 
-.anchor:hover {
-  @apply visible;
+::selection {
+  background-color: var(--accent-soft);
+  color: var(--ink);
 }
 
-.prose a {
-  @apply decoration-neutral-400 decoration-[0.1em] underline-offset-2 transition-all dark:decoration-neutral-600;
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.display {
+  font-family: var(--display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
 }
 
 .interlink {
-  @apply underline hover:text-neutral-500;
+  @apply decoration-accent/40 hover:text-accent hover:decoration-accent underline decoration-1 underline-offset-[0.2em] transition-colors;
 }
 
 .prose .anchor:after {
@@ -60,12 +191,8 @@ html {
   content: '#';
 }
 
-.prose *:hover > .anchor {
-  @apply visible;
-}
-
 .prose pre {
-  @apply overflow-x-auto rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm dark:border-neutral-900 dark:bg-neutral-900;
+  @apply border-line bg-surface overflow-x-auto rounded-lg border px-3 py-2 text-sm;
 }
 
 .prose code {
@@ -88,7 +215,7 @@ html {
 }
 
 .prose p {
-  @apply my-4 text-neutral-800 dark:text-neutral-200;
+  @apply text-ink-soft my-4;
 }
 
 .prose h1 {
@@ -134,14 +261,6 @@ pre {
   scrollbar-width: none; /* Firefox */
 }
 
-/* Remove Safari input shadow on mobile */
-input[type='text'],
-input[type='email'] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
 table {
   display: block;
   max-width: fit-content;
@@ -151,8 +270,4 @@ table {
 
 .title {
   text-wrap: balance;
-}
-
-html {
-  scroll-behavior: smooth;
 }

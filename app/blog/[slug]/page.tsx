@@ -116,9 +116,7 @@ export default async function Blog({ params }: Props) {
       />
       <h1 className='title text-2xl font-semibold tracking-tighter'>{post.metadata.title}</h1>
       <div className='mt-2 mb-8 flex items-center justify-between text-sm'>
-        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+        <p className='text-muted text-sm'>{formatDate(post.metadata.publishedAt)}</p>
       </div>
       <article className='prose'>
         {headings.length > 0 && (
@@ -127,10 +125,7 @@ export default async function Blog({ params }: Props) {
             <div className='space-y-1'>
               {headings.map(({ level, title, slug }, index) => (
                 <div key={index} style={{ paddingLeft: `${(level - 1) * 1}rem` }}>
-                  <a
-                    href={`#${slug}`}
-                    className='text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
-                  >
+                  <a href={`#${slug}`} className='text-muted hover:text-ink'>
                     {title}
                   </a>
                 </div>

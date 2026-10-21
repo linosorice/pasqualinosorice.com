@@ -46,8 +46,8 @@ export default function Page() {
             className='shrink-0 rounded-full object-cover'
           />
         )}
-        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-          <span className='font-medium text-neutral-900 dark:text-neutral-100'>{site.name}</span>
+        <p className='text-muted text-sm'>
+          <span className='text-ink font-medium'>{site.name}</span>
           <br />
           CTO di MioAssicuratore
         </p>
@@ -55,7 +55,7 @@ export default function Page() {
       <h1 className='title text-2xl font-semibold tracking-tighter sm:text-3xl'>
         Ciao, sono Pasqualino.
       </h1>
-      <div className='mt-4 space-y-4 text-lg text-neutral-700 dark:text-neutral-300'>
+      <div className='text-ink-soft mt-4 space-y-4 text-lg'>
         <p>
           Sono CTO di{' '}
           <a href='https://www.mioassicuratore.it' className='interlink' target='_blank'>
@@ -71,7 +71,7 @@ export default function Page() {
       <div className='mt-8 flex flex-wrap items-center gap-x-4 gap-y-2'>
         <Link
           href='/blog/un-solo-sviluppatore-sviluppo-agentico'
-          className='inline-flex items-center rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300'
+          className='bg-ink text-paper hover:bg-accent inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors'
         >
           Leggi come lavoriamo
         </Link>
@@ -80,7 +80,7 @@ export default function Page() {
         </Link>
       </div>
 
-      <p className='mt-12 text-neutral-700 dark:text-neutral-300'>
+      <p className='text-ink-soft mt-12'>
         Ogni tanto sperimento anche per conto mio: nel 2024 ho costruito ExaminatorAI, una web app,
         in 12 ore con l’AI, e{' '}
         <Link href='/blog/examinatorai-web-app-in-12-ore' className='interlink'>

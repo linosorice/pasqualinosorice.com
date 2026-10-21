@@ -23,11 +23,11 @@ const links = [
 export default function Footer() {
   return (
     <footer className='mb-16'>
-      <ul className='font-sm mt-8 flex flex-col space-y-2 space-x-0 text-neutral-600 md:flex-row md:space-y-0 md:space-x-4 dark:text-neutral-300'>
+      <ul className='font-sm text-muted mt-8 flex flex-col space-y-2 space-x-0 md:flex-row md:space-y-0 md:space-x-4'>
         {links.map(({ name, href }) => (
           <li key={name}>
             <a
-              className='flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100'
+              className='hover:text-ink flex items-center transition-all'
               rel='noopener noreferrer'
               target={href.startsWith('mailto:') ? undefined : '_blank'}
               href={href}
@@ -38,10 +38,10 @@ export default function Footer() {
           </li>
         ))}
       </ul>
-      <p className='mt-8 text-sm text-neutral-600 dark:text-neutral-300'>
+      <p className='text-muted mt-8 text-sm'>
         © {new Date().getFullYear()} {site.name}
         {site.vatNumber && <> · P.IVA {site.vatNumber}</>} ·{' '}
-        <Link href='/privacy' className='hover:text-neutral-800 dark:hover:text-neutral-100'>
+        <Link href='/privacy' className='hover:text-ink'>
           Privacy
         </Link>
       </p>

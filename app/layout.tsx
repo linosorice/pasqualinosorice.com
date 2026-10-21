@@ -2,11 +2,21 @@ import './global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { Newsreader } from 'next/font/google'
 import { Navbar } from './components/nav'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { StyleSwitcher } from './components/style-switcher'
+import { canSwitchStyle, defaultStyle, styleInitScript } from './design'
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  variable: '--font-newsreader'
+})
 
 const title = 'Pasqualino Sorice - CTO di MioAssicuratore'
 const description =
@@ -59,18 +69,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang='it'
-      className={cx(
-        'bg-white text-black dark:bg-black dark:text-white',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
+      data-style={defaultStyle}
+      // The init script may switch the style before hydration
+      suppressHydrationWarning
+      className={cx(GeistSans.variable, GeistMono.variable, newsreader.variable)}
     >
+      <head>
+        {canSwitchStyle && <script dangerouslySetInnerHTML={{ __html: styleInitScript }} />}
+      </head>
       <body className='mx-4 mt-8 max-w-xl antialiased md:mx-auto'>
         <main className='mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0'>
           <Navbar />
           {children}
           <Footer />
         </main>
+        {canSwitchStyle && <StyleSwitcher />}
         <Analytics />
         <SpeedInsights />
       </body>
