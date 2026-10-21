@@ -23,6 +23,11 @@ function readMDXFile(filePath: string) {
   return { metadata: { ...data, publishedAt } as Metadata, content: content.trim() }
 }
 
+// Minutes at about 200 words a minute, rounded and never zero
+function readingTime(content: string) {
+  return Math.max(1, Math.round(content.split(/\s+/).length / 200))
+}
+
 function getMDXData(dir: string) {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map(file => {
@@ -32,7 +37,8 @@ function getMDXData(dir: string) {
     return {
       metadata,
       slug,
-      content
+      content,
+      readingTime: readingTime(content)
     }
   })
 }
@@ -69,4 +75,9 @@ export function formatDate(date: string) {
     day: 'numeric',
     year: 'numeric'
   })
+}
+
+// Keeps numeric ranges like "5-6" on one line in wrapped titles
+export function displayTitle(title: string) {
+  return title.replace(/(\d)-(\d)/g, '$1‑$2')
 }

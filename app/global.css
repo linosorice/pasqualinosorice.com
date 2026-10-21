@@ -190,6 +190,44 @@ body {
   text-wrap: balance;
 }
 
+/* Small label above a section or a highlighted block */
+.kicker {
+  font-family: var(--meta);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+[data-style='editoriale'] .featured {
+  border-width: 2px 0 1px;
+  border-top-color: var(--ink);
+  border-radius: 0;
+  background: none;
+  padding-inline: 0;
+}
+
+[data-style='tecnico'] .kicker {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[data-style='tecnico'] .kicker::before {
+  content: '// ';
+  color: var(--muted);
+}
+
+[data-style='sobrio'] .kicker {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
 [data-style='tecnico'] .wordmark {
   font-family: var(--font-mono);
   font-size: 1rem;

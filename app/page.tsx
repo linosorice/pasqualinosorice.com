@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { BlogPosts } from 'app/components/posts'
+import { BlogPosts, FeaturedPost } from 'app/components/posts'
+import { getBlogPosts } from 'app/blog/utils'
 import { ContactNote } from 'app/components/cta'
 import { site } from 'app/config'
 import { baseUrl } from './sitemap'
@@ -27,7 +28,12 @@ const personJsonLd = {
   'sameAs': [site.github, site.x, site.linkedin]
 }
 
+// The post that explains the method, highlighted above the others
+const featuredSlug = 'un-solo-sviluppatore-sviluppo-agentico'
+
 export default function Page() {
+  let featured = getBlogPosts().find(post => post.slug === featuredSlug)
+
   return (
     <section>
       <script
@@ -35,27 +41,23 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      <div className='mb-6 flex items-center gap-4'>
+      <div className='flex items-center gap-4'>
         {site.portrait && (
           <Image
             src={site.portrait}
             alt={`Ritratto di ${site.name}`}
-            width={56}
-            height={56}
+            width={64}
+            height={64}
             preload
             className='shrink-0 rounded-full object-cover'
           />
         )}
-        <p className='text-muted text-sm'>
-          <span className='text-ink font-medium'>{site.name}</span>
-          <br />
-          CTO di MioAssicuratore
-        </p>
+        <p className='kicker'>CTO di MioAssicuratore</p>
       </div>
-      <h1 className='title text-2xl font-semibold tracking-tighter sm:text-3xl'>
+      <h1 className='display title text-ink mt-6 text-4xl leading-[1.05] sm:text-5xl'>
         Ciao, sono Pasqualino.
       </h1>
-      <div className='text-ink-soft mt-4 space-y-4 text-lg'>
+      <div className='font-body text-ink-soft mt-6 space-y-4 text-lg leading-relaxed sm:text-xl'>
         <p>
           Sono CTO di{' '}
           <a href='https://www.mioassicuratore.it' className='interlink' target='_blank'>
@@ -67,20 +69,7 @@ export default function Page() {
         </p>
         <p>Qui racconto come ci siamo arrivati, cosa funziona e cosa ho imparato strada facendo.</p>
       </div>
-
-      <div className='mt-8 flex flex-wrap items-center gap-x-4 gap-y-2'>
-        <Link
-          href='/blog/un-solo-sviluppatore-sviluppo-agentico'
-          className='bg-ink text-paper hover:bg-accent inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors'
-        >
-          Leggi come lavoriamo
-        </Link>
-        <Link href='/blog' className='interlink text-sm'>
-          Tutti gli articoli
-        </Link>
-      </div>
-
-      <p className='text-ink-soft mt-12'>
+      <p className='font-body text-muted mt-6 leading-relaxed'>
         Ogni tanto sperimento anche per conto mio: nel 2024 ho costruito ExaminatorAI, una web app,
         in 12 ore con l’AI, e{' '}
         <Link href='/blog/examinatorai-web-app-in-12-ore' className='interlink'>
@@ -89,8 +78,20 @@ export default function Page() {
         . Fuori dal codice sono un papà felice.
       </p>
 
-      <h2 className='mt-16 mb-4 text-xl font-medium tracking-tight'>Dal blog</h2>
-      <BlogPosts limit={5} />
+      {featured && (
+        <div className='mt-14'>
+          <FeaturedPost post={featured} />
+        </div>
+      )}
+
+      <h2 className='kicker mt-16 mb-2'>Dal blog</h2>
+      <BlogPosts limit={4} exclude={featuredSlug} heading='h3' />
+      <Link
+        href='/blog'
+        className='font-ui text-muted hover:text-accent mt-4 inline-flex min-h-11 items-center gap-2 text-sm transition-colors'
+      >
+        Tutti gli articoli <span aria-hidden>→</span>
+      </Link>
 
       <ContactNote />
     </section>

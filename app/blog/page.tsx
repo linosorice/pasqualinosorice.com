@@ -35,7 +35,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className='mb-8 text-2xl font-semibold tracking-tighter'>Blog</h1>
+      <h1 className='display title text-ink text-4xl sm:text-5xl'>Blog</h1>
+      <p className='font-body text-muted mt-4 mb-10 text-lg'>{description}</p>
       <BlogPosts />
     </section>
   )
