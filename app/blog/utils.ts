@@ -45,12 +45,13 @@ export function getBlogPosts(limit?: number) {
     post => isPublished(post.metadata.publishedAt) && !replaced.has(post.slug)
   )
 
-  const sortedData = filteredData.sort((a, b) => {
-    if (a.metadata.publishedAt > b.metadata.publishedAt) {
-      return -1
-    }
-    return 1
-  })
+  // Newest first; on the same day original posts come before rewrites of older ones
+  const sortedData = filteredData.sort(
+    (a, b) =>
+      b.metadata.publishedAt.localeCompare(a.metadata.publishedAt) ||
+      Number(Boolean(a.metadata.replaces)) - Number(Boolean(b.metadata.replaces)) ||
+      a.metadata.title.localeCompare(b.metadata.title)
+  )
 
   if (limit) {
     return sortedData.slice(0, limit)
