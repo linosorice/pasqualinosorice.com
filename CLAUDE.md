@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal website and blog of Pasqualino Sorice (https://www.pasqualinosorice.com), CTO of MioAssicuratore, telling how he set up a system of AI agents that develop software instead of a development team. Consulting is offered only in private conversations: the site must not show services, prices or booking buttons. All copy is in Italian (`lang="it"`); the older posts are still in English until they are rewritten. Built with Next.js 16 App Router (Turbopack, React 19), Tailwind CSS v4 (via `@tailwindcss/postcss`) and MDX. Deployed on Vercel; analytics via Vercel Analytics and Speed Insights only (cookieless, no consent banner — do not reintroduce GTM/GA without one).
+Personal website and blog of Pasqualino Sorice (https://www.pasqualinosorice.com), CTO of MioAssicuratore, telling how he set up a system of AI agents that develop software instead of a development team. Consulting is offered only in private conversations: the site must not show services, prices or booking buttons. All copy is in Italian (`lang="it"`). Built with Next.js 16 App Router (Turbopack, React 19), Tailwind CSS v4 (via `@tailwindcss/postcss`) and MDX. Deployed on Vercel; analytics via Vercel Analytics and Speed Insights only (cookieless, no consent banner — do not reintroduce GTM/GA without one).
 
 ## Commands
 

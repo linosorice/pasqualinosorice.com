@@ -126,7 +126,7 @@ export default function Page() {
             ExaminatorAI
           </strong>
           : una web app costruita in 12 ore con l’AI, un esperimento del 2024 che{' '}
-          <Link href='/blog/examinatorai' className='interlink'>
+          <Link href='/blog/examinatorai-web-app-in-12-ore' className='interlink'>
             ho raccontato qui
           </Link>
           .
