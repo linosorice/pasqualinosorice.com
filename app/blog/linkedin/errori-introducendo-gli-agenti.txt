@@ -1,0 +1,5 @@
+Nuovo articolo: gli errori che abbiamo fatto introducendo gli agenti nel team, da marzo a oggi.
+
+Regole scritte che nessuno strumento applicava, controlli sempre rossi, un backlog che cresceva da solo, un agente che si fermava a chiedere troppo spesso e il giorno in cui abbiamo cambiato le regole tre volte. Per ognuno, cosa è successo e cosa abbiamo cambiato.
+
+https://www.pasqualinosorice.com/blog/errori-introducendo-gli-agenti

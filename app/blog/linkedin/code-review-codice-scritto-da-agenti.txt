@@ -1,0 +1,5 @@
+Nuovo articolo: come facciamo la code review quando il codice lo scrivono gli agenti.
+
+Il revisore è un agente separato che parte solo dal numero della pull request, segue una checklist scritta e commenta senza mai approvare. A me arriva una scheda di dodici righe. Analisi statica e copertura dei test guardano solo il codice nuovo.
+
+https://www.pasqualinosorice.com/blog/code-review-codice-scritto-da-agenti

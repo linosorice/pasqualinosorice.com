@@ -1,0 +1,5 @@
+Nuovo articolo: come scriviamo il contesto per gli agenti in MioAssicuratore.
+
+Com'è fatto il nostro file di istruzioni, perché accanto a ogni regola c'è scritto il motivo, come dividiamo il contesto tra agenti, comandi e skill, e quali regole facciamo rispettare con controlli automatici invece di lasciarle scritte nel file.
+
+https://www.pasqualinosorice.com/blog/dare-contesto-agli-agenti

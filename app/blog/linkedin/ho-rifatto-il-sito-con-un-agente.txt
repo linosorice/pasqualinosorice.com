@@ -1,0 +1,5 @@
+Nuovo articolo: ho fatto rifare il design di questo sito a un agente.
+
+Invece di descrivermi tre stili, li ha implementati tutti e tre in un'unica pull request, su una base comune, così ho scelto guardando le pagine vere. Racconto cosa ha fatto l'agente, cosa ho deciso io e come ha trovato un bug negli spazi tra le parole, un'ipotesi alla volta.
+
+https://www.pasqualinosorice.com/blog/ho-rifatto-il-sito-con-un-agente
