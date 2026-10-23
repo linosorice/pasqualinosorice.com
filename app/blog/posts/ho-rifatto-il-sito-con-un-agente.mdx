@@ -1,0 +1,83 @@
+---
+title: 'Ho fatto rifare il design del mio sito a un agente: tre stili da confrontare, una scelta'
+publishedAt: '2026-10-27'
+summary: "Il mio sito era minimale, ma troppo. Ho chiesto a un agente cosa si poteva fare e gli ho delegato tutto. Invece di descrivermi tre direzioni le ha costruite, così ho scelto guardando le pagine vere. Cosa ha fatto l'agente, cosa ho deciso io e cosa ho imparato."
+---
+
+Fino a qualche giorno fa questo sito era quasi identico al template da cui era partito: bianco e nero, un solo font, l'elenco dei post come un muro di link sottolineati. Pulito, ma anonimo. Chi legge blog di tecnologia l'aveva già visto cento volte.
+
+Così ho aperto una sessione con l'agente che uso tutti i giorni e gli ho scritto una riga: "mi piacerebbe abbellire un po' questo sito. È minimale, ma troppo. Cosa possiamo fare?"
+
+Meno di mezz'ora dopo avevo una pull request con tre stili completi da confrontare. Il giorno stesso il sito che stai leggendo era in produzione. Racconto com'è andata, perché dice molto su come si delega un lavoro a un agente, anche quando il lavoro non è codice di prodotto.
+
+## Prima la diagnosi, poi le proposte
+
+L'agente non è partito dalle idee. Prima ha guardato il sito in produzione, ha fatto gli screenshot della home e di un articolo e ha letto il codice dei componenti. Poi mi ha detto cosa non andava, in concreto:
+
+- il sito era riconoscibile come il template di partenza;
+- non c'era nessun colore, a parte il blu della selezione del testo;
+- i titoli dei paragrafi avevano tutti la stessa dimensione;
+- l'elenco dei post mostrava solo data e titolo, e le date erano tutte uguali;
+- negli articoli l'indice occupava tutta la prima schermata.
+
+Solo dopo ha proposto tre direzioni: un sito **editoriale**, con un font serif su fondo color carta; uno **tecnico**, con dettagli da terminale e un accento verde; uno **sobrio**, che teneva il bianco e nero di prima aggiungendo un colore e una gerarchia più chiara. Ne raccomandava una, con il motivo.
+
+È lo stesso principio del nostro [workflow di sviluppo](/blog/un-solo-sviluppatore-sviluppo-agentico): prima si capisce il problema, poi si costruisce. Un agente che parte subito a scrivere CSS produce qualcosa di più bello, ma non necessariamente qualcosa di giusto.
+
+## "Implementale tutte"
+
+A quel punto avrei dovuto scegliere una direzione leggendo tre descrizioni. È quello che si fa di solito: si guarda una moodboard, si immagina il risultato e si spera che una volta costruito somigli a quello che si aveva in testa.
+
+Ho risposto in un altro modo: "ti delego completamente il tutto, fai a gusto tuo. Mi piacciono le tre strade, implementale tutte e poi fai una unica PR, così vedo tutto insieme."
+
+Con un team di persone sarebbe stata una richiesta assurda: tre design completi per sceglierne uno. Con un agente costa poco, a patto di impostare bene la struttura. L'agente ha costruito una base comune per tutti e tre gli stili: header, home con l'articolo in evidenza, pagina articolo con l'indice laterale, gerarchia dei titoli. Sopra ci ha messo tre serie di valori per colori e font. Nell'anteprima della pull request c'era un piccolo selettore in fondo alla pagina per passare da uno stile all'altro.
+
+Così ho scelto guardando le pagine vere, con i miei articoli, in chiaro e in scuro, sul computer e sul telefono. Non su una descrizione.
+
+## Un passo, un commit, una verifica
+
+L'agente non ha fatto tutto in un colpo. Ha lavorato per passi: prima i colori e i font, poi la tipografia degli articoli, poi header e footer, poi la home, poi la pagina articolo, infine le rifiniture. Ogni passo aveva il suo commit.
+
+Dopo ogni passo l'agente apriva il sito in locale e faceva gli screenshot dei tre stili, controllava modalità scura, telefono e schermo largo, e correggeva quello che non andava. Per esempio, un titolo andava a capo in mezzo a "5-6", lasciando "5-" su una riga e "6" su quella sotto. Prima della pull request ha fatto girare lint, controllo dei tipi e build di produzione. Ha anche verificato che in produzione il selettore degli stili non comparisse.
+
+Questo modo di procedere non l'ha inventato l'agente: è scritto in un comando che avevo preparato per le rifiniture delle interfacce. Diagnosi, un intervento alla volta, una verifica dal vivo e un commit per ogni passo. Il risultato dipende molto da quanto contesto e quanto metodo dai all'agente prima di cominciare.
+
+## La scelta e la pulizia
+
+Ho guardato l'anteprima e ho scritto tre parole: "mi piace tecnico".
+
+Leggendo le descrizioni avrei scelto editoriale, che era anche la raccomandazione dell'agente. Guardando le pagine vere ho capito che il serif su fondo carta raccontava uno che scrive, non uno che costruisce. Tecnico somiglia a quello che faccio ogni giorno: il terminale, i commenti nel codice, i `##` del markdown. L'ho riconosciuto dal telefono, prima ancora di leggere.
+
+Da lì l'agente ha tolto gli altri due stili, il selettore e il font serif che non serviva più. È stato semplice perché ogni colore e ogni font passavano dagli stessi valori centralizzati: eliminare due stili voleva dire cancellare due blocchi, non riscrivere i componenti. Poi ha rifatto nello stesso stile l'immagine che compare quando un articolo viene condiviso sui social e l'icona del sito.
+
+## Il bug che nessuno aveva previsto
+
+Nell'immagine per i social gli spazi tra le parole del titolo erano irregolari: alcuni normali, altri il doppio. Nel browser lo stesso titolo era perfetto.
+
+Il modo in cui l'agente l'ha risolto è stata la parte più istruttiva. Ha provato un'ipotesi alla volta, e ogni volta ha rigenerato l'immagine e l'ha guardata:
+
+1. ha tolto il bilanciamento automatico delle righe: niente;
+2. ha sospettato la crenatura del font e l'ha rimossa dal file: niente;
+3. ha provato il titolo con il font monospazio: spazi perfetti, quindi il problema era legato al font del titolo;
+4. ha separato le parole e tolto la spaziatura negativa tra le lettere: risolto.
+
+La causa era il motore che genera queste immagini, che misura male le parole quando la spaziatura tra le lettere è negativa. Le prime due ipotesi erano plausibili e sbagliate. Senza una verifica dopo ogni tentativo, la prima spiegazione convincente sarebbe finita in produzione insieme al bug.
+
+È la stessa lezione dei test nel codice di prodotto: un agente è velocissimo a provare soluzioni, ma la velocità serve solo se ogni tentativo viene controllato sul risultato vero.
+
+## Cosa ho fatto io
+
+Contando i messaggi, ne ho scritti quattro: la domanda iniziale, la delega, la scelta dello stile e "ok, andiamo in prod". Il resto, cioè 22 file modificati e una decina di commit, l'ha fatto l'agente.
+
+Da solo ci avrei messo almeno un paio di weekend, e probabilmente mi sarei fermato al primo stile accettabile. Con un designer, tra brief, proposte e giri di revisione, sarebbero state settimane. Qui ho scelto fra tre stili finiti nello stesso pomeriggio in cui ho fatto la domanda.
+
+Le due decisioni che contavano sono rimaste mie: quale stile tenere e quando andare in produzione. L'agente ha preparato tutto, ma il deploy è partito solo dopo il mio OK.
+
+## Cosa mi porto via
+
+- **Quando costruire costa poco, non scegliere sulla carta.** Fai costruire le alternative e scegli guardando il risultato vero.
+- **La struttura viene prima dell'estetica.** I valori centralizzati hanno reso economiche sia le tre varianti sia l'eliminazione di due.
+- **Un passo, un commit, una verifica, anche nel design.** Gli screenshot dopo ogni passo sono i test di un'interfaccia.
+- **Le decisioni di gusto e di rilascio restano tue.** All'agente si delega il lavoro, non la responsabilità.
+
+Se vuoi vedere il risultato, ci sei già dentro. Se hai provato a delegare a un agente qualcosa che non è codice di prodotto, mi interessa sapere com'è andata.

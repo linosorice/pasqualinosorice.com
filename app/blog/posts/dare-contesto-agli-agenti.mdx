@@ -1,0 +1,84 @@
+---
+title: 'Dare contesto agli agenti: cosa scriviamo e cosa facciamo rispettare agli strumenti'
+publishedAt: '2026-11-03'
+summary: "Un agente lavora bene quanto il contesto che gli dai. Com'è fatto il nostro file di istruzioni, perché ogni regola porta scritto il suo perché, come agenti diversi sanno cose diverse e perché le regole che contano non le lasciamo alla buona volontà."
+---
+
+Nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico) ho scritto che il lavoro delle persone, con gli agenti, si riduce a tre cose: decidere cosa costruire, guidare gli agenti e controllare il risultato. Questo articolo è sulla seconda.
+
+Un agente non si ricorda di ieri. Ogni sessione parte da zero, e quello che sa del progetto è il codice che legge più quello che gli scrivi. Se il contesto è sbagliato, l'agente sbaglia con sicurezza. Se è incompleto, riempie i vuoti da solo. Per questo in MioAssicuratore il contesto lo trattiamo come codice: si scrive, si revisiona, si corregge quando sbaglia.
+
+## Il file di istruzioni
+
+Il centro di tutto è un file in Markdown nella radice del repository. Noi lo chiamiamo `CLAUDE.md` perché oggi usiamo Claude Code; altri strumenti leggono `AGENTS.md` o file simili, ma l'idea è la stessa. L'agente lo legge all'inizio di ogni sessione.
+
+Il nostro è nato a marzo con 153 righe. Oggi ne ha circa 670, divise in sezioni con un indice: architettura, convenzioni, flusso di lavoro obbligatorio, feature flag, permessi, design, rilascio, test, gestione del prodotto. Accanto ci sono 16 file più piccoli, uno per ogni area del codice che ha regole sue, e un file con le decisioni di design della product designer.
+
+Non è cresciuto in modo lineare. A maggio era arrivato a 719 righe e diceva le stesse cose in più punti. L'ho compattato in due passate, con un vincolo: stessi concetti, meno parole. Alla fine era sotto le 470 righe. Poi è ricresciuto, ma in modo diverso: ogni regola nuova nasce da un errore vero.
+
+## Ogni regola porta scritto il suo perché
+
+Nel nostro file quasi nessuna regola è solo un ordine. Accanto c'è il motivo e, spesso, il caso che l'ha fatta nascere: "Il caso che ha portato a queste regole (ottobre 2026): …".
+
+Sembra prolisso, ma serve. Un agente che conosce solo la regola la applica alla lettera, anche dove non c'entra, oppure la aggira quando gli sembra d'intralcio. Se conosce il perché, sa riconoscere il caso limite. E il perché serve anche a me, quando rileggo il file dopo tre mesi e mi chiedo se una regola ha ancora senso.
+
+## Un'informazione in un posto solo
+
+A luglio il nostro file descriveva come attivi 23 script di collaudo che nessuno usava più, e diceva che i test giravano in una pipeline che non esisteva. Gli agenti ci credevano. Proprio quando qualcosa andava storto andavano a cercare nel posto sbagliato.
+
+Da allora seguiamo due regole:
+
+- **niente fotografie dello stato.** Un elenco copiato dal codice invecchia il giorno dopo. Al suo posto mettiamo un rimando al file vero, che l'agente può leggere;
+- **ogni informazione sta in un posto solo.** Il formato di una pull request, per esempio, vive nel template della pull request e da nessun'altra parte. Il file di istruzioni dice solo dove trovarlo.
+
+A giugno abbiamo fatto anche un "lint" del file: abbiamo cercato le contraddizioni e verificato ogni affermazione contro il codice. Il criterio per far entrare qualcosa è semplice: ci va solo quello che l'agente non può ricavare leggendo il codice.
+
+## Scrivere anche come deve parlarti
+
+Una parte del contesto non riguarda il codice, ma la comunicazione. Nel nostro file c'è scritto chi è il lettore delle risposte dell'agente: il CTO che deve decidere, non uno sviluppatore in pair programming. Quindi prima viene quello che serve per decidere, e la raccomandazione va sempre per prima. C'è anche un esempio di risposta sbagliata e di risposta giusta.
+
+Ci sono anche regole di lingua: le risposte sono in italiano, il codice e i messaggi di commit in inglese. È un dettaglio, ma toglie attrito a ogni sessione.
+
+## Agenti diversi, contesti diversi
+
+Non tutto il contesto va dato a tutti. Lo dividiamo in quattro tipi di file:
+
+- **agenti**: ruoli con strumenti limitati. Il revisore, l'architetto, l'agente di grooming e quello che gestisce il backlog possono solo leggere. L'agente che verifica l'interfaccia può usare solo il browser;
+- **comandi**: procedure che si lanciano a mano, come il merge o il rilascio. Quelli che portano in produzione partono solo se li scrivo io: l'agente non può lanciarli da solo;
+- **skill**: convenzioni e modelli per creare nuovi pezzi di codice;
+- **documentazione**: le decisioni tecniche già prese, ognuna con il suo motivo.
+
+Ogni ruolo ha anche dei confini scritti. L'agente di grooming fa ricerca ma non decide, e quando non ha verificato qualcosa scrive "DA VERIFICARE". Il revisore di design non inventa regole: se il file di design non copre un caso, la regola resta provvisoria, non blocca il lavoro e la domanda parte subito alla designer.
+
+## L'architetto che risponde solo con i precedenti
+
+Con me portano codice in produzione anche il CEO e la product designer. Quando una loro sessione arriva a una scelta tecnica, non la fa da sola: la passa a un agente architetto, che può solo leggere.
+
+L'architetto risponde solo se la risposta è già scritta: nel registro delle decisioni tecniche, nel file di istruzioni, nei documenti di architettura, nel codice esistente o in una mia decisione su una issue. La regola è esplicita: "Una fonte vale se dice esattamente la cosa che serve. «Assomiglia» non basta." Costi, sicurezza, dati, moduli nuovi, fornitori e casi senza precedenti arrivano sempre a me. Ogni decisione nuova entra nel registro insieme alla pull request che la implementa, e da lì diventa un precedente.
+
+Il CEO e la designer vivono queste regole come un rallentamento, e li capisco. Ma sono nate da un problema preciso. Quando non c'erano, arrivavano pull request con scelte tecniche che non andavano bene, e ho dovuto far rifare parecchio codice. Fermarsi a chiedere all'architetto sembra più lento; rifare il lavoro dopo lo è molto di più.
+
+## Le regole che contano le fanno rispettare gli strumenti
+
+Un file di istruzioni è un suggerimento: l'agente lo legge, ma può sbagliare a interpretarlo o ignorarlo. Le regole che contano davvero le abbiamo spostate negli strumenti:
+
+- **prima di ogni comando** un controllo blocca i tentativi di saltare i controlli di git e i rilasci in produzione da parte di chi non è il CTO;
+- **quando l'agente apre una pull request** lo stesso controllo blocca le pull request impilate, quelle oltre i limiti di dimensione e quelle con scelte tecniche non registrate;
+- **a ogni messaggio** l'agente riceve un promemoria del perimetro della issue su cui sta lavorando, ricavato dal nome del branch;
+- **prima di ogni commit e di ogni push** girano la ricerca di segreti, il lint, il controllo dei tipi, i test e la copertura.
+
+Anche questi controlli sono codice, e hanno i loro test.
+
+Alcune regole restano solo scritte, e lo sappiamo. Per esempio "fai la soluzione più semplice" non la può verificare uno script: la controlla la review. L'importante è sapere quali regole sono garantite da uno strumento e quali dipendono dalla buona volontà.
+
+## Da dove partire
+
+Se il tuo team inizia adesso a lavorare con gli agenti:
+
+1. **Parti da un file corto.** Architettura, come si lanciano i test, le cinque regole che contano davvero. Il resto arriverà dagli errori.
+2. **Scrivi il perché accanto a ogni regola.** Aiuta l'agente nei casi limite e aiuta te a capire quando una regola è diventata inutile.
+3. **Quando un agente sbaglia, correggi il contesto, non solo il codice.** Altrimenti lo stesso errore torna alla sessione successiva.
+4. **Rimanda al codice, non copiarlo.** Ogni copia è una fotografia che invecchia.
+5. **Sposta negli strumenti le regole che contano.** Quello che è solo scritto, prima o poi un agente lo aggira.
+
+Il contesto non si scrive una volta sola. Il nostro file ha avuto 86 versioni in sette mesi, e ogni versione è una cosa che abbiamo imparato.

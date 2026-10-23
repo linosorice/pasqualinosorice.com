@@ -1,0 +1,93 @@
+---
+title: 'Code review quando il codice lo scrive un agente'
+publishedAt: '2026-11-10'
+summary: 'Se il codice non lo scrive nessuno di noi, chi lo rivede e cosa guarda? Un revisore indipendente che parte da zero, una checklist che chiede anche «si poteva fare con metà del codice?», una scheda di dodici righe per me e i controlli di qualità solo sul codice nuovo.'
+---
+
+A ottobre in MioAssicuratore abbiamo fatto il merge di circa 250 pull request. Il codice l'hanno scritto tutto gli agenti. Nessuno può leggere 250 pull request riga per riga, eppure la review non è diventata facoltativa: è cambiato chi la fa e cosa guarda.
+
+Nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico) ho accennato che ogni pull request passa da una review indipendente prima del merge. Qui racconto come funziona davvero.
+
+## Il primo errore: la review fatta dall'autore
+
+All'inizio la review girava prima del push. La lanciava lo stesso agente che aveva scritto il codice, e il revisore partiva dal suo resoconto. Ereditava le sue impostazioni e i suoi punti ciechi, e non lasciava traccia.
+
+Ad agosto l'abbiamo spostata dopo l'apertura della pull request. Il revisore è un agente diverso, che parte da zero e conosce solo il numero della pull request. Legge la issue, il diff e la descrizione, come farebbe un collega che non ha seguito il lavoro. I suoi rilievi finiscono come commenti sulla pull request, così restano visibili a tutti.
+
+## Cosa controlla il revisore
+
+Il revisore ha una checklist scritta. Le voci principali sono queste:
+
+- **architettura**: il codice sta dove deve stare e rispetta le convenzioni;
+- **dati**: le migrazioni del database si possono annullare, e i dati di un cliente non finiscono mai a un altro;
+- **completezza**: se il codice usa un segreto o una variabile d'ambiente nuova, è stata aggiunta anche dove serve per il rilascio;
+- **sicurezza**;
+- **perimetro**: la pull request fa quello che chiede la issue, e niente di più;
+- **decisioni prese da solo**: l'agente che ha sviluppato ha fatto scelte non previste dall'epica? Le ha dichiarate?
+- **semplicità**: "si poteva fare con metà del codice senza che nessuno se ne accorga?".
+
+L'ultima voce l'abbiamo aggiunta a giugno. Molte delle nostre feature sono esperimenti: se non funzionano, si tolgono. Per un esperimento la complessità in più è debito, non qualità. L'unica eccezione sono sicurezza e isolamento dei dati, dove la prudenza non è mai troppa.
+
+Altrettanto importante è quello che il revisore **non** deve fare. Non blocca per questioni di stile o preferenze personali. Non chiede prove che possono esistere solo dopo il merge, come l'esito del collaudo in produzione: verifica che il piano di collaudo sia dichiarato, non che sia già stato eseguito. Pretendere l'impossibile in review produce solo falsi blocchi.
+
+## Commenti, mai approvazioni
+
+Ogni rilievo ha una gravità: bloccante, da discutere o minore. Il revisore pubblica un'unica review su GitHub con tutti i rilievi. Quelli bloccanti e da discutere sono commenti sulle righe interessate, quelli minori vanno in fondo.
+
+Il revisore non approva mai: commenta soltanto. L'approvazione è una decisione e resta mia. E pubblica la review anche quando non trova niente, perché una pull request senza il suo commento è una pull request ancora da revisionare.
+
+Se la pull request tocca l'interfaccia, in parallelo parte un secondo revisore, specializzato nel design, che controlla le regole scritte dalla product designer.
+
+## La scheda per me
+
+In cima alla review c'è una scheda di al massimo dodici righe, scritta per me. Dice:
+
+- cosa cambia per l'utente;
+- quali decisioni l'agente ha preso da solo, e se le ha dichiarate;
+- quali scelte tecniche ci sono, con la fonte che le giustifica;
+- come è stato testato e come verrà collaudato;
+- il verdetto.
+
+Una scelta tecnica che c'è nel codice ma non è registrata da nessuna parte blocca la pull request.
+
+Il merge mi prende poco tempo, e il motivo non è la scheda. Le scelte tecniche le ho già fatte prima, durante il grooming o tramite le decisioni registrate. Quando arriva la pull request il codice è stato solo sviluppato come mi aspetto. La scheda mi serve a confermarlo in un minuto, e il diff lo apro quando segnala qualcosa che non torna. La verifica vera resta il collaudo, quando accendo il feature flag.
+
+## Il diritto di replica
+
+Un revisore automatico può sbagliare. Se ogni rilievo andasse corretto per forza, l'agente che ha sviluppato finirebbe per cambiare codice giusto solo per far tacere il revisore. È la cosa peggiore che può succedere a una pull request.
+
+Per questo l'agente autore ha un diritto di replica: invece di correggere, può rispondere a un rilievo spiegando perché il codice va bene così. Come ho raccontato nel post sul workflow, i giri di review sono al massimo due. Quando lavoriamo sulla coda delle pull request, il secondo giro lo fa un agente diverso da quello che ha corretto: chi ha corretto non si giudica.
+
+## Controlli di qualità solo sul codice nuovo
+
+Oltre al revisore ci sono i controlli automatici: analisi statica, test e copertura. Li abbiamo cambiati più volte, e la versione attuale è questa:
+
+- l'analisi statica guarda solo le righe aggiunte. Bug e vulnerabilità bloccano, lo stile genera solo un avviso;
+- le righe di logica cambiate devono essere coperte dai test almeno all'80%. L'interfaccia è esclusa, e sotto le 20 righe la soglia non si applica;
+- il debito tecnico vecchio non blocca nessuno.
+
+Prima non era così, e un controllo che falliva sempre per colpa del codice vecchio veniva ignorato in blocco, anche quando segnalava un problema vero. Dal 20 ottobre quattro controlli su GitHub sono obbligatori per tutti, me compreso.
+
+## La review trova anche i buchi delle regole
+
+Il rilievo più istruttivo degli ultimi mesi non riguardava il codice di prodotto, ma le nostre regole. Il limite di dimensione delle pull request non scattava mai. Il template della pull request citava, in un commento, l'intestazione che serve per dichiarare un'eccezione al limite, e il controllo la trovava in ogni pull request. A notarlo è stata la review.
+
+Da lì ho capito che anche i controlli vanno revisionati, non solo il codice.
+
+## I numeri
+
+Qualche numero, arrotondato, per dare un'idea:
+
+- circa 250 pull request mergiate a ottobre;
+- circa la metà ha almeno una correzione nata dalla review;
+- tra fine agosto e fine settembre, circa il 5% dei rilasci ha causato un problema in produzione. L'obiettivo che ci siamo dati è restare sotto il 10%.
+
+## Da dove partire
+
+1. **Separa chi scrive da chi rivede.** Il revisore deve partire da zero, senza il resoconto dell'autore.
+2. **Scrivi una checklist, compreso quello che il revisore deve ignorare.** I falsi blocchi costano quanto i bug mancati.
+3. **Fatti preparare una sintesi, non leggere tutti i diff.** Funziona solo se le scelte tecniche le hai già prese prima dello sviluppo.
+4. **Metti i controlli di qualità solo sul codice nuovo.** Un controllo sempre rosso finisce ignorato.
+5. **Limita i giri di review e dai diritto di replica.** Una review che non converge peggiora il codice invece di migliorarlo.
+
+Se nel tuo team avete trovato un modo diverso di rivedere il codice scritto dagli agenti, mi interessa sapere come.

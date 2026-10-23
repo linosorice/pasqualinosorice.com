@@ -1,6 +1,7 @@
 const { getReplacements } = require('./app/blog/publishing')
 
-// 'unsafe-eval' is only needed by React's dev tooling, never in production
+// 'unsafe-eval' is only needed by React's dev tooling, never in production.
+// HTTPS upgrades are production-only too, or the dev server can't be opened from another device.
 const isDev = process.env.NODE_ENV === 'development'
 
 const cspHeader = `
@@ -13,7 +14,7 @@ const cspHeader = `
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    upgrade-insecure-requests;
+    ${isDev ? '' : 'upgrade-insecure-requests;'}
 `
 
 // Posts removed in the October 2026 relaunch: keep their backlinks working
