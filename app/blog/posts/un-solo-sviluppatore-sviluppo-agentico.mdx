@@ -1,14 +1,14 @@
 ---
 title: 'Un solo sviluppatore, 5-6 feature a settimana: come lavoriamo con gli agenti AI'
 publishedAt: '2026-10-21'
-summary: "Prima eravamo 6 sviluppatori e rilasciavamo 1-2 feature ogni due settimane. Oggi sono l'unico sviluppatore, con me CEO e product designer portano codice in produzione grazie agli agenti AI, e la qualità è la stessa. Ecco il metodo, passo per passo."
+summary: "Prima eravamo 6 sviluppatori e rilasciavamo 1-2 feature ogni due settimane. Oggi sono l'unico sviluppatore, con me CEO e product designer portano codice in produzione grazie agli agenti AI, e la qualità è la stessa. Come funziona il metodo, passo per passo."
 ---
 
 Prima di lavorare con gli agenti, in MioAssicuratore eravamo 5-6 sviluppatori e mettevamo in produzione 1-2 feature ogni due settimane. Oggi lo sviluppatore sono solo io, e nemmeno a tempo pieno. Con me lavorano il CEO e la product designer, che portano codice in produzione anche loro grazie agli agenti. In una settimana rilasciamo anche 5-6 feature.
 
 Non abbiamo tagliato sulla qualità per andare più veloci. Ogni feature arriva in produzione con test unitari, test end-to-end e una review della pull request prima del merge, esattamente come prima. La differenza è che il codice non lo scriviamo più noi: lo scrivono gli agenti AI, tutto.
 
-In questo articolo racconto come lavoriamo, passo per passo. Non è una lista di strumenti: è un metodo, e funziona indipendentemente dall'agente o dal modello che usi.
+In questo articolo racconto come lavoriamo, passo per passo. Non è una lista di strumenti: è un metodo, e non dipende dall'agente o dal modello che usi.
 
 ## Da dove siamo partiti
 
@@ -26,7 +26,7 @@ Nel nostro team il 100% del codice lo scrivono gli agenti. Il lavoro delle perso
 - **guidare gli agenti**, dando loro il contesto giusto;
 - **controllare il risultato**, con test e review.
 
-Sembra un dettaglio, ma cambia tutto. Il tempo non si spende più a scrivere codice, si spende a togliere ambiguità prima e a verificare dopo.
+Il tempo non si spende più a scrivere codice, si spende a togliere ambiguità prima e a verificare dopo.
 
 C'è una conseguenza che all'inizio non mi aspettavo: se il lavoro è decidere e verificare, non serve essere sviluppatori per contribuire. Il CEO e la product designer aprono issue, fanno il grooming con l'agente e portano le loro pull request fino al merge. Quello che non possono fare è valutare le scelte tecniche, e per questo le scelte tecniche passano sempre da me, oppure da un agente che risponde solo citando decisioni già prese e documentate. Se la risposta non c'è, la domanda arriva a me.
 
@@ -58,9 +58,7 @@ L'agente non affronta l'epica tutta insieme: lavora **per deliverable**, pezzi p
 
 Ogni pull request arriva con test unitari e test end-to-end, e il codice di logica che cambia deve essere coperto dai test. Poi passa da una review indipendente: un altro agente, che parte da zero e conosce solo il numero della pull request, controlla il lavoro. Il merge avviene solo con il mio OK.
 
-Su questo non facciamo eccezioni, e non è un caso: più codice produce l'agente, più i test diventano l'unico modo affidabile per sapere che funziona.
-
-Chi pensa che con l'AI si possa fare a meno dei test ha il ragionamento al contrario. Lo sviluppo agentico richiede più rigore, non meno.
+Su questo non facciamo eccezioni: più codice produce l'agente, più i test diventano l'unico modo affidabile per sapere che funziona. Con gli agenti i test servono di più, non di meno.
 
 ### 5. Tutto finisce su main, i feature flag decidono
 
@@ -74,7 +72,7 @@ Con 5-6 feature a settimana, gestire rami paralleli sarebbe impossibile. Con i f
 
 Oggi usiamo Claude Code, ma il nostro modo di lavorare non è legato a un agente o a un modello. Il valore sta nella struttura: issue, epiche senza punti aperti, ruoli separati, deliverable piccoli, test obbligatori e feature flag. Se domani uscisse uno strumento migliore, cambieremmo strumento senza cambiare metodo.
 
-È anche il consiglio che do a chi parte: non scegliere prima lo strumento. Scegli prima come vuoi lavorare.
+Per chi parte adesso vale lo stesso: prima si decide come lavorare, poi si sceglie lo strumento.
 
 ## Cosa non funziona ancora (e cosa abbiamo imparato)
 
@@ -95,4 +93,4 @@ Non serve rivoluzionare tutto in un giorno. Se dovessi ripartire da zero, farei 
 3. **Lavora per pezzi piccoli e integra spesso.** Deliverable brevi, pull request piccole e feature flag per decidere quando rilasciare.
 4. **Metti le regole in uno strumento, non in un documento.** Ogni regola che conta va fatta rispettare da un controllo automatico, altrimenti prima o poi un agente la aggira.
 
-Il resto viene da sé, ma richiede tempo e qualche errore. Se state facendo lo stesso percorso, mi fa piacere sapere com'è andata a voi.
+Il resto è arrivato con il tempo, e quasi sempre da un errore.
