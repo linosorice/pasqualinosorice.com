@@ -1,0 +1,17 @@
+Un agente non si ricorda di ieri.
+
+Ogni sessione parte da zero: quello che sa del progetto è il codice che legge più quello che gli scrivi. Se il contesto è sbagliato, sbaglia con sicurezza.
+
+In MioAssicuratore il file di istruzioni per gli agenti è nato a marzo con 153 righe. In sette mesi ha avuto 86 versioni. Tre cose che ho imparato scrivendolo:
+
+1. Ogni regola porta scritto il suo perché. Un agente che conosce solo la regola la applica alla lettera, oppure la aggira. Se conosce il motivo, riconosce il caso limite.
+
+2. Niente fotografie dello stato. A luglio il file descriveva 23 script che nessuno usava più, e gli agenti ci credevano.
+
+3. Le regole che contano non stanno nel file. Le fa rispettare uno strumento, che ha i suoi test.
+
+E quando un agente sbaglia, correggo il contesto, non solo il codice. Altrimenti lo stesso errore torna alla sessione dopo.
+
+Ho raccontato com'è fatto il nostro, il link è nel primo commento.
+
+Voi dove tenete il contesto per i vostri agenti?

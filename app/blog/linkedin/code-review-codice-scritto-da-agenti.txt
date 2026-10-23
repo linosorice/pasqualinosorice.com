@@ -1,0 +1,13 @@
+A ottobre abbiamo fatto il merge di circa 250 pull request. Il codice l'hanno scritto tutto gli agenti.
+
+Nessuno può leggerle riga per riga. Ma la review non è diventata facoltativa: è cambiato chi la fa e cosa guarda.
+
+Il primo errore è stato far fare la review allo stesso agente che aveva scritto il codice: ereditava i suoi punti ciechi. Oggi il revisore è un altro agente, che parte da zero e conosce solo il numero della pull request.
+
+La domanda della sua checklist che preferisco: "si poteva fare con metà del codice senza che nessuno se ne accorga?". Molte nostre feature sono esperimenti, e per un esperimento la complessità è debito.
+
+Il revisore non approva mai, commenta soltanto. In cima mi lascia una scheda di dodici righe: cosa cambia per l'utente, cosa ha deciso l'agente da solo, come è stato testato. L'approvazione resta mia.
+
+Ho raccontato tutto il sistema, compreso il diritto di replica dell'agente che ha scritto il codice. Il link è nel primo commento.
+
+Nel vostro team come rivedete il codice scritto dagli agenti?

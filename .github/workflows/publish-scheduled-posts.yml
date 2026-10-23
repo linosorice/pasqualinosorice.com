@@ -1,5 +1,6 @@
 # Pages are statically generated and posts dated in the future are hidden at build time:
-# rebuild the site on the day a post is scheduled so it goes live without a manual deploy.
+# rebuild the site on the day a post is scheduled so it goes live without a manual deploy,
+# then open an issue reminding to share it on LinkedIn.
 name: Publish scheduled posts
 
 on:
@@ -11,6 +12,14 @@ on:
         description: 'Deploy even if no post is scheduled for today'
         type: boolean
         default: false
+      remind:
+        description: 'Send the LinkedIn reminder for this post slug (to resend it or test it)'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   deploy:
@@ -18,18 +27,31 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Trigger Vercel deploy hook if a post is scheduled for today
-        env:
-          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
-          FORCE: ${{ inputs.force }}
+      - name: Find posts scheduled for today
+        id: today
         run: |
           today=$(date -u +%F)
-          if [ "$FORCE" != "true" ] && ! grep -rlE "^publishedAt: ['\"]?${today}" app/blog/posts; then
-            echo "No post scheduled for ${today}"
-            exit 0
-          fi
+          slugs=$( (grep -lE "^publishedAt: ['\"]?${today}" app/blog/posts/*.mdx || true) |
+            xargs -r -n1 basename -s .mdx | tr '\n' ' ')
+          echo "Posts scheduled for ${today}: ${slugs:-none}"
+          echo "slugs=${slugs}" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger Vercel deploy hook
+        if: steps.today.outputs.slugs != '' || inputs.force
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
           if [ -z "$DEPLOY_HOOK_URL" ]; then
             echo "::error::Secret VERCEL_DEPLOY_HOOK_URL is not set"
             exit 1
           fi
           curl -fsS -X POST "$DEPLOY_HOOK_URL"
+
+      - name: Remind to share on LinkedIn
+        if: steps.today.outputs.slugs != '' || inputs.remind != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUGS: ${{ steps.today.outputs.slugs }} ${{ inputs.remind }}
+        run: |
+          read -ra slugs <<< "$SLUGS"
+          .github/scripts/linkedin-reminder.sh "${slugs[@]}"
