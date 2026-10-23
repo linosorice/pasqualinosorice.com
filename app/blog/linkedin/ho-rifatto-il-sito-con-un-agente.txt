@@ -1,15 +1,5 @@
-Ho chiesto a un agente di rifare il design del mio sito. Invece di descrivermi tre proposte, le ha costruite tutte e tre.
+Nuovo articolo: ho fatto rifare il design di questo sito a un agente.
 
-Il sito era ancora il template da cui era partito: bianco e nero, un solo font, un muro di link. Gli ho scritto una riga: "È minimale, ma troppo. Cosa possiamo fare?"
+Invece di descrivermi tre stili, li ha implementati tutti e tre in un'unica pull request, su una base comune, così ho scelto guardando le pagine vere. Racconto cosa ha fatto l'agente, cosa ho deciso io e come ha trovato un bug negli spazi tra le parole, un'ipotesi alla volta.
 
-Prima ha fatto la diagnosi, poi ha proposto tre direzioni: editoriale, tecnica, sobria. Gli ho risposto: implementale tutte, in un'unica pull request.
-
-Con un team sarebbe stata una richiesta assurda. Con un agente costa poco, se la struttura è fatta bene.
-
-Così ho scelto guardando le pagine vere, sul telefono, con i miei articoli. Sulla carta avrei scelto lo stile editoriale. Guardando il risultato ho scelto quello tecnico: l'ho riconosciuto dal telefono, prima ancora di leggere.
-
-In tutto ho scritto quattro messaggi. Le due decisioni che contavano, quale stile tenere e quando andare in produzione, sono rimaste mie.
-
-Ho raccontato com'è andata, compreso un bug negli spazi tra le parole che l'agente ha risolto un'ipotesi alla volta. Il link è nel primo commento.
-
-Avete mai delegato a un agente qualcosa che non è codice di prodotto?
+https://www.pasqualinosorice.com/blog/ho-rifatto-il-sito-con-un-agente

@@ -1,17 +1,5 @@
-Un agente non si ricorda di ieri.
+Nuovo articolo: come scriviamo il contesto per gli agenti in MioAssicuratore.
 
-Ogni sessione parte da zero: quello che sa del progetto è il codice che legge più quello che gli scrivi. Se il contesto è sbagliato, sbaglia con sicurezza.
+Com'è fatto il nostro file di istruzioni, perché accanto a ogni regola c'è scritto il motivo, come dividiamo il contesto tra agenti, comandi e skill, e quali regole facciamo rispettare con controlli automatici invece di lasciarle scritte nel file.
 
-In MioAssicuratore il file di istruzioni per gli agenti è nato a marzo con 153 righe. In sette mesi ha avuto 86 versioni. Tre cose che ho imparato scrivendolo:
-
-1. Ogni regola porta scritto il suo perché. Un agente che conosce solo la regola la applica alla lettera, oppure la aggira. Se conosce il motivo, riconosce il caso limite.
-
-2. Niente fotografie dello stato. A luglio il file descriveva 23 script che nessuno usava più, e gli agenti ci credevano.
-
-3. Le regole che contano non stanno nel file. Le fa rispettare uno strumento, che ha i suoi test.
-
-E quando un agente sbaglia, correggo il contesto, non solo il codice. Altrimenti lo stesso errore torna alla sessione dopo.
-
-Ho raccontato com'è fatto il nostro, il link è nel primo commento.
-
-Voi dove tenete il contesto per i vostri agenti?
+https://www.pasqualinosorice.com/blog/dare-contesto-agli-agenti

@@ -54,24 +54,22 @@ for slug in "$@"; do
     echo "L'articolo è online: ${url}"
     echo
     if [ -f "$text_file" ]; then
-      echo "Copia il testo in un nuovo post su LinkedIn e metti il link nel primo commento: i post con un link esterno nel testo vengono mostrati a meno persone."
-      echo
-      echo '### Testo del post'
+      echo 'Testo per LinkedIn, da copiare così com'"'"'è:'
       echo
       echo '```text'
       cat "$text_file"
       echo '```'
     else
-      echo "Per questo articolo non c'è un testo pronto in \`${text_file}\`. Il riassunto da cui partire:"
+      echo "Per questo articolo non c'è un testo in \`${text_file}\`. Un testo minimo, da titolo e riassunto:"
       echo
-      echo "> $(frontmatter summary "$post")"
+      echo '```text'
+      echo "Nuovo articolo: ${title}"
+      echo
+      frontmatter summary "$post"
+      echo
+      echo "$url"
+      echo '```'
     fi
-    echo
-    echo '### Primo commento'
-    echo
-    echo '```text'
-    echo "L'articolo completo: ${url}"
-    echo '```'
     echo
     echo "Quando hai pubblicato, chiudi questa issue: le issue chiuse con l'etichetta \`${label}\` sono il registro di cosa hai condiviso."
   } >"$body"

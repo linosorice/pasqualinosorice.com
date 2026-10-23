@@ -1,13 +1,5 @@
-Il 16 ottobre abbiamo cambiato tre volte in un giorno le regole con cui sviluppiamo con gli agenti.
+Nuovo articolo: gli errori che abbiamo fatto introducendo gli agenti nel team, da marzo a oggi.
 
-Il lavoro aperto stava sfuggendo di mano. Una issue che chiedeva di togliere un blocco da un PDF era diventata una pull request da 43 file in 5 aree del codice.
+Regole scritte che nessuno strumento applicava, controlli sempre rossi, un backlog che cresceva da solo, un agente che si fermava a chiedere troppo spesso e il giorno in cui abbiamo cambiato le regole tre volte. Per ognuno, cosa è successo e cosa abbiamo cambiato.
 
-È uno degli errori che racconto nel nuovo articolo. Quasi tutti hanno la stessa origine: con gli agenti aprire issue, pull request e feature flag costa zero. Leggerli, rivederli e chiuderli costa ancora come prima.
-
-L'altro errore, quello che racconterei per primo a un altro CTO: credere che una regola scritta sia una regola rispettata. A maggio ho tolto la pipeline di integrazione continua, perché tanto i controlli giravano sul mio computer. A ottobre l'ho rimessa.
-
-Oggi ogni errore ci lascia una regola scritta con il suo perché e un controllo che la fa rispettare.
-
-Il link è nel primo commento.
-
-Voi quali errori avete fatto introducendo gli agenti nel team?
+https://www.pasqualinosorice.com/blog/errori-introducendo-gli-agenti
