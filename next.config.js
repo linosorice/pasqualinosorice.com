@@ -42,7 +42,11 @@ module.exports = {
       permanent: true
     }))
     // The consulting page was removed: the site only tells the story, offers happen in private
-    let retired = [{ source: '/consulenza', destination: '/', permanent: true }]
+    // /contact is a URL of the old site that still gets visits
+    let retired = [
+      { source: '/consulenza', destination: '/', permanent: true },
+      { source: '/contact', destination: '/', permanent: true }
+    ]
     return [...removed, ...rewritten, ...retired]
   },
   async headers() {

@@ -8,6 +8,9 @@ type Metadata = {
   publishedAt: string
   summary: string
   image?: string
+  // Shorter title and description for search results; the page keeps title and summary
+  seoTitle?: string
+  seoDescription?: string
   // Slug of an older post this one supersedes once published (see app/blog/publishing.js)
   replaces?: string
 }
