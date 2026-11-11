@@ -54,8 +54,10 @@ export async function generateMetadata({ params }: Props) {
     return
   }
 
-  let { title, publishedAt: publishedTime, summary: description, image } = post.metadata
-  let ogImage = postImage(title, image)
+  let { publishedAt: publishedTime, image } = post.metadata
+  let title = post.metadata.seoTitle ?? post.metadata.title
+  let description = post.metadata.seoDescription ?? post.metadata.summary
+  let ogImage = postImage(post.metadata.title, image)
 
   return {
     title,
@@ -106,7 +108,7 @@ export default async function Blog({ params }: Props) {
             'headline': post.metadata.title,
             'datePublished': post.metadata.publishedAt,
             'dateModified': post.metadata.publishedAt,
-            'description': post.metadata.summary,
+            'description': post.metadata.seoDescription ?? post.metadata.summary,
             'image': postImage(post.metadata.title, post.metadata.image),
             'url': `${baseUrl}/blog/${post.slug}`,
             'mainEntityOfPage': `${baseUrl}/blog/${post.slug}`,
