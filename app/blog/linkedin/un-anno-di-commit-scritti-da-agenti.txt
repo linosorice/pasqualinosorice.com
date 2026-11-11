@@ -1,0 +1,5 @@
+Nuovo articolo: un anno di commit scritti da agenti nel nostro monorepo, dal 23% di ottobre 2025 a quasi il 100% di ottobre 2026.
+
+I numeri mese per mese, cosa è cambiato a marzo con il monorepo e le issue, perché ho lasciato un framework a fasi e cosa ha fatto raddoppiare il volume a ottobre.
+
+https://www.pasqualinosorice.com/blog/un-anno-di-commit-scritti-da-agenti

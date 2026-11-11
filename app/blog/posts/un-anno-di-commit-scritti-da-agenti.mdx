@@ -1,0 +1,75 @@
+---
+title: 'Dal 23% al 100%: un anno di commit scritti da agenti'
+publishedAt: '2026-11-24'
+summary: "A ottobre 2025 gli agenti scrivevano il 23% dei commit del nostro monorepo, a ottobre 2026 quasi tutti. I numeri mese per mese, cosa è cambiato a marzo, perché il monorepo l'ho fatto solo per gli agenti e cosa ha fatto raddoppiare il lavoro a ottobre."
+seoDescription: "Dal 23% dei commit nell'ottobre 2025 a quasi il 100% un anno dopo: le fasi vere dell'adozione degli agenti in MioAssicuratore, con i numeri mese per mese."
+---
+
+Negli altri post ho scritto che lavoriamo con gli agenti "da marzo". È vero per il metodo, non per l'uso: gli agenti scrivevano codice nel nostro repository già da qualche mese. Qui metto in fila l'ultimo anno con i numeri, perché le fasi vere di un'adozione sono diverse da come si raccontano dopo.
+
+## Come ho contato
+
+Quando un agente fa un commit, aggiunge in fondo al messaggio una riga che lo dichiara. Ho contato, mese per mese, i commit sul branch principale del monorepo che hanno quella riga.
+
+È un conteggio per difetto. La riga si perde in alcuni casi, per esempio quando più commit di una pull request vengono uniti in uno solo. Quindi le percentuali sono un minimo: la quota vera è uguale o più alta.
+
+- ottobre 2025: 137 commit, il 23% scritto da agenti;
+- gennaio 2026: 300 commit, il 50%;
+- marzo 2026: 126 commit, il 72%;
+- maggio 2026: 224 commit, l'86%;
+- settembre 2026: 193 commit, l'86%;
+- ottobre 2026: 493 commit, quasi il 100%.
+
+## Fino a febbraio: lo strumento prima del metodo
+
+A ottobre 2025 gli agenti scrivevano circa un commit su quattro. A gennaio la quota era già al 50%. Il motivo principale non è un metodo nuovo, è il modello: a dicembre era arrivato Opus 4.5. Ogni salto di modello, da allora, ha spostato un po' più di lavoro verso gli agenti.
+
+A fine gennaio ho provato anche un framework open source che organizza il lavoro dell'agente in fasi: una cartella di piani con roadmap, requisiti, milestone e stato, e l'agente che pianifica ed esegue una fase dopo l'altra. Sulla carta era interessante. In pratica si è rivelato troppo strutturato e verboso. L'ho usato qualche volta e poi l'ho lasciato.
+
+In questa fase gli agenti scrivevano già metà del codice, ma il modo di lavorare era quello di prima, solo più veloce.
+
+## Marzo: arriva il metodo
+
+Tra il 18 marzo e il 1° aprile sono cambiate tre cose.
+
+**Il 18 marzo i servizi e le app sono entrati nel monorepo, tutti nello stesso giorno**, e i repository vecchi si sono fermati. L'ho fatto esclusivamente per gli agenti. Con un solo repository l'agente vede in un posto solo il codice, le dipendenze tra i servizi e le istruzioni, e una modifica che tocca un servizio e il frontend che lo usa diventa una sola pull request.
+
+**Il 24 marzo le GitHub Issues sono diventate l'unica fonte del backlog**, con un template che chiede priorità, effort e criteri di accettazione. Il 1° aprile ho cancellato la cartella dei piani del framework: roadmap e avanzamento ormai stavano nelle issue.
+
+**Il 30 marzo ho chiesto a due agenti di valutare il punto di partenza**: uno ha analizzato quanto la codebase fosse pronta per farci lavorare gli agenti, l'altro quanto del backlog si potesse affidare a loro. Il voto complessivo era 7 su 10. In un'analisi della piattaforma dello stesso periodo, l'osservabilità prendeva 2,3 su 10.
+
+Delle cose emerse in quelle settimane, due hanno contato più delle altre.
+
+- **Le issue pronte per gli agenti.** Il grooming è la fase più importante: dà all'agente un obiettivo preciso. Un agente che parte da una richiesta vaga la completa da solo, e non sempre come volevi. Come lo facciamo oggi l'ho raccontato nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico).
+- **I test.** Sono quello che ti permette di lasciare autonomia all'agente senza stare in ansia.
+
+## Da aprile a settembre: il metodo regge
+
+Da aprile la quota resta tra l'80 e il 90%. Il 14% che manca a maggio non è codice scritto a mano: guardando i commit uno per uno, molti sono pull request unite in un solo commit che ha perso la riga dell'agente, gli altri sono piccole correzioni di configurazione della CI e dei deploy.
+
+In questi mesi il lavoro è stato soprattutto sistemare quello che non funzionava: regole scritte che nessuno strumento applicava, controlli sempre rossi, un backlog che cresceva da solo. Gli errori principali li ho raccontati nel [post sugli errori](/blog/errori-introducendo-gli-agenti).
+
+## Ottobre: il volume raddoppia
+
+A settembre è arrivato Opus 5.5, e a ottobre era il modello di quasi tutti i commit. Il volume è raddoppiato in un mese:
+
+- i commit sono passati da 193 a 493;
+- le pull request mergiate da 189 a 496.
+
+La percentuale non poteva crescere molto, era già all'86%. È cresciuto quanto lavoro si riesce ad affidare agli agenti con la stessa struttura. Anche il collo di bottiglia si è spostato: con il doppio delle pull request, la review e le decisioni sono diventate la parte lenta. Come rivediamo il codice oggi l'ho raccontato nel [post sulla code review](/blog/code-review-codice-scritto-da-agenti).
+
+Il modello decide quanto lavoro puoi affidare agli agenti. La struttura (issue chiare, test, review) decide se puoi fidarti del risultato. Senza la seconda, un modello migliore produce solo più codice da controllare.
+
+## Cosa ha fatto l'agente, cosa ho fatto io
+
+Gli agenti hanno scritto il codice, i test e anche l'analisi del 30 marzo.
+
+Io ho deciso le cose che hanno cambiato fase: unire tutto in un monorepo, lasciare il framework a fasi per le issue, rendere i test obbligatori. E ho tenuto la proprietà del prodotto: le decisioni su cosa costruire e come restano mie.
+
+## Se dovessi ricominciare
+
+Se oggi un altro CTO mi chiedesse da dove partire, gli direi tre cose.
+
+1. **Ragiona come se gli agenti fossero dipendenti.** Un agente che analizza la richiesta, uno che sviluppa, uno che rivede: una piccola scala gerarchica, come in un team, in cui ognuno ha un compito preciso e qualcuno controlla il lavoro degli altri.
+2. **Tieni tu la proprietà del prodotto.** Gli agenti possono scrivere tutto il codice, ma le decisioni su cosa costruire devono restare tue. Se le deleghi, dopo qualche mese non capisci più cosa sta facendo il tuo prodotto.
+3. **Metti i test prima di tutto il resto.** Sono l'unico modo per lasciare autonomia agli agenti e dormire tranquillo.
