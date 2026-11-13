@@ -1,0 +1,5 @@
+Nuovo articolo: a ottobre siamo passati da uno sviluppatore con gli agenti a più persone che lavorano in parallelo, e ogni merge, rilascio e collaudo passava ancora da me.
+
+I tempi di attesa delle pull request mese per mese, i freni che ho provato per primi e perché non bastavano, e cosa resta a me oggi che l'84% dei merge lo fa un'app.
+
+https://www.pasqualinosorice.com/blog/quando-il-cto-diventa-il-collo-di-bottiglia

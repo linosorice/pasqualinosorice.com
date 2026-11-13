@@ -1,0 +1,80 @@
+---
+title: 'Quando il CTO diventa il collo di bottiglia'
+publishedAt: '2026-12-15'
+summary: 'A ottobre siamo passati da uno sviluppatore con gli agenti a più persone che lavorano in parallelo, e il sistema non lo prevedeva: ogni merge, rilascio e collaudo passava da me. Prima ho provato a frenare la coda, poi sono uscito dal percorso. I tempi di attesa, mese per mese.'
+seoDescription: 'Da uno a più sviluppatori in parallelo con gli agenti: come il CTO è diventato il collo di bottiglia, i freni che non bastavano e cosa gli resta oggi.'
+---
+
+Sabato 17 e domenica 18 ottobre ho fatto 32 merge. In tutto settembre, nei fine settimana, ne avevo fatto uno.
+
+Non era un picco di lavoro degli agenti. Era una coda di pull request che aspettavano me, e che durante la settimana non ero riuscito a smaltire.
+
+## Da uno a più sviluppatori
+
+Il nostro sistema era nato per una persona sola: io con gli agenti. L'ho raccontato nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico). Il merge, i passi di rilascio e il collaudo passavano da me, e andava bene così, perché ero anche l'unico ad aprire le pull request.
+
+A ottobre questo è cambiato. Anche altre persone hanno cominciato a lanciare sessioni di agenti che portavano codice, e le sessioni lavoravano in parallelo. Siamo passati da un modello con un solo sviluppatore a uno con più sviluppatori contemporaneamente. Il sistema non lo prevedeva: tutte quelle sessioni finivano nello stesso imbuto, cioè me.
+
+## I numeri
+
+Ho misurato il tempo tra l'apertura di una pull request e il suo merge, per tutte le pull request mergiate da maggio:
+
+- settembre: 189 pull request, mediana 0,9 ore, un quarto oltre le 3,5 ore;
+- ottobre: 496 pull request, mediana 2,9 ore, un quarto oltre le 20 ore;
+- novembre, fino al 12: 388 pull request, mediana mezz'ora, un quarto oltre le 2,5 ore.
+
+La settimana peggiore è stata quella del 12 ottobre: 120 merge, mediana 21 ore, un quarto oltre le 61. Venerdì 16 le pull request aperte erano 42, più del doppio del lunedì.
+
+L'attesa non era uguale per tutte. Le pull request su un solo servizio aspettavano in mediana 2,5 ore; quelle che toccavano due o più servizi 17,6, e quelle sopra le mille righe 16. Sono proprio quelle che richiedono più attenzione, e io ne avevo sempre meno.
+
+Il singolo merge mi prendeva poco tempo, come ho scritto nel [post sulla code review](/blog/code-review-codice-scritto-da-agenti). Il problema era il totale: ogni merge, ogni passo di rilascio, ogni collaudo, ogni parere tecnico, uno dopo l'altro.
+
+## Prima reazione: frenare
+
+Il 16 ottobre, nel pomeriggio, ho introdotto quattro regole:
+
+- un tetto di cinque pull request aperte per persona, bozze comprese, perché la coda non crescesse più in fretta di quanto riuscivo a smaltirla;
+- due corsie, una leggera e una riservata a me per le aree più delicate. È durata un'ora e mezza;
+- al posto delle corsie, un agente architetto: le scelte tecniche le risolve lui citando una regola o un precedente, e a me arrivano solo quelle che toccano costi e dati;
+- un limite di mille righe per pull request.
+
+Nei giorni dopo sono arrivati altri strumenti per smaltire meglio la coda: una scheda di dodici righe su ogni pull request, scritta per me; un comando che per ogni pull request pronta calcola il passo successivo, così approvo un piano invece di una pull request alla volta; una coda unica, in cui tutto quello che aspetta me diventa un compito leggibile da solo.
+
+Oggi uso ancora un comando di Claude Code sul mio computer che legge tutte le schede aperte e mi aiuta a decidere.
+
+Il 23 ottobre avevo anche scritto la regola esplicitamente: i tetti restano, perché sono il freno che tiene la coda alla mia velocità.
+
+Ha funzionato a metà. La coda era più ordinata, ma andava ancora alla mia velocità. E la mia velocità era il problema.
+
+## Seconda reazione: uscire dal percorso
+
+Il primo passo è stato piccolo. Dal 26 ottobre le pull request che cambiano solo documenti le mergia un'app, perché non vanno in produzione e il mio merge non protegge niente. Subito dopo l'app ha cominciato a mergiare ogni pull request che rispetta le condizioni: fuori dalla bozza, controlli verdi, review dell'agente positiva. Anche i rilasci sono passati a lotti a orari fissi, invece che uno per pull request.
+
+Il 29 ottobre ho tolto i tetti per persona che sei giorni prima avevo scritto di voler tenere. Restano solo due tetti di sistema: quante epiche sono in lavorazione e quante sessioni avvia l'automatismo.
+
+Il 3 novembre ho scritto in un'epica una frase che riassume il problema: il CTO lavora tutto il giorno ed è il collo di bottiglia. Il titolo dell'epica era "cosa resta al CTO: solo il distruttivo".
+
+Oggi a me restano:
+
+- i passi distruttivi, da un elenco chiuso: cancellazioni, scritture massive sui dati di produzione, spese nuove;
+- le decisioni che spendono soldi;
+- l'accensione dei feature flag per tutti gli utenti;
+- il grooming e le decisioni di prodotto, e quali epiche mettere in lavorazione.
+
+Tutto il resto lo fanno regole che una macchina può verificare: il merge, i rilasci, i passi di rilascio non distruttivi, le scelte tecniche ordinarie con l'architetto, e dal 5 novembre anche il collaudo dopo il rilascio.
+
+La cosa che mi è costata di più lasciare sono stati proprio il rilascio e il collaudo. Erano i passaggi in cui sentivo di controllare davvero cosa arrivava in produzione.
+
+## Novembre
+
+Nella settimana del 2 novembre abbiamo fatto 251 merge, il massimo di sempre. Solo 58 sono passati da me. La mediana dall'apertura al merge era sotto l'ora.
+
+A novembre l'84% dei merge lo fa l'app. Non sono diventato più veloce io: le pull request che passano ancora da me aspettano più o meno quanto a ottobre. È cambiato quante ne passano.
+
+Alcune cose scritte nel post su come lavoriamo, uscito il 21 ottobre, sono cambiate entro due settimane: i tetti per persona, il merge solo con il mio OK, l'architetto che risponde solo con un precedente. È un diario, e quel post racconta come lavoravamo allora.
+
+## Cosa mi porto via
+
+- **Un sistema per una persona non regge due persone.** Finché ero l'unico ad aprire pull request, passare tutto da me era un controllo. Con più persone in parallelo è diventato una coda.
+- **Frenare tiene la coda alla tua velocità.** Se il problema è la tua velocità, il freno non lo risolve.
+- **Scrivi cosa resta a te, non cosa deleghi.** L'elenco di quello che deve passare da me è corto e chiuso. Tutto il resto deve poterlo verificare una macchina.
