@@ -1,0 +1,5 @@
+Nuovo articolo: da dicembre 2025 a settembre 2026 ho cambiato sei volte il modello con cui gli agenti scrivono il nostro codice.
+
+Quali salti hanno cambiato davvero il lavoro (il contesto da un milione di token a marzo, Opus 5.5 a settembre), perché li adotto dal primo giorno e cosa non è cambiato con nessuno di loro.
+
+https://www.pasqualinosorice.com/blog/sei-modelli-in-dieci-mesi

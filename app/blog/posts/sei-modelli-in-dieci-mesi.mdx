@@ -1,0 +1,63 @@
+---
+title: 'Sei modelli in dieci mesi'
+publishedAt: '2026-12-29'
+summary: 'Da dicembre 2025 a settembre 2026 ho cambiato sei volte il modello con cui gli agenti scrivono il nostro codice. Quali salti hanno cambiato davvero il lavoro, perché li adotto dal primo giorno, e cosa non è cambiato con nessuno di loro.'
+seoDescription: 'Sei versioni di Claude Opus in dieci mesi di sviluppo agentico: quali salti hanno cambiato il lavoro, come li adotto e cosa resta uguale.'
+---
+
+Chiudo l'anno con un conto che non avevo mai fatto: quante volte è cambiato il modello che scrive il nostro codice.
+
+## Come ho contato
+
+Quando un agente fa un commit, aggiunge in fondo al messaggio una riga che dichiara il modello che l'ha scritto. È la stessa riga che ho usato nel [post sull'anno di commit](/blog/un-anno-di-commit-scritti-da-agenti) per contare quanti commit scrivono gli agenti. Qui ho guardato la prima comparsa di ogni modello sul branch principale del monorepo:
+
+- Opus 4.5: 10 dicembre 2025;
+- Opus 4.6: 6 febbraio 2026, con la finestra di contesto da un milione di token da marzo;
+- Opus 4.7: 17 aprile;
+- Opus 4.8: 29 maggio;
+- Opus 5: 27 luglio;
+- Opus 5.5: 23 settembre.
+
+Sei modelli in dieci mesi, uno nuovo ogni due mesi circa. Ogni volta il passaggio è stato immediato: dopo poche settimane il modello vecchio sparisce dai commit.
+
+## Li adotto dal primo giorno
+
+Quando esce un modello nuovo lo uso subito, su tutto. Non faccio un periodo di prova su qualche issue e non tengo il vecchio come riserva.
+
+Me lo posso permettere perché il modo di lavorare non dipende dal modello. Ogni modifica parte da una issue con i criteri di accettazione, passa dai test e da una review indipendente prima del merge, e arriva agli utenti dietro un feature flag. Se un modello nuovo sbaglia di più, lo vedo lì.
+
+## I salti che ricordo
+
+Non tutti i salti si sentono allo stesso modo. Nel lavoro di tutti i giorni ne ricordo due.
+
+### Marzo: un milione di token di contesto
+
+Con Opus 4.6, da marzo, la finestra di contesto è passata a un milione di token. Una sessione poteva tenere insieme molto più codice, più istruzioni e più storia del lavoro prima di dover riassumere.
+
+Nello stesso mese abbiamo portato servizi e app in un solo monorepo e spostato il backlog sulle GitHub Issues. Il contesto lungo arrivava nel momento in cui avevo appena messo tutto in un posto solo.
+
+C'è un seguito. A ottobre, quando il limite settimanale del mio piano ha smesso di bastare, la prima voce di consumo erano proprio i messaggi con più di 300.000 token di contesto. Da fine ottobre la finestra da un milione non è più quella predefinita, e le sessioni vengono riassunte a 400.000 token. L'ho raccontato nel [post sul limite settimanale](/blog/limite-settimanale-finito-di-mercoledi). La stessa funzione che a marzo ha cambiato il lavoro, a ottobre ho dovuto limitarla.
+
+### Settembre: Opus 5.5
+
+Con Opus 5.5 gli agenti portano a termine da soli issue grandi, che prima dovevo spezzare in pezzi più piccoli o seguire passo passo. È la differenza che sento di più: meno lavoro per preparare una issue, meno interventi mentre l'agente la implementa.
+
+Nei numeri si vede così: a ottobre, il primo mese intero con Opus 5.5, le pull request mergiate sono raddoppiate rispetto a settembre. La struttura era la stessa, il modello no.
+
+## Non un modello solo
+
+Da ottobre non usiamo più un solo modello per tutto. Gli agenti che scrivono codice restano sul modello più capace; quelli che leggono e cercano, per esempio le analisi del backlog o dei dati del CRM, girano su Sonnet, che costa meno. Nel dubbio si resta sul modello grande.
+
+La regola non dipende da una versione: dice quale tipo di lavoro merita il modello più capace.
+
+## Il modello non lo scegli solo tu
+
+Il 21 ottobre un modello che usavamo in due funzioni del prodotto è stato tolto dalla regione del fornitore che usiamo. Ce ne siamo accorti dagli errori. In giornata le due funzioni sono passate a modelli più recenti: una a Claude, l'altra a una versione nuova di Gemini.
+
+I modelli per lo sviluppo li scelgo io. Quelli dentro il prodotto dipendono anche da cosa decide il fornitore, e possono cambiare in un giorno qualsiasi. Il nome del modello per ogni funzione è una configurazione, non è scritto nel codice: per questo il cambio è stato veloce.
+
+## Cosa non è cambiato
+
+Nella storia del nostro `CLAUDE.md` non ho trovato regole tolte perché un modello nuovo non ne aveva più bisogno. Le regole cambiate in questi mesi sono cambiate perché cambiava il modo di lavorare: il monorepo, le issue, i feature flag, la review, i test.
+
+Ogni modello ha spostato un po' più di lavoro verso gli agenti. Nessuno ha reso inutili le issue scritte bene, i test e la review: con un modello più capace servono a controllare più lavoro, non meno.
