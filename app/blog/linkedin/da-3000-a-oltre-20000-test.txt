@@ -1,0 +1,5 @@
+Nuovo articolo: da aprile i test del nostro monorepo sono passati da circa 3.000 a oltre 20.000, tutti scritti da agenti.
+
+Nello stesso periodo ho tolto da prima del merge il QA fatto da un agente che naviga l'applicazione: era lento e sbagliava in tutte e due le direzioni. Come è cambiato il collaudo, fino all'agente che a novembre è tornato a farlo da solo, dopo il merge.
+
+https://www.pasqualinosorice.com/blog/da-3000-a-oltre-20000-test

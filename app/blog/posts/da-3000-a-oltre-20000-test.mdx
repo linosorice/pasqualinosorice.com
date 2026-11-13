@@ -1,0 +1,74 @@
+---
+title: 'Da 3.000 a oltre 20.000 test'
+publishedAt: '2026-12-22'
+summary: 'Da aprile i test del nostro monorepo sono passati da circa 3.000 a oltre 20.000, tutti scritti da agenti. Nello stesso periodo ho tolto da prima del merge il QA fatto da un agente che naviga come un utente: era lento e sbagliava in tutte e due le direzioni. Come è cambiato il collaudo, fino a novembre.'
+seoDescription: 'Test scritti da agenti da 3.000 a oltre 20.000, e un QA agentico tolto da prima del merge: perché era lento, come sbagliava e come collaudiamo oggi.'
+---
+
+Nel [post su come lavoriamo](/blog/un-solo-sviluppatore-sviluppo-agentico) ho scritto in quattro righe che i test fatti da un agente che naviga l'applicazione erano inaffidabili, e che prima del merge usiamo solo test deterministici. Qui racconto come ci siamo arrivati, e cosa è successo dopo.
+
+## Come ho contato
+
+Ho contato le dichiarazioni di test nel codice del monorepo, cioè le righe `it(` e `test(` nei file di test, all'inizio di ogni mese. Sono compresi test unitari, di integrazione ed end-to-end. È un conteggio per difetto: un test che gira su una tabella di casi vale uno, e sullo stesso commit il runner ne esegue qualche punto percentuale in più.
+
+- 1° aprile: circa 3.000;
+- 1° luglio: circa 6.000;
+- 1° ottobre: circa 10.300;
+- 23 ottobre: circa 16.300;
+- 12 novembre: circa 22.700.
+
+I test li hanno scritti tutti gli agenti. La crescita non è una linea dritta: tra ottobre e novembre sono raddoppiati in sei settimane. Hanno contato tre cose: da fine settembre ogni pull request deve coprire con i test le righe di logica che cambia, a ottobre le pull request sono raddoppiate, e da fine ottobre il collaudo di una funzionalità si scrive come test nella stessa pull request. Ci arrivo sotto.
+
+## Il QA che navigava come un utente
+
+A maggio avevamo aggiunto alla pipeline di ogni pull request un agente di QA. Apriva l'applicazione in un browser, la usava come un utente e dava un esito: superato, fallito o bloccato. Stava prima del merge, dopo la code review.
+
+L'idea era buona. In pratica aveva due problemi.
+
+**Era lento.** Un flusso misurato a giugno: 7 minuti e 67 azioni, circa 6 secondi ciascuna. Il ciclo "fotografa la pagina, ragiona, clicca" da solo era il 60% del tempo. Moltiplicato per ogni pull request, e con più agenti che aprivano browser in parallelo sul mio Mac, era il passaggio che rallentava tutto.
+
+**Sbagliava in tutte e due le direzioni.**
+
+- **Falsi allarmi.** Lo stesso codice della stessa pull request era fallito in una sessione e superato in altre due. L'agente agiva su pagine non ancora pronte e leggeva un form vuoto come dati persi, o contava dati reali che cambiavano tra un giro e l'altro. La causa principale era una regola: "zero errori in console". Nell'ambiente di collaudo ogni pagina emetteva errori di sfondo che con la pull request non c'entravano niente, quindi ogni errore sembrava nuovo.
+- **Un errore vero archiviato come rumore.** Per evitare i falsi allarmi, gli agenti avevano cominciato a classificare alcuni errori come "rumore noto". Uno di questi diceva che una chiave di configurazione era vuota. In locale era vero e non era un problema. Nella versione rilasciata di uno dei frontend, lo stesso messaggio voleva dire che una variabile letta al momento del build non veniva passata, e una pagina restava bianca. Il messaggio è stato messo da parte circa sei volte in un mese. Il 23 giugno l'abbiamo trovata in collaudo e corretta lo stesso giorno, con una riga. Nessun utente l'ha incontrata.
+
+Lo stesso messaggio, due significati. Un elenco di errori da ignorare non poteva funzionare.
+
+## Non aggiustarlo, spostarlo
+
+L'agente aveva scritto una diagnosi completa e proponeva di sistemare il QA: sessioni del browser salvate, un confronto con gli errori già presenti prima della pull request, attese più precise, un tetto alle azioni.
+
+Ho deciso diversamente. Il 3 luglio il QA fatto dall'agente è uscito da prima del merge: lì restano solo test deterministici, che danno sempre lo stesso esito sullo stesso codice. Il motivo principale era il tempo. C'era anche un motivo di processo: con i feature flag, fare il merge non vuol dire più mostrare una funzionalità agli utenti. Il collaudo vero si fa in produzione, con il flag acceso solo per l'ambiente di collaudo.
+
+## Il collaudo a due mani
+
+Il 14 luglio è nato il testbook: un piano di collaudo scritto come commento sulla issue, da eseguire quando si accende il flag. Per tre mesi l'abbiamo fatto a due mani: io usavo l'interfaccia, l'agente controllava il backend con query e log, e segnava ogni caso come superato, fallito o non eseguito.
+
+Due idee del formato si sono rivelate le più utili.
+
+- **Il doppio binario.** Ogni caso ha un risultato atteso nell'interfaccia e una verifica nel backend. Così si possono provare cose che un test dell'interfaccia non sa esprimere, per esempio che una procedura, al login successivo, non debba ripartire.
+- **I casi non eseguiti, con il motivo.** Ogni testbook ha una sezione per quello che non si collauda, per esempio perché non è riproducibile o perché sarebbe distruttivo in produzione, e dice dove è coperto. "Non testato" e "testato altrove" non sono la stessa cosa.
+
+Prima del testbook avevamo già provato tre volte a scrivere piani di collaudo: un documento di scenari mai versionato, degli script spenti da due mesi senza che nessuno se ne accorgesse, le specifiche di uno strumento abbandonato. Erano morti tutti e tre, perché nessuno era obbligato a leggerli. Il testbook invece vive sulla issue, dove lo vede chiunque lavori a quella funzionalità.
+
+## L'agente torna, dopo il merge
+
+A fine ottobre il testbook è diventato codice. I casi che si possono automatizzare sono test end-to-end scritti nella stessa pull request, marcati con il flag a cui appartengono, e girano dopo ogni rilascio. A mano restano solo le cose che un test non può fare da solo: una mail vera, un PDF da guardare, un pagamento reale.
+
+Il 5 novembre anche quella parte è passata agli agenti. Il collaudo manuale è diventato una issue che un agente esegue da solo; se un caso fallisce, il flag si spegne nell'ambiente di collaudo. Il 10 novembre l'agente di QA ha avuto le sessioni del browser salvate, e ora gira senza nessuno davanti.
+
+L'ho lasciato agli agenti perché erano diventati affidabili. Ma c'è una differenza rispetto a maggio: l'agente non sceglie più cosa provare e non giudica contro una regola generica. Esegue casi scritti prima, contro un risultato atteso scritto prima, dopo il merge.
+
+## Lo stesso criterio per SonarQube
+
+A luglio il mio Mac era sempre caldo. Due carichi lo tenevano occupato: le build per i rilasci, che giravano emulate e una alla volta, e SonarQube sempre acceso. Lo stesso giorno le build sono passate a un pulsante che rilascia da un runner nella CI, e SonarQube su una macchina in cloud, accesa e spenta a orario per risparmiare.
+
+Quella macchina ci metteva fino a cinque minuti a riaccendersi, e SonarQube era diventato il passaggio più lento di ogni pull request. A settembre l'ho tolto dalla pipeline. Al suo posto ci sono controlli sulle sole righe nuove, che girano in pochi millisecondi a file prima di ogni commit; le regole le ho raccontate nel [post sulla code review](/blog/code-review-codice-scritto-da-agenti). Prima di attivarli l'agente li ha provati sulle ultime 32 pull request già mergiate: 30 passavano, 2 sarebbero state bloccate per copertura insufficiente.
+
+Il criterio è lo stesso del QA: un controllo che costa minuti a ogni pull request deve valere quei minuti, altrimenti si sposta o si toglie.
+
+## Più di ventimila test
+
+Con più di ventimila test scritti da agenti mi fido di più del codice, non di meno. Mi preoccupa poco anche la manutenzione: quando un test va aggiornato, lo aggiorna l'agente che sta cambiando il codice, nella stessa pull request.
+
+Quello che ho imparato è che conta dove metti ogni controllo. Prima del merge servono controlli veloci e che danno sempre lo stesso esito. Il giudizio di un agente che usa l'applicazione come una persona serve, ma dopo, su casi decisi prima.
