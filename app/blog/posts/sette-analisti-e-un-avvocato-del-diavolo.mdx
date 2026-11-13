@@ -1,0 +1,73 @@
+---
+title: 'Sette agenti analisti e un avvocato del diavolo'
+publishedAt: '2026-12-01'
+summary: "L'11 marzo ho chiesto a una squadra di agenti quali oggetti del CRM copiare in un database di analisi. Uno di loro aveva il compito di non credere agli altri: ha trovato due conteggi gonfiati e un progetto disallineato dalla produzione. Altre cose le ha lasciate passare."
+seoDescription: "Sette agenti analisti e un verificatore ostile su un'analisi del CRM: cosa ha trovato l'avvocato del diavolo, cosa gli è sfuggito e cosa ho deciso io."
+---
+
+Nel [post sui sistemi multi-agente](/blog/sistemi-multi-agente-quando-servono) ho scritto che separare i ruoli serve quando ti serve un giudizio indipendente. Qui racconto un caso concreto: una mattina di marzo, otto agenti e un'analisi che doveva essere giusta al primo colpo.
+
+## Il problema
+
+A inizio marzo avevamo installato Airbyte per copiare i dati del CRM, Salesforce, in un database Postgres su cui fare analisi. Lo strumento era scelto e installato. Restava da decidere cosa copiare.
+
+Sembra una domanda semplice, ma non lo è. Il CRM lo usano sette progetti nostri: due servizi backend, due frontend, una libreria condivisa, una libreria di componenti e il progetto con le personalizzazioni di Salesforce. In più ci sono 129 flow, cioè automazioni configurate dentro Salesforce, che leggono e scrivono oggetti senza che il nostro codice li richiami. Se dimentichi un oggetto, la copia è incompleta e i numeri delle analisi sono sbagliati senza che nessuno se ne accorga.
+
+## La squadra
+
+Nel prompt ho chiesto all'agente principale di mettere in piedi una squadra di analisti, con due ruoli precisi:
+
+- un agente dedicato agli oggetti che Salesforce usa senza che un pezzo di codice li richiami esplicitamente;
+- un avvocato del diavolo, che mettesse in discussione quello che trovavano gli altri.
+
+L'idea dell'avvocato del diavolo non è mia: era un suggerimento nelle guide di Claude. La divisione per area l'ha fatta l'agente. Il risultato sono stati otto agenti: cinque sulle aree di codice, uno sulle dipendenze implicite, uno sui flow e il verificatore.
+
+## Cosa ha trovato l'avvocato del diavolo
+
+Il primo giro ha prodotto un inventario e un rapporto. Il verificatore ha corretto sei punti. I tre più istruttivi:
+
+- **Un conteggio gonfiato.** L'agente dei frontend aveva trovato "più di 92 oggetti". Quelli usati davvero erano circa 27: aveva contato i campi come se fossero oggetti.
+- **Un progetto disallineato.** Nel progetto Salesforce che avevamo in locale la cartella degli oggetti era vuota. Gli agenti stavano analizzando una copia che non corrispondeva alla produzione. L'ho fatto riallineare e da lì sono arrivati i metadati veri, compresi i 129 flow.
+- **Un uso nascosto.** Gli allegati non comparivano nel codice dei servizi, ma li usavano cinque flow per generare i PDF. Senza quel controllo li avremmo lasciati fuori.
+
+Poi ho chiesto un secondo giro, con quattro analisti e di nuovo il verificatore. Questa volta l'agente dei flow aveva trovato 391 "oggetti nuovi". Erano campi, di nuovo. Il verificatore li ha scartati e ne è rimasto uno solo vero.
+
+Lo stesso errore due volte, in due agenti diversi. Senza qualcuno incaricato di dubitare, il primo giro avrebbe triplicato il perimetro della copia e il secondo l'avrebbe moltiplicato per sette.
+
+## Il terzo giro: una domanda mia
+
+Il rapporto proponeva di dividere gli oggetti in quattro livelli di priorità, ognuno con la sua frequenza di copia. Ho chiesto perché non copiare semplicemente tutto, e di verificare la raccomandazione con un'altra squadra: un esperto di Airbyte, un architetto Salesforce, un analista dei costi e di nuovo l'avvocato del diavolo.
+
+La risposta è stata più semplice della proposta iniziale: due connessioni invece di quattro livelli. Una per gli oggetti critici, ogni 30 minuti; una per tutto il resto, ogni 6 ore. Se un oggetto secondario dà errore, non blocca quelli importanti. I quattro livelli aggiungevano solo cose da gestire.
+
+Per le chiamate alle API di Salesforce la stima era intorno al 6-8% del limite giornaliero, calcolata con i numeri veri del nostro account, che ho incollato io a metà giornata.
+
+Tre giri, dalle 9:52 alle 14:28 con la configurazione delle connessioni. Mi sono serviti tutti e tre: il primo per l'inventario, il secondo per ripulirlo, il terzo per semplificare la configurazione.
+
+## Cosa gli è sfuggito
+
+Il verificatore controlla quello che ha davanti. Quello che non era nel suo contesto non poteva vederlo.
+
+- **Il totale finale era sbagliato.** Il rapporto chiudeva con "52 oggetti da replicare": il calcolo toglieva due volte gli oggetti già esclusi. La configurazione che ho scritto ne ha 61. I numeri su cui prendo una decisione li ricontrollo io, anche quando c'è un verificatore.
+- **Il costo era della versione sbagliata.** La stima di spesa era per la versione cloud di Airbyte, mentre il giorno prima l'avevamo installato sul nostro cluster. L'analisi girava in un'altra sessione e nessuno gliel'aveva detto.
+- **Nessuno ha contato i record.** Gli agenti hanno contato oggetti e flow, non le righe. Ad agosto uno degli oggetti messi tra quelli "da valutare" da solo valeva il 99,94% dei record copiati e allungava la copia delle 6 ore da un minuto a quasi tre ore. Non lo leggeva nessuno: l'abbiamo spostato in una connessione settimanale. Oggi, in un'analisi del genere, chiederei anche i volumi.
+
+## Cosa ho tolto io
+
+Tra le raccomandazioni, il verificatore aveva segnato come critica una rilettura completa settimanale di tutti i dati, perché i record cancellati nel CRM non restassero vivi nella copia. In più proponeva un controllo giornaliero dei conteggi.
+
+Li ho tolti entrambi. Ho fatto verificare la documentazione di Airbyte: i record cancellati arrivano comunque nella copia, segnati come cancellati, e basta ignorarli nelle viste e nelle query. A otto mesi di distanza non sono mai serviti.
+
+Un avvocato del diavolo tende a vedere rischi ovunque, ed è il suo compito. Decidere quali rischi valgono un lavoro in più resta compito mio.
+
+## Cosa è successo dopo
+
+La copia è in produzione dall'11 marzo. Da aprile è diventata una fonte dati del prodotto: le dashboard leggono da lì. A settembre ci abbiamo aggiunto altre sorgenti e uno strumento di analisi in sola lettura, e oggi è la base di tutte le nostre analisi.
+
+L'avvocato del diavolo invece è rimasto nel modo in cui lavoro. Lo metto in quasi ogni squadra di agenti che fa ricerca o analisi: a settembre, per esempio, la scelta dello strumento di dashboard è passata da tre giri con una controverifica ostile.
+
+## Cosa mi porto via
+
+Più agenti non mi hanno dato più risposte. Mi hanno dato meno risposte sbagliate, perché uno di loro aveva il compito di non credere agli altri.
+
+Il verificatore però vede solo il contesto che ha. Il totale sbagliato, la versione sbagliata e i volumi mancanti non erano errori di ragionamento: erano informazioni che nessuno gli aveva dato. E le decisioni su cosa togliere le ho prese io.
