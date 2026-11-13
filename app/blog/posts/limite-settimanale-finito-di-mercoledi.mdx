@@ -1,0 +1,90 @@
+---
+title: 'Il limite settimanale è finito di mercoledì'
+publishedAt: '2026-12-08'
+summary: 'A ottobre il limite settimanale del mio piano ha cominciato a non bastare. Ho fatto misurare agli agenti dove andavano i token: non nel codice scritto, ma nel contesto riletto a ogni messaggio. Il modello più economico era la leva più visibile e la meno utile.'
+seoDescription: 'Dove vanno i token nello sviluppo agentico: contesto riletto a ogni messaggio, istruzioni fisse, file letti interi. Le misure e le leve che hanno funzionato.'
+---
+
+Uso gli agenti con un piano che ha un limite di consumo settimanale. Il ciclo si azzera il mercoledì sera. Mercoledì 14 ottobre il limite è finito alle 18:37, tre ore e mezza prima dell'azzeramento.
+
+Poche ore, ma il volume di lavoro stava raddoppiando: a ottobre abbiamo fatto il merge di quasi 500 pull request, contro le 189 di settembre. Giovedì 22 ottobre ho chiesto all'agente con cui lavoravo: usiamo troppi token e il piano non basta su base settimanale, cosa possiamo fare per risolvere e per limitarti?
+
+## Prima misurare
+
+L'agente non ha proposto subito delle soluzioni. Ha letto le trascrizioni delle sessioni degli ultimi sette giorni, che Claude Code salva in locale con il consumo di ogni risposta, e ha sommato i token per tipo: contesto letto, contesto scritto in cache, testo generato.
+
+I numeri principali:
+
+- in media ogni messaggio delle sessioni principali rileggeva circa **290.000 token** di contesto;
+- il **62%** del consumo del modello grande veniva da messaggi con più di **300.000 token** di contesto. Il modello predefinito aveva la finestra da un milione di token, quindi una sessione poteva crescere a lungo prima di essere riassunta;
+- circa **metà dei messaggi** veniva dai sotto-agenti, tutti sul modello grande;
+- ogni sessione e ogni sotto-agente partiva con circa **50.000 token fissi** prima di cominciare: il `CLAUDE.md` da solo ne valeva circa 25.000.
+
+C'era anche un consumo che non vedevo. Un plugin di memoria che girava in background aveva avviato in una settimana quasi mille sessioni sue, sullo stesso piano. Anche il messaggio del 14 ottobre era arrivato in una di quelle, non in una sessione di lavoro.
+
+Il punto è che il costo non sta nel codice che l'agente scrive. Sta in quello che rilegge: ogni messaggio porta con sé tutto il contesto accumulato fino a lì.
+
+## La leva più visibile era la meno utile
+
+La prima proposta dell'agente è stata la più ovvia: spostare i sotto-agenti sul modello più economico, Sonnet. L'ho approvata insieme alle altre. Il giorno dopo ho chiesto se era davvero la soluzione migliore.
+
+La risposta è cominciata così: "Non ne sono sicuro, e la domanda è giusta". Poi ha misurato il consumo per tipo di sotto-agente:
+
+- gli agenti che implementano le issue valevano l'**81%** del consumo dei sotto-agenti;
+- i quattro agenti che fanno solo ricerca, quelli che si potevano spostare senza rischi, valevano il 5,7%. Sul totale, il 2-3%.
+
+Spostare tutti i sotto-agenti sul modello piccolo avrebbe risparmiato davvero solo togliendo il modello grande proprio agli agenti che scrivono il codice che va in produzione. Abbiamo fatto marcia indietro: chi scrive codice resta sul modello grande, chi legge o cerca soltanto va su Sonnet. Nel dubbio, si resta sul modello grande.
+
+## Le leve vere
+
+A guardarle dopo, le due cose che hanno fatto la differenza sono state il contesto fisso e la lunghezza delle sessioni.
+
+### Il CLAUDE.md, contato in byte
+
+Nel [post sul contesto](/blog/dare-contesto-agli-agenti) ho raccontato come il nostro `CLAUDE.md` era cresciuto e poi era stato compattato a fine maggio, sotto le 470 righe. Contato in righe sembrava sotto controllo. Contato in byte no:
+
+- a maggio aveva 719 righe e pesava 44 KB;
+- a ottobre aveva 675 righe e pesava 98 KB.
+
+Meno righe, peso più che raddoppiato: le righe erano diventate sempre più lunghe. Per il costo conta il peso, perché ogni sessione e ogni sotto-agente lo legge tutto prima di cominciare.
+
+Il 23 ottobre l'abbiamo portato a 249 righe e 29 KB. Nessuna regola è stata cancellata: il testo integrale delle sezioni lunghe è finito in cinque documenti separati, che gli agenti leggono solo quando servono, e il `CLAUDE.md` tiene la regola in sintesi con il link al dettaglio.
+
+In tre settimane è risalito a 39 KB, il 32% in più. Senza una misura che si ripete, il file torna a crescere.
+
+### Sessioni più corte
+
+Il secondo intervento è stato smettere di usare la finestra da un milione di token come predefinita e far riassumere le sessioni automaticamente quando arrivano a 400.000 token. Prima c'erano messaggi con 750.000 token di contesto; da fine ottobre il massimo si ferma intorno ai 380.000.
+
+La riga che gli agenti aggiungono ai commit lo mostra bene. Dal 1° al 22 ottobre, 170 commit dichiaravano il modello con la finestra da un milione. Dal 23 al 31 ottobre, 8. A novembre nessuno.
+
+### Le cose piccole
+
+Il resto ha contato meno, ma costa poco tenerlo:
+
+- il plugin di memoria spento;
+- al massimo tre sotto-agenti in parallelo;
+- un controllo che rifiuta la lettura per intero dei file di testo oltre le 400 righe e chiede di cercare la parte utile. Più di metà del contesto accumulato durante il lavoro erano file letti, spesso interi;
+- lo sforzo di ragionamento al livello alto per tutto e al massimo solo per il grooming, dove le ricerche dell'agente diventano decisioni.
+
+## Il prima e il dopo
+
+Ho fatto rimisurare a novembre con lo stesso metodo. È una tendenza più che un confronto preciso, perché nel frattempo una parte del lavoro si è spostata su sessioni nel cloud che non lasciano trascrizioni sul Mac:
+
+- il contesto medio per messaggio delle sessioni principali è sceso da circa 306.000 a 200.000 token;
+- la quota di consumo da messaggi oltre i 300.000 token è scesa dal 51% al 22%.
+
+L'11 novembre il limite è finito di nuovo, sempre di mercoledì, sette minuti prima dell'azzeramento, alla fine di due giorni di lavoro su un'epica grande. Non mi preoccupa: arrivare al limite l'ultimo giorno vuol dire che lo stai usando tutto, non che ti manca.
+
+## La stessa cosa nel prodotto
+
+Il principio vale anche per le funzionalità AI che costruiamo. Il briefing mattutino del nostro prodotto lo genera un modello piccolo con un prompt di sistema lungo e sempre uguale. Con il prompt caching la seconda chiamata paga il prompt in cache il 92% in meno. Sul briefing intero, contando la parte che cambia e la risposta, il risparmio è circa il 73%.
+
+Due cose le abbiamo scoperte solo misurando. Sotto una certa lunghezza del prompt la cache non parte, e non dà nessun errore: abbiamo allungato il prompt apposta per superare la soglia. E il servizio intermediario che usiamo per chiamare i modelli, con le impostazioni predefinite, mandava le richieste a un fornitore che scartava la cache in silenzio.
+
+## Cosa mi porto via
+
+- **Il costo è il contesto, non il modello.** Quello che pesa è quanto ogni messaggio rilegge: istruzioni fisse, file letti interi, sessioni lunghe.
+- **Misura prima di tagliare.** La soluzione più comoda, il modello economico per tutti, valeva il 2-3% e avrebbe peggiorato il codice.
+- **Conta in byte.** Le righe del `CLAUDE.md` nascondevano la crescita.
+- **Una misura una volta sola non basta.** Il file è risalito del 32% in tre settimane.
