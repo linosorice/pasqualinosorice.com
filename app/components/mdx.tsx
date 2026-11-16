@@ -114,5 +114,13 @@ let components = {
 }
 
 export function CustomMDX(props) {
-  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
+  return (
+    <MDXRemote
+      {...props}
+      // Posts are our own files: allow JS expressions in props such as <Table data={{ … }} />,
+      // which next-mdx-remote 6 strips by default (blockDangerousJS stays on)
+      options={{ blockJS: false, ...props.options }}
+      components={{ ...components, ...(props.components || {}) }}
+    />
+  )
 }
