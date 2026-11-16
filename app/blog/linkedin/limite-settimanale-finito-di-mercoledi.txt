@@ -1,0 +1,7 @@
+A ottobre il limite settimanale del mio piano per gli agenti ha cominciato a non bastare, e ho fatto misurare dove andavano i token.
+
+Ogni messaggio rileggeva in media circa 290.000 token di contesto, e il 62% del consumo veniva da messaggi con più di 300.000. Spostare gli agenti di ricerca su un modello più economico valeva il 2-3%. Le leve vere sono state il CLAUDE.md, passato da 98 a 29 KB, e le sessioni riassunte a 400.000 token.
+
+L'articolo completo è nel primo commento.
+---
+https://www.pasqualinosorice.com/blog/limite-settimanale-finito-di-mercoledi
