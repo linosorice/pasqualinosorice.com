@@ -1,0 +1,7 @@
+A marzo ho chiesto a una squadra di agenti quali oggetti del CRM copiare nel nostro database di analisi. Otto agenti: sette analisti e un avvocato del diavolo, con il compito di non credere agli altri.
+
+Ha trovato due conteggi gonfiati dallo stesso errore: un agente aveva contato più di 92 oggetti dove erano circa 27, un altro 391 oggetti nuovi dove ce n'era uno solo. In tutti e due i casi aveva scambiato i campi per oggetti. Il totale finale sbagliato invece non l'ha visto, perché non era nel suo contesto.
+
+L'articolo completo è nel primo commento.
+---
+https://www.pasqualinosorice.com/blog/sette-analisti-e-un-avvocato-del-diavolo
