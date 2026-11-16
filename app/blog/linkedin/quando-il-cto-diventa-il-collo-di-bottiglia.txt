@@ -1,0 +1,7 @@
+Sabato 17 e domenica 18 ottobre ho fatto 32 merge. In tutto settembre, nei fine settimana, ne avevo fatto uno.
+
+Eravamo passati da uno sviluppatore con gli agenti a più persone in parallelo, e ogni merge, rilascio e collaudo passava ancora da me. A ottobre la mediana dall'apertura al merge di una pull request era 2,9 ore, con un quarto oltre le 20. A novembre, dopo essere uscito dal percorso, è mezz'ora.
+
+L'articolo completo è nel primo commento.
+---
+https://www.pasqualinosorice.com/blog/quando-il-cto-diventa-il-collo-di-bottiglia
