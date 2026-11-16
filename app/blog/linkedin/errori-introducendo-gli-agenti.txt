@@ -1,5 +1,9 @@
-Nuovo articolo: gli errori che abbiamo fatto introducendo gli agenti nel team, da marzo a oggi.
+Gli errori che abbiamo fatto introducendo gli agenti nel nostro team di sviluppo, da marzo a oggi.
 
-Regole scritte che nessuno strumento applicava, controlli sempre rossi, un backlog che cresceva da solo, un agente che si fermava a chiedere troppo spesso e il giorno in cui abbiamo cambiato le regole tre volte. Per ognuno, cosa è successo e cosa abbiamo cambiato.
+A maggio avevo tolto la pipeline di integrazione continua, più di 1.300 righe di configurazione: sviluppavo solo io e i controlli giravano già sul mio computer. A ottobre l'ho rimessa, e oggi quattro controlli su GitHub sono obbligatori per tutti, me compreso.
 
+A giugno gli agenti dovevano fermarsi a chiedere a me a ogni dubbio. In due settimane mi hanno fatto 126 domande, e ogni domanda era una sessione ferma ad aspettare.
+
+L'articolo completo è nel primo commento.
+---
 https://www.pasqualinosorice.com/blog/errori-introducendo-gli-agenti
