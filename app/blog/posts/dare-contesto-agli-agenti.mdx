@@ -14,9 +14,9 @@ Un agente non si ricorda di ieri. Ogni sessione parte da zero, e quello che sa d
 
 Il centro di tutto è un file in Markdown nella radice del repository. Noi lo chiamiamo `CLAUDE.md` perché oggi usiamo Claude Code; altri strumenti leggono `AGENTS.md` o file simili, ma l'idea è la stessa. L'agente lo legge all'inizio di ogni sessione.
 
-Il nostro è nato a marzo con 153 righe. Oggi ne ha circa 670, divise in sezioni con un indice: architettura, convenzioni, flusso di lavoro obbligatorio, feature flag, permessi, design, rilascio, test, gestione del prodotto. Accanto ci sono 16 file più piccoli, uno per ogni area del codice che ha regole sue, e un file con le decisioni di design della product designer.
+Il nostro è nato a marzo con 153 righe. A ottobre era arrivato a circa 670, divise in sezioni con un indice: architettura, convenzioni, flusso di lavoro obbligatorio, feature flag, permessi, design, rilascio, test, gestione del prodotto. Accanto ci sono una ventina di file più piccoli, uno per ogni area del codice che ha regole sue, e un file con le decisioni di design della product designer.
 
-Non è cresciuto in modo lineare. A maggio era arrivato a 719 righe e diceva le stesse cose in più punti. L'ho compattato in due passate, con un vincolo: stessi concetti, meno parole. Alla fine era sotto le 470 righe. Poi è ricresciuto, ma in modo diverso: ogni regola nuova nasce da un errore vero.
+Non è cresciuto in modo lineare. A maggio era arrivato a 719 righe e diceva le stesse cose in più punti. L'ho compattato in due passate, con un vincolo: stessi concetti, meno parole. Alla fine era sotto le 470 righe. Poi è ricresciuto, ma in modo diverso: ogni regola nuova nasce da un errore vero. A fine ottobre l'ho alleggerito ancora, a circa 250 righe: il testo completo delle sezioni lunghe è passato in documenti separati, che gli agenti leggono solo quando servono, e nel file resta la regola in sintesi.
 
 ## Ogni regola porta scritto il suo perché
 
