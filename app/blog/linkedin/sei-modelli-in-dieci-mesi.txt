@@ -1,0 +1,7 @@
+Da dicembre 2025 a settembre 2026 il modello che scrive il nostro codice è cambiato sei volte: Opus 4.5, 4.6, 4.7, 4.8, 5 e 5.5. Li adotto dal primo giorno.
+
+I salti che ho sentito di più sono due: il contesto da un milione di token a marzo, e Opus 5.5 a settembre, con cui gli agenti chiudono da soli issue che prima dovevo spezzare. A ottobre le pull request mergiate sono raddoppiate.
+
+L'articolo completo è nel primo commento.
+---
+https://www.pasqualinosorice.com/blog/sei-modelli-in-dieci-mesi
