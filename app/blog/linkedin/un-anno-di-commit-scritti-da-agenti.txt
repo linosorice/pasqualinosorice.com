@@ -1,5 +1,7 @@
-Nuovo articolo: un anno di commit scritti da agenti nel nostro monorepo, dal 23% di ottobre 2025 a quasi il 100% di ottobre 2026.
+A ottobre 2025 gli agenti scrivevano il 23% dei commit del nostro monorepo. A gennaio il 50%, a maggio l'86%, a ottobre 2026 quasi il 100%.
 
-I numeri mese per mese, cosa è cambiato a marzo con il monorepo e le issue, perché ho lasciato un framework a fasi e cosa ha fatto raddoppiare il volume a ottobre.
+Il metodo è arrivato dopo lo strumento: il 18 marzo ho portato servizi e app in un solo monorepo, solo per gli agenti, e il 24 marzo le GitHub Issues sono diventate l'unica fonte del backlog. A ottobre, con Opus 5.5, le pull request mergiate sono passate da 189 a 496.
 
+L'articolo completo è nel primo commento.
+---
 https://www.pasqualinosorice.com/blog/un-anno-di-commit-scritti-da-agenti

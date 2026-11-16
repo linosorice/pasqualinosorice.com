@@ -53,7 +53,20 @@ for slug in "$@"; do
   {
     echo "L'articolo è online: ${url}"
     echo
-    if [ -f "$text_file" ]; then
+    if [ -f "$text_file" ] && grep -qx -- '---' "$text_file"; then
+      # Post text above the --- line, first comment (the link) below it
+      echo 'Testo del post, da copiare così com'"'"'è:'
+      echo
+      echo '```text'
+      sed '/^---$/,$d' "$text_file"
+      echo '```'
+      echo
+      echo 'Subito dopo, come primo commento:'
+      echo
+      echo '```text'
+      sed '1,/^---$/d' "$text_file"
+      echo '```'
+    elif [ -f "$text_file" ]; then
       echo 'Testo per LinkedIn, da copiare così com'"'"'è:'
       echo
       echo '```text'
