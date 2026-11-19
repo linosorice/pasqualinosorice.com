@@ -1,7 +1,15 @@
 A ottobre 2025 gli agenti scrivevano il 23% dei commit del nostro monorepo. A gennaio il 50%, a maggio l'86%, a ottobre 2026 quasi il 100%.
 
-Il metodo è arrivato dopo lo strumento: il 18 marzo ho portato servizi e app in un solo monorepo, solo per gli agenti, e il 24 marzo le GitHub Issues sono diventate l'unica fonte del backlog. A ottobre, con Opus 5.5, le pull request mergiate sono passate da 189 a 496.
+Guardando i numeri mese per mese, la crescita ha due motori diversi.
 
-L'articolo completo è nel primo commento.
+Il primo è il modello. Il salto dal 23% al 50% tra ottobre e gennaio non è venuto da un metodo nuovo: a dicembre era arrivato Opus 4.5, e gli agenti scrivevano metà del codice con il modo di lavorare di prima, solo più veloce. A settembre è arrivato Opus 5.5, e a ottobre le pull request mergiate sono passate da 189 a 496 in un mese.
+
+Il secondo è la struttura. Tra il 18 marzo e il 1° aprile ho portato servizi e app in un solo monorepo, fatto esclusivamente per gli agenti, e le GitHub Issues sono diventate l'unica fonte del backlog, con criteri di accettazione obbligatori. Da lì la quota è salita all'86% e ci è rimasta.
+
+La differenza tra i due si è vista a ottobre. Con il doppio delle pull request, la parte lenta non era più scrivere codice ma rivederlo e decidere. Il modello decide quanto lavoro puoi affidare agli agenti. La struttura (issue chiare, test, review) decide se puoi fidarti del risultato. Senza la seconda, un modello migliore produce solo più codice da controllare.
+
+Una nota sul metodo: ho contato i commit che dichiarano l'agente nel messaggio. È un conteggio per difetto, perché quella riga si perde quando i commit di una pull request vengono uniti in uno solo.
+
+L'articolo completo, con tutti i mesi, è nel primo commento.
 ---
 https://www.pasqualinosorice.com/blog/un-anno-di-commit-scritti-da-agenti

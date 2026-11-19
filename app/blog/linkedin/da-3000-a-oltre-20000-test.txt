@@ -1,6 +1,12 @@
-Da aprile i test del nostro monorepo sono passati da circa 3.000 a oltre 20.000, tutti scritti da agenti.
+Da aprile i test del nostro monorepo sono passati da circa 3.000 a oltre 20.000, tutti scritti da agenti. Tra ottobre e novembre sono raddoppiati in sei settimane, da quando ogni pull request deve coprire con i test le righe di logica che cambia.
 
-Nello stesso periodo ho tolto da prima del merge il QA fatto da un agente che naviga l'applicazione come un utente. Un flusso misurato: 7 minuti e 67 azioni. E sbagliava in tutte e due le direzioni: falsi allarmi, e un errore vero archiviato come rumore. A novembre l'agente è tornato a collaudare da solo, ma dopo il merge e su casi scritti prima.
+Nello stesso periodo ho tolto da prima del merge il QA fatto da un agente che apriva l'applicazione in un browser e la usava come un utente. Era lento: un flusso misurato a giugno richiedeva 7 minuti e 67 azioni. E sbagliava in tutte e due le direzioni. Lo stesso codice falliva in una sessione e passava in altre due. Per ridurre i falsi allarmi, gli agenti avevano cominciato a ignorare alcuni errori come "rumore noto": uno di quelli, nella versione rilasciata, voleva dire una pagina bianca. L'abbiamo trovata in collaudo, prima degli utenti.
+
+L'agente proponeva di aggiustare il QA. Ho deciso di spostarlo. Prima del merge restano solo test deterministici, che danno sempre lo stesso esito sullo stesso codice. Il collaudo vero si fa dopo, in produzione, con la funzionalità accesa da un feature flag solo per l'ambiente di collaudo.
+
+A novembre l'agente è tornato a collaudare da solo. Ma non sceglie più cosa provare e non giudica contro una regola generica: esegue casi scritti prima, contro un risultato atteso scritto prima, dopo il merge.
+
+Conta meno quanti controlli hai e più dove li metti. Prima del merge servono controlli veloci e ripetibili. Il giudizio di un agente che usa l'applicazione come una persona serve, ma dopo.
 
 L'articolo completo è nel primo commento.
 ---

@@ -1,6 +1,12 @@
 Sabato 17 e domenica 18 ottobre ho fatto 32 merge. In tutto settembre, nei fine settimana, ne avevo fatto uno.
 
-Eravamo passati da uno sviluppatore con gli agenti a più persone in parallelo, e ogni merge, rilascio e collaudo passava ancora da me. A ottobre la mediana dall'apertura al merge di una pull request era 2,9 ore, con un quarto oltre le 20. A novembre, dopo essere uscito dal percorso, è mezz'ora.
+Non era un picco di lavoro degli agenti. Il nostro sistema era nato per una persona sola, io con gli agenti, e merge, rilasci e collaudo passavano da me. A ottobre anche altre persone hanno cominciato ad avviare sessioni in parallelo, e tutte finivano nello stesso imbuto. La mediana dall'apertura al merge di una pull request è passata da 0,9 a 2,9 ore, con un quarto oltre le 20. Aspettavano di più proprio quelle che toccavano più servizi, cioè quelle che richiedono più attenzione.
+
+La prima reazione è stata frenare: un tetto alle pull request aperte per persona, una scheda di dodici righe per ogni pull request, un comando che calcola il passo successivo. La coda era più ordinata, ma andava ancora alla mia velocità. E la mia velocità era il problema.
+
+La seconda è stata uscire dal percorso. Ho scritto un elenco chiuso di quello che deve passare da me: i passi distruttivi, le spese nuove, l'accensione dei feature flag per tutti, il grooming e le decisioni di prodotto. Tutto il resto lo fanno regole che una macchina può verificare. Un'app mergia ogni pull request con i controlli verdi e la review positiva, e i rilasci partono a lotti a orari fissi.
+
+A novembre l'84% dei merge lo fa l'app, e la mediana è mezz'ora. Le pull request che passano ancora da me aspettano più o meno come prima. È cambiato quante ne passano.
 
 L'articolo completo è nel primo commento.
 ---
