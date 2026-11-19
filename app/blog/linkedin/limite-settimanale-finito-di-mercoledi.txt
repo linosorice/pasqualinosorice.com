@@ -1,6 +1,12 @@
-A ottobre il limite settimanale del mio piano per gli agenti ha cominciato a non bastare, e ho fatto misurare dove andavano i token.
+A ottobre il limite settimanale del mio piano per gli agenti ha cominciato a finire prima del rinnovo. Prima di cambiare qualcosa, ho chiesto all'agente di misurare dove andavano i token.
 
-Ogni messaggio rileggeva in media circa 290.000 token di contesto, e il 62% del consumo veniva da messaggi con più di 300.000. Spostare gli agenti di ricerca su un modello più economico valeva il 2-3%. Le leve vere sono state il CLAUDE.md, passato da 98 a 29 KB, e le sessioni riassunte a 400.000 token.
+Il costo non stava nel codice scritto, ma in quello che ogni messaggio rilegge. In media ogni messaggio portava con sé circa 290.000 token di contesto, e il 62% del consumo veniva da messaggi con più di 300.000. Ogni sessione e ogni sotto-agente partiva con circa 50.000 token fissi, metà solo per il CLAUDE.md.
+
+La prima proposta era la più ovvia: spostare i sotto-agenti su un modello più economico. L'ho approvata, e il giorno dopo ho chiesto se era davvero la soluzione migliore. Rimisurando, gli agenti che si potevano spostare senza rischi valevano il 2-3% del totale. Il resto erano gli agenti che scrivono il codice che va in produzione. Siamo tornati indietro.
+
+Le leve vere sono state due. Il CLAUDE.md: contato in righe sembrava sotto controllo, contato in byte era passato da 44 a 98 KB, perché le righe si erano allungate. L'abbiamo portato a 29 KB spostando il dettaglio in documenti che gli agenti leggono solo quando servono. E le sessioni: invece di lasciarle crescere fino a un milione di token, ora vengono riassunte a 400.000.
+
+A novembre la quota di consumo dei messaggi oltre i 300.000 token si è più che dimezzata. Il file invece in tre settimane era già risalito a 39 KB: una misura fatta una volta sola non basta.
 
 L'articolo completo è nel primo commento.
 ---

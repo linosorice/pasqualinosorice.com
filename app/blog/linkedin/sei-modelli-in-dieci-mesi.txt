@@ -1,6 +1,12 @@
-Da dicembre 2025 a settembre 2026 il modello che scrive il nostro codice è cambiato sei volte: Opus 4.5, 4.6, 4.7, 4.8, 5 e 5.5. Li adotto dal primo giorno.
+Da dicembre 2025 a settembre 2026 il modello che scrive il nostro codice è cambiato sei volte: Opus 4.5, 4.6, 4.7, 4.8, 5 e 5.5. Uno nuovo ogni due mesi circa.
 
-I salti che ho sentito di più sono due: il contesto da un milione di token a marzo, e Opus 5.5 a settembre, con cui gli agenti chiudono da soli issue che prima dovevo spezzare. A ottobre le pull request mergiate sono raddoppiate.
+Li adotto dal primo giorno, su tutto, senza periodo di prova e senza tenere il vecchio come riserva. Posso farlo perché il modo di lavorare non dipende dal modello: ogni modifica parte da una issue con i criteri di accettazione, passa dai test e da una review indipendente, e arriva agli utenti dietro un feature flag. Se un modello nuovo sbaglia di più, lo vedo lì.
+
+I salti che ho sentito di più sono due. A marzo il contesto da un milione di token, arrivato proprio mentre portavo servizi e app in un solo monorepo; a ottobre era diventato la prima voce di consumo e ho dovuto limitarlo. A settembre Opus 5.5: gli agenti portano a termine da soli issue grandi che prima dovevo spezzare o seguire passo passo. A ottobre, con la stessa struttura, le pull request mergiate sono raddoppiate.
+
+Poi ho cercato nella storia del nostro CLAUDE.md una regola tolta perché un modello nuovo non ne aveva più bisogno. Non ne ho trovate. Le regole sono cambiate quando cambiava il modo di lavorare, non quando cambiava il modello.
+
+Ogni modello ha spostato un po' più di lavoro verso gli agenti. Nessuno ha reso inutili le issue scritte bene, i test e la review: con un modello più capace servono a controllare più lavoro, non meno.
 
 L'articolo completo è nel primo commento.
 ---
