@@ -47,7 +47,16 @@ module.exports = {
       { source: '/consulenza', destination: '/', permanent: true },
       { source: '/contact', destination: '/', permanent: true }
     ]
-    return [...removed, ...rewritten, ...retired]
+    // Some link shortener or crawler requested the slug base64-encoded and truncated
+    // ("ZGFyZS1jb" is the start of "dare-co…"): send those visits to the post
+    let mangled = [
+      {
+        source: '/blog/:slug(ZGFyZS1jb[A-Za-z0-9+/=]*)',
+        destination: '/blog/dare-contesto-agli-agenti',
+        permanent: true
+      }
+    ]
+    return [...removed, ...rewritten, ...retired, ...mangled]
   },
   async headers() {
     return [
